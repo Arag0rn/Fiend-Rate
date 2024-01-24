@@ -1,0 +1,12 @@
+@import '../src/app/styles/global.module.scss';
+
+
+.head{
+    font-size: 50px;
+    color:black
+}
+
+.signupBtn{
+    @include mainBtn;
+    margin: 0 auto;
+}
