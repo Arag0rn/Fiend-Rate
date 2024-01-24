@@ -10,3 +10,24 @@
     @include mainBtn;
     margin: 0 auto;
 }
+
+.btnBox { 
+    display: flex;
+    width: 328px;
+    margin: 0 auto;
+  }
+  
+  .smallButton1 {
+    @include smalBtn;
+  }
+  
+  .smallButton2 {
+    @include smalBtn;
+
+  }
+
+  .secondaryButton{
+    @include smalBtn;
+    background-color: $disable-switch-color;
+    color: $color-beige-50;
+  }
