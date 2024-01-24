@@ -1,9 +1,10 @@
 import './globals.css';
+import styles from "./styles/global.module.scss"
 
-export default function RootLayout() {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body></body>
+      <body className={styles.background}>{children}</body>
     </html>
   )
 }
