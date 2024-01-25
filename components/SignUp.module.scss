@@ -2,7 +2,7 @@
 
 
 .head{
-  margin-top: 24px;
+  margin-top: 56px;
   color: $main-beige;
   text-align: center;
   font-family: "Helvetica Neue";
@@ -29,18 +29,35 @@
     display: flex;
     width: 328px;
     margin: 0 auto;
+    position: relative;
   }
   
   .smallButton1 {
+    position: absolute;
+    left: 0;
+    z-index: 1;
     @include smalBtn;
   }
   
   .smallButton2 {
+    position: absolute;
+    right: 0;
     @include smalBtn;
+    
 
   }
 
   .secondaryButton{
+    position: absolute;
+    z-index: 0;
+    @include smalBtn;
+    background-color: $disable-switch-color;
+    color: $color-beige-50;
+  }
+
+  .secondaryButton2{
+    position: absolute;
+    right: 0;
     @include smalBtn;
     background-color: $disable-switch-color;
     color: $color-beige-50;

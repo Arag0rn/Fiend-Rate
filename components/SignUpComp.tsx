@@ -55,7 +55,7 @@ const SignUpComp= () => {
           SIGN UP
         </button>
         <button
-          className={` ${activeButton === 'SIGN IN' ? styles.smallButton2 : styles.secondaryButton}`}
+          className={` ${activeButton === 'SIGN IN' ? styles.smallButton2 : styles.secondaryButton2}`}
           onClick={() => handleButtonClick('SIGN IN')}
         >
           SIGN IN
