@@ -1,8 +1,7 @@
-import Link from 'next/link';
-import styles from './page.module.scss';
+import styles from './page.module.css';
 
 export default function Home() {
   return (
-    <Link className={styles.toReg} href='/dashboard/hello-page'>Start</Link>
+    <main></main>
   )
 }
