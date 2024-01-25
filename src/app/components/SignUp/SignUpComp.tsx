@@ -6,12 +6,12 @@ import Container from '../Container';
 import { Formik, Field, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image';
-import showIcon from "../../public/images/SignUp/show_icon.svg";
-import hideIcon from "../../public/images/SignUp/hide_icon.svg";
-import checkFalse from "../../public/images/SignUp/checkFalse.svg";
-import checkTrue from "../../public/images/SignUp/checkTrue.svg";
-import facebook from "../../public/images/SignUp/FB.svg";
-import Google from "../../public/images/SignUp/Google.svg";
+import showIcon from "../../images/SignUp/show_icon.svg";
+import hideIcon from "../../images/SignUp/hide_icon.svg";
+import checkFalse from "../../images/SignUp/checkFalse.svg";
+import checkTrue from "../../images/SignUp/checkTrue.svg";
+import facebook from "../../images/SignUp/FB.svg";
+import Google from "../../images/SignUp/Google.svg";
 
 
 const SignupSchema = Yup.object().shape({
