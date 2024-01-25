@@ -16,7 +16,14 @@
 .signupBtn{
     @include mainBtn;
     margin-top: 30px;
+    &:disabled {
+      @include mainBtn;
+      margin-top: 30px;
+      background-color: $disable-button-color;
+      cursor: not-allowed;
+    }
 }
+
 
 .btnBox { 
     display: flex;
@@ -89,4 +96,68 @@
     font-weight: 400;
     line-height: 150%; 
     letter-spacing: 0.1px;
+  }
+
+  .signInTxt {
+    position: relative;
+    margin-top: 8px;
+    color: $main-beige;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 150%;
+  
+    &::before,
+    &::after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 108px;
+      height: 1px;
+      background-color: var(--Main-beige, #FCFBF5);
+      margin: 8px 0;
+    }
+  
+    &::before {
+      left: 0; 
+    }
+  
+    &::after {
+      top: 0;
+      right: 0; 
+    }
+  }
+
+  .socialBox{
+    display: flex;
+    justify-content: space-around
+  }
+
+  .socialIcon{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .socialTxt{
+    color: $main-beige;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 2;
+  }
+
+  .bottomLine{
+    margin: 0 auto;
+    margin-top: 7px;
+    width: 120px;
+    height: 4px;
+    border-radius: 100px;
+    background: $main-beige;
+  }
+  .bottomTxt{
+    color: $color-beige-50;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 2; 
   }

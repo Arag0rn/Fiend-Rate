@@ -10,6 +10,8 @@ import showIcon from "../public/images/SignUp/show_icon.svg";
 import hideIcon from "../public/images/SignUp/hide_icon.svg";
 import checkFalse from "../public/images/SignUp/checkFalse.svg";
 import checkTrue from "../public/images/SignUp/checkTrue.svg";
+import facebook from "../public/images/SignUp/FB.svg";
+import Google from "../public/images/SignUp/Google.svg";
 
 
 const SignupSchema = Yup.object().shape({
@@ -133,9 +135,32 @@ const SignUpComp= () => {
               
                       <p className={styles.checkboxTxt}>I agree to the Terms & Conditions and Privacy Policy</p> 
                   </div>
-            <button className={styles.signupBtn} type='submit'>CONTINUE</button>
+            <button className={styles.signupBtn} type='submit' disabled={!isAccept}>CONTINUE</button>
           </Form>
         </Formik>
+
+        <div className={styles.signInTxt}>or Sign in with</div>
+
+        <div className={styles.socialBox}>
+          <a className={styles.socialIcon}>
+          <Image
+            src={facebook}
+            alt="facebook"
+          />
+          <p className={styles.socialTxt}>Facebook</p>
+          </a>  
+          <a className={styles.socialIcon}>
+            <Image
+              src={Google}
+              alt="Google"
+            />
+            <p className={styles.socialTxt}>Google</p>
+          </a>
+
+        </div>
+
+        <p className={styles.bottomTxt}>Already have an account? <span className={styles.socialTxt}>Sign in!</span></p>
+        <div className={styles.bottomLine}></div>
 
     
     </Container>
