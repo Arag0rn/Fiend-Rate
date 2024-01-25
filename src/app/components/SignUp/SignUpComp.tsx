@@ -12,6 +12,7 @@ import checkFalse from "../../images/SignUp/checkFalse.svg";
 import checkTrue from "../../images/SignUp/checkTrue.svg";
 import facebook from "../../images/SignUp/FB.svg";
 import Google from "../../images/SignUp/Google.svg";
+import TogleBtn from './TogleBtn';
 
 
 const SignupSchema = Yup.object().shape({
@@ -35,33 +36,16 @@ const SignupSchema = Yup.object().shape({
 
 const SignUpComp= () => {
 
-  const [activeButton, setActiveButton] = useState<string>('SIGN UP');
+
   const [showPassword, setShowPassword] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
 
-  const handleButtonClick = (buttonName: string) => {
-    setActiveButton(buttonName);
-  };
 
 
   return (
     <>
     <Container>
-  <div className={styles.btnBox}>
-      <button
-          className={` ${activeButton === 'SIGN UP' ? styles.smallButton1 : styles.secondaryButton}`}
-          onClick={() => handleButtonClick('SIGN UP')}
-        >
-          SIGN UP
-        </button>
-        <button
-          className={` ${activeButton === 'SIGN IN' ? styles.smallButton2 : styles.secondaryButton2}`}
-          onClick={() => handleButtonClick('SIGN IN')}
-        >
-          SIGN IN
-      </button>
-
-  </div>
+    <TogleBtn/>
 
   <h2 className={styles.head}>Create new account</h2>
 
@@ -73,7 +57,7 @@ const SignUpComp= () => {
           }}
           validationSchema={SignupSchema}
           onSubmit={async (values, action) => {
-      
+            
           }}
         >
           <Form className={styles.imputForm}>
@@ -85,7 +69,7 @@ const SignUpComp= () => {
               Password
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
-                  <Image className={styles.icon} src={showIcon} alt="show_icon"  />
+                  <Image  className={styles.icon} src={showIcon} alt="show_icon"  />
                 ) : (
                   <Image className={styles.icon} src={hideIcon} alt="hide_icon"  />
                 )}
