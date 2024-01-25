@@ -3,7 +3,7 @@
 @mixin mainBtn(){
     display: flex;
     width: 328px;
-    padding: 16px 128px;
+    padding: 16px ;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -12,12 +12,45 @@
     background: $main-blue;
     color: $main-beige;
     text-align: center;
-    font-family: "Helvetica Neue";
     font-size: 16px;
     font-weight: 700;
     line-height: 1.5;
-    &:hover {
-        
-    } 
+    cursor: pointer;
 
+
+}
+
+@mixin smalBtn {
+    display: flex;
+    width: 168px;
+    height: 32px;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    border: none;
+    background: $main-blue;
+    color: $main-beige;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.7; 
+    cursor: pointer;
+}
+
+@mixin inputField {
+    display: flex;
+    padding: 12px 118px 12px 18px;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid $main-beige;
+    background: $color-beige-10;
+    outline: none;
+    color: $main-beige;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7; 
 }
