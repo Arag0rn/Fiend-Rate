@@ -15,6 +15,7 @@
     font-size: 16px;
     font-weight: 700;
     line-height: 1.5;
+    cursor: pointer;
 
 
 }
@@ -31,10 +32,25 @@
     border-radius: 6px;
     border: none;
     background: $main-blue;
-    color: var(--Main-beige, #FCFBF5);
+    color: $main-beige;
     text-align: center;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
+    line-height: 1.7; 
+    cursor: pointer;
+}
+
+@mixin inputField {
+    display: flex;
+    padding: 12px 118px 12px 18px;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid $main-beige;
+    background: $color-beige-10;
+    outline: none;
+    color: $main-beige;
+    font-size: 14px;
+    font-weight: 400;
     line-height: 1.7; 
 }

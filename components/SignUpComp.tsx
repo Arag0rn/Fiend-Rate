@@ -6,7 +6,11 @@ import Container from './Container';
 import { Formik, Field, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image';
-import { ReactComponent as ShowIcon } from "./show_icon.svg";
+import showIcon from "../public/images/SignUp/show_icon.svg";
+import hideIcon from "../public/images/SignUp/hide_icon.svg";
+import checkFalse from "../public/images/SignUp/checkFalse.svg";
+import checkTrue from "../public/images/SignUp/checkTrue.svg";
+
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -31,6 +35,7 @@ const SignUpComp= () => {
 
   const [activeButton, setActiveButton] = useState<string>('SIGN UP');
   const [showPassword, setShowPassword] = useState(false);
+  const [isAccept, setIsAccept] = useState(false);
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
@@ -56,7 +61,7 @@ const SignUpComp= () => {
 
   </div>
 
-  <h2>Create new account</h2>
+  <h2 className={styles.head}>Create new account</h2>
 
   <Formik
           initialValues={{
@@ -69,53 +74,66 @@ const SignUpComp= () => {
       
           }}
         >
-          <Form>
-            <label htmlFor="email">Enter your email</label>
-            <Field id="email" name="email" placeholder="E-mail" />
-            <ErrorMessage component="span" name="email" />
+          <Form className={styles.imputForm}>
+            <label className={styles.fieldLabel} htmlFor="email">Email</label>
+            <Field className={styles.field} id="email" name="email" placeholder="Please enter your email address" />
+            <ErrorMessage className={styles.errMes} component="span" name="email" />
 
-            <label htmlFor="password">
-              Enter your password
-              <button onClick={() => setShowPassword(!showPassword)}>
+            <label className={styles.fieldLabel} htmlFor="password">
+              Password
+              <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
-                  <Image src="./show_icon.svg" alt="Logo" width={18} height={18} />
+                  <Image className={styles.icon} src={showIcon} alt="show_icon"  />
                 ) : (
-                  <Image src="./hide_icon.svg" alt="Logo" width={18} height={18} />
+                  <Image className={styles.icon} src={hideIcon} alt="hide_icon"  />
                 )}
-              </button>
+              </div>
             </label>
-            <Field
+            <Field className={styles.field}
               id="password"
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="Password"
+              placeholder="Enter your password"
               title="password"
-            />
+            >
+              
+            </Field>
 
-            <ErrorMessage component="span" name="password" />
+            <ErrorMessage className={styles.errMes} component="span" name="password" />
 
-            <label htmlFor="passwordRepeat">
+            <label className={styles.fieldLabel} htmlFor="passwordRepeat">
               Repeat password
-              <button onClick={() => setShowPassword(!showPassword)}>
+              <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
-                  <Image src="./show_icon.svg" alt="Logo" width={18} height={18} />
+                  <Image className={styles.icon} src={showIcon} alt="show_icon" />
                 ) : (
-                  <Image src="./hide_icon.svg" alt="Logo" width={18} height={18} />
+                  <Image className={styles.icon} src={hideIcon} alt="hide_icon"  />
                 )}
-              </button>
+              </div>
             </label>
-            <Field
+            <Field className={styles.field}
               id="passwordRepeat"
               type={showPassword ? 'text' : 'password'}
               name="passwordRepeat"
-              placeholder="Repeat password"
+              placeholder="Confirm your password"
               title="passwordRepeat"
             />
 
-            <ErrorMessage component="span" name="passwordRepeat" />
-          
+            <ErrorMessage className={styles.errMes} component="span" name="passwordRepeat" />
 
-            <button className={styles.signupBtn} type='submit'>SIGN UP</button>
+
+                  <div className={styles.checkbox}>
+              
+                      
+                  <Image
+                      onClick={() => setIsAccept(!isAccept)}
+                      src={isAccept ? checkTrue : checkFalse}
+                      alt="Icon"
+                  />
+              
+                      <p className={styles.checkboxTxt}>I agree to the Terms & Conditions and Privacy Policy</p> 
+                  </div>
+            <button className={styles.signupBtn} type='submit'>CONTINUE</button>
           </Form>
         </Formik>
 
