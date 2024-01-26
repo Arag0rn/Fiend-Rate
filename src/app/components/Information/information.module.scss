@@ -39,6 +39,7 @@
     font-weight: 400;
     line-height: 150%; 
     letter-spacing: 0.1px;
+    color: var(--Error, #BA4242);
   }
 
   .continueBtn{
@@ -92,4 +93,15 @@
     height: 4px;
     border-radius: 100px;
     background: $main-beige;
+  }
+
+  .nonPresedImg{
+    fill: none;
+    stroke: $main-beige;
+  }
+
+  .presedImg{
+    fill: #FCFBF5;
+    stroke:black;
+
   }
