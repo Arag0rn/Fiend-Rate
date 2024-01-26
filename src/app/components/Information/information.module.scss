@@ -44,10 +44,10 @@
 
   .continueBtn{
     @include mainBtn;
-    margin-top: 30px;
+    margin-top: 62px;
     &:disabled {
       @include mainBtn;
-      margin-top: 30px;
+      margin-top: 62px;
       background-color: $disable-button-color;
       cursor: not-allowed;
     }
