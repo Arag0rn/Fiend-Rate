@@ -1,9 +1,13 @@
+import { MouseEventHandler } from 'react';
 import styles from './page.module.scss';
 
-const ButtonIn = ({ children }: { children: React.ReactNode }) => {
+const ButtonIn = ({ children, onClick }: {
+  children: React.ReactNode,
+  onClick: MouseEventHandler<HTMLButtonElement>,
+}) => {
   return (
-    <button className={styles['button-in']}>{children}</button>
+    <button onClick={onClick} className={styles['button-in']}>{children}</button>
   )
 }
 
-export default ButtonIn
+export default ButtonIn;
