@@ -3,6 +3,6 @@ import styles from './page.module.scss';
 
 export default function Home() {
   return (
-    <Link className={styles.toReg} href='/dashboard/hello-page'>Start</Link>
+    <Link className={styles.toReg} href='/hello-page'>Start</Link>
   )
 }
