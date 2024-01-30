@@ -1,8 +1,8 @@
-import SignInComp from '@/app/components/SignIn/SignInComp';
+import SignInContainer from '@/app/containers/SignInContainer';
 
 const Page = () => {
   return (
-    <SignInComp />
+    <SignInContainer />
   )
 }
 

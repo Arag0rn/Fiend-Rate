@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./SignUp/SignUp.module.scss"; 
+import styles from "./SignUp/SignUp.module.scss";
 
 interface ContainerProps {
   children: React.ReactNode;
