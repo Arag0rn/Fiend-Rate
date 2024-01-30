@@ -5,7 +5,6 @@
   margin-top: 56px;
   color: $main-beige;
   text-align: center;
-  font-family: "Helvetica Neue";
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
@@ -87,7 +86,10 @@
     top: 150%;
     right: 5%;
     cursor: pointer;
+    background-color: transparent;
   }
+
+
 
   .checkbox{
     display: flex;
