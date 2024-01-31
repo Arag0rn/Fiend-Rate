@@ -1,7 +1,7 @@
 "use client"
 import styles from "./styles.module.scss";
 import { ChangeEvent, useState } from 'react';
-import { Formik, Field, Form, ErrorMessage} from 'formik';
+import { Formik, Field, Form, ErrorMessage, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image';
 import showIcon from "../../images/SignUp/show_icon.svg";
@@ -24,7 +24,6 @@ import SocialBlock from "../../components/SignIn/SocialBlock";
 import Label from "../../components/SignIn/Label";
 import Restore from "@/app/components/SignIn/Restore";
 
-
 export const SignupSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
@@ -34,14 +33,14 @@ export const SignupSchema = Yup.object().shape({
     )
     .required('Required'),
   password: Yup.string()
-    .min(8, 'Too Short!')
-    .max(48, 'Too Long!')
-    .matches(/[a-zA-Z]/, 'Must contain at least one letter',)
-    .required('Required'),
+    .matches(/[a-zA-Z]/, 'Try to reset your password first',)
+    .required('Incorrect username or password',),
+
   passwordRepeat: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
     .required('Required'),
 });
+
 
 
 const SignInContainer = () => {
@@ -50,7 +49,6 @@ const SignInContainer = () => {
   const [isAccept, setIsAccept] = useState(true);
   const [isReset, setIsReset] = useState(false);
   const [redirect, setRedirect] = useState(false);
-  const [reset, setReset] = useState('');
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
@@ -95,100 +93,82 @@ const SignInContainer = () => {
                 email: '',
                 password: '',
               }}
-              validate={values => {
-                if (values.password === '') {
-                  setIsReset(true);
-                }
-
-                if (!values.password) {
-                  setReset(values.password = '');
-                }
-              }}
+              validationSchema={SignupSchema}
               onSubmit={async (values, action) => {
                 setIsReset(false);
-                setReset(values.password = '');
+                action.resetForm;
+                action.setStatus;
               }}
             >
-            <Form className={styles.imputForm}>
-              {redirect && (
-                <BlockInput>
-                  <Label className={styles.fieldLabel} htmlFor="email">Email/Username</Label>
-                  <Field
-                    className={styles.field}
-                    id="email"
-                    name="email"
-                    placeholder="Email/Username"
-                  />
-                  <ErrorMessage className={styles.errMes} component="span" name="email" />
-                </BlockInput>
-              )}
+              {({ errors, handleSubmit }) => (
+              <Form onSubmit={handleSubmit} className={styles.imputForm}>
+                  <BlockInput>
+                    <Label className={styles.fieldLabel} htmlFor="email">Email/Username</Label>
+                    <Field
+                      className={styles.field}
+                      id="email"
+                      name="email"
+                      placeholder="Email/Username"
+                    />
+                    <ErrorMessage className={styles.errMes} component="span" name="email" />
+                  </BlockInput>
 
-                <BlockInput>
-                  <Label className={styles.fieldLabel} htmlFor="email">Email/Username</Label>
-                  <Field
-                    className={styles.field}
-                    id="email"
-                    name="email"
-                    placeholder="Email/Username"
-                  />
-                  <ErrorMessage className={styles.errMes} component="span" name="email" />
-                </BlockInput>
-
-                <BlockInput>
-                  <Label className={styles.fieldLabel} htmlFor="password">
-                    Password
-                  </Label>
-                  <Block className={styles["block-password"]}>
-                    <Field className={isReset === true ? styles.errorPasword : styles.field}
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      name="password"
-                      placeholder="Enter your password"
-                      title="password"
-                    ></Field>
-                    {isReset === true
-                      ? <Block
-                      className={styles.icon}
-                      onClick={() => setReset('')}
-                    >
-                      <Image className={styles.icon} src={cross} alt="show_icon" />
-                    </Block>
-                      :
-                    <Block
-                      className={styles.icon}
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? (
-                        <Image className={styles.icon} src={showIcon} alt="show_icon" />
-                      ) : (
-                        <Image className={styles.icon} src={hideIcon} alt="hide_icon" />
-                      )}
-                    </Block>
-                    }
-                  </Block>
-                  {isReset === true ? (
-                    <div className={styles["reset"]}>
-                        Incorrect username or password. <Link
-                        onClick={() => setRedirect(true)}
-                        className={styles["reset__link"]}
-                        href={""}
+                  <BlockInput>
+                    <Label className={styles.fieldLabel} htmlFor="password">
+                      Password
+                    </Label>
+                    <Block className={styles["block-password"]}>
+                      <Field className={errors.password ? styles.errorPasword : styles.field}
+                        id="password"
+                        type={showPassword ? 'text' : 'password'}
+                        name="password"
+                        placeholder="Enter your password"
+                        title="password"
+                      ></Field>
+                      {errors.password
+                        ? <Block
+                        className={styles.icon}
                       >
-                        Try to reset your password first
-                      </Link>
-                    </div>
-                  ) : (
-                    ''
-                  )}
-                </BlockInput>
+                        <Image className={styles.icon} src={cross} alt="show_icon" />
+                      </Block>
+                        :
+                      <Block
+                        className={styles.icon}
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                          {showPassword ? (
+                          <Image className={styles.icon} src={showIcon} alt="show_icon" />
+                        ) : (
+                          <Image className={styles.icon} src={hideIcon} alt="hide_icon" />
+                        )}
+                      </Block>
+                      }
+                    </Block>
+                    {!errors.password && <Link className={styles.forgetPassword} href={{}}>Forgot password</Link>}
+                    {errors.password ? (
+                      <div className={styles["reset"]}>
+                          {errors.password}. <Link
+                          onClick={() => setRedirect(true)}
+                          className={styles["reset__link"]}
+                          href={""}
+                        >
+                          Try to reset your password first
+                        </Link>
+                      </div>
+                    ) : (
+                      ''
+                    )}
+                  </BlockInput>
 
-                <ButtonSubmit
-                  className={styles.signupBtn}
-                  type={TypeButton.SUBMIT}
-                  disabled={isAccept === true ? true : false}
-                >
-                  CONTINUE
-                </ButtonSubmit>
+                  <ButtonSubmit
+                    className={styles.signupBtn}
+                    type={TypeButton.SUBMIT}
+                    disabled={isAccept === true ? true : false}
+                  >
+                    CONTINUE
+                  </ButtonSubmit>
               </Form>
+              )}
             </Formik>
 
             <Block className={styles.signInTxt}>
