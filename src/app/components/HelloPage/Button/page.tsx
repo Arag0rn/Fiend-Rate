@@ -1,8 +1,12 @@
+import { MouseEventHandler } from 'react';
 import styles from './page.module.scss';
 
-const Button = ({ children }: { children: React.ReactNode }) => {
+const Button = ({ children, onClick }: {
+  children: React.ReactNode,
+  onClick?: MouseEventHandler<HTMLButtonElement>,
+}) => {
   return (
-    <button className={styles.button}>{children}</button>
+    <button onClick={onClick} className={styles.button}>{children}</button>
   )
 }
 
