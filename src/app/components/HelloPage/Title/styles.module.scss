@@ -1,0 +1,10 @@
+@import '../../../styles/_variables';
+
+.title {
+  color: $color-title;
+  font-size: 24px;
+  text-align: center;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
