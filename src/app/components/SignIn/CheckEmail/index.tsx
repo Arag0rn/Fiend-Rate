@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import Description from '../../HelloPage/Description/page';
+import Description from '../../HelloPage/Description/styles';
 import LinkSignUp from '../LinkSignUp';
 import Link from 'next/link';
 import ButtonSubmit, { TypeButton } from '../ButtonSubmit';

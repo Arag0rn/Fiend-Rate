@@ -82,7 +82,7 @@ const Information = () => {
           name="birthday"
           value={date}
           onChange={handleInputChange}
-          maxLength="10"
+          maxLength={10}
           placeholder="DD.MM.YYYY"
           onBlur={formik.handleBlur}
         />
