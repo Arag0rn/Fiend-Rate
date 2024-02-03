@@ -1,8 +1,7 @@
 'use client';
-import Link from 'next/link';
-import styles from './page.module.scss';
 import Loader from './components/Loader';
 import { useEffect, useState } from 'react';
+import HelloPage from './containers/HelloPage';
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -14,6 +13,6 @@ export default function Home() {
   if (!loading) return <Loader />;
 
   return (
-    <Link className={styles.toReg} href='/hello-page'>Start</Link>
+    <HelloPage />
   )
 }

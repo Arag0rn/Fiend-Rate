@@ -1,4 +1,5 @@
-@import '../../../styles/global.module.scss';
+@import '../../../styles/utils.module';
+@import '../../../styles/mixins.module';
 
 @mixin btn {
   @content;
@@ -31,7 +32,6 @@
   position: absolute;
   left: 0;
   z-index: 1;
-  transition: all .3s;
   @include btn;
   width: 52%;
 }
@@ -39,7 +39,6 @@
 .smallButton2 {
   position: absolute;
   right: 0;
-  transition: all .3s;
   @include btn;
   width: 52%;
 }
@@ -48,7 +47,6 @@
   position: absolute;
   width: 52%;
   left: 0;
-  transition: all .3s;
   @include btn;
   background-color: $disable-switch-color;
   color: $color-beige-50;
@@ -58,7 +56,6 @@
   position: absolute;
   width: 52%;
   right: 0;
-  transition: all .3s;
   @include btn;
   background-color: $disable-switch-color;
   color: $color-beige-50;
@@ -70,7 +67,6 @@
 }
 
 .signupBtn{
-  transition: all .3s;
 
     @include mainBtn;
     margin-top: 59px;

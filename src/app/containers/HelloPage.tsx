@@ -4,7 +4,7 @@ import BlockLogo from "../components/HelloPage/BlockLogo";
 import BlockTitle from "../components/HelloPage/BlockTitle";
 import Button from "../components/HelloPage/Button";
 import ButtonIn from "../components/HelloPage/ButtonIn";
-import MainContainer from "../components/MainContainer";
+import Container from "../components/Container";
 import Description from "../components/HelloPage/Description/styles";
 import HelloImage from "../components/HelloPage/HelloImage";
 import LogoImage from "../components/HelloPage/LogoImage";
@@ -26,7 +26,7 @@ const HelloPage = () => {
   if (!loading) return <Loader />;
 
   return (
-    <MainContainer>
+    <Container>
       <BlockLogo>
         <HelloImage></HelloImage>
         <LogoImage></LogoImage>
@@ -44,7 +44,7 @@ const HelloPage = () => {
         <ButtonIn onClick={() => router.push('/sign-in')}>Sign In</ButtonIn>
       </BlockButton>
       <Link className={styles['none-registration']} href='/'>Try without registration</Link>
-    </MainContainer>
+    </Container>
   )
 }
 
