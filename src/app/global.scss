@@ -1,7 +1,6 @@
 @import './styles/mixins.module';
 @import './styles/utils.module.scss';
 
-
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +8,6 @@
   background-color: $background;
   transition: all .3s;
 }
-
 
 h1,
 h2,
