@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import styles from './page.module.scss';
+import styles from './styles.module.scss';
 
 const BlockButton = ({ children }: { children: ReactElement | ReactElement[] }) => {
   return (

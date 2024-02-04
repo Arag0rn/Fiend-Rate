@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react';
-import styles from './page.module.scss';
+import styles from './styles.module.scss';
 
 const ButtonIn = ({ children, onClick }: {
   children: React.ReactNode,

@@ -1,4 +1,4 @@
-import styles from './page.module.scss';
+import styles from './styles.module.scss';
 
 const BlockLogo = ({ children }: { children: React.ReactNode }) => {
   return (

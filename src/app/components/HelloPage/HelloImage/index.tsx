@@ -1,4 +1,4 @@
-import image from '../../../images/hello-page.png';
+import image from '../../../images/hello-page.svg';
 import Image from 'next/image';
 
 const HelloImage = () => {

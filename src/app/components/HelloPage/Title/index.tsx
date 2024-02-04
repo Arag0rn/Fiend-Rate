@@ -1,4 +1,4 @@
-import styles from './page.module.scss';
+import styles from './styles.module.scss';
 
 const Title = ({ children }: { children: React.ReactNode }) => {
   return (
