@@ -1,8 +1,7 @@
-@import '../../../styles/global.module.scss';
+@import '../../../styles/utils.module';
+@import '../../../styles/mixins.module';
 
 .signupBtn{
-  transition: all .3s;
-
     @include mainBtn;
     width: 100%;
 

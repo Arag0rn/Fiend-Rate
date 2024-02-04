@@ -29,7 +29,7 @@ const SignupSchema = Yup.object().shape({
     .matches(/[a-zA-Z]/, 'Must contain at least one letter')
     .required('Required'),
   passwordRepeat: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .oneOf([Yup.ref('password')], 'Passwords must match')
     .required('Required'),
 });
 

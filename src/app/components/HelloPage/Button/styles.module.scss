@@ -1,17 +1,16 @@
-@import '../../../styles/_variables.scss';
+@import '../../../styles/utils.module';
 
 .button {
   border-radius: 10px;
   padding: 16px 0;
-  color: $color-title;
-  background: $background-button;
+  color: $main-beige;
+  background: $main-blue;
   border: none;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: 24px;
   text-transform: uppercase;
-  transition: all .3s;
 
   &:active {
     background-color: $background-button-active;
