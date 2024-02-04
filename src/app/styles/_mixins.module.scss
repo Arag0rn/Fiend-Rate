@@ -2,7 +2,6 @@
 
 @mixin mainBtn(){
     display: flex;
-    width: 328px;
     padding: 16px ;
     justify-content: center;
     align-items: center;
@@ -16,8 +15,6 @@
     font-weight: 700;
     line-height: 1.5;
     cursor: pointer;
-
-
 }
 
 @mixin smalBtn {
@@ -43,7 +40,7 @@
 
 @mixin inputField {
     display: flex;
-    padding: 12px 118px 12px 18px;
+    padding: 12px 18px;
     align-items: center;
     border-radius: 10px;
     border: 1px solid $main-beige;
