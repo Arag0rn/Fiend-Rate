@@ -9,7 +9,7 @@ import hideIcon from "../../images/SignUp/hide_icon.svg";
 import cross from '../../images/SignUp/cross.svg';
 import facebook from "../../images/SignUp/FB.svg";
 import Google from "../../images/SignUp/Google.svg";
-import Description from "../../components/HelloPage/Description/styles";
+import Description from "../../components/HelloPage/Description";
 import ButtonToggle from "../../components/SignIn/ButtonToggle";
 import BlockToggle from "../../components/SignIn/BlockToogle";
 import BlockContent from "../../components/SignIn/BlockContent";

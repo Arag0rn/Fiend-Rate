@@ -6,5 +6,4 @@ const BlockButton = ({ children }: { children: ReactNode }) => {
     <div className={styles['block-button']}>{children}</div>
   )
 }
-
 export default BlockButton;

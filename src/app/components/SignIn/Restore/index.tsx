@@ -4,7 +4,7 @@ import BlockContent from '../BlockContent';
 import BlockToggle from '../BlockToogle';
 import ButtonToggle from '../ButtonToggle';
 import TitleSignIn from '../TitleSignIn';
-import Description from '../../HelloPage/Description/styles';
+import Description from '../../HelloPage/Description';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import ButtonSubmit, { TypeButton } from '../ButtonSubmit';
 import Block from '../Block';
