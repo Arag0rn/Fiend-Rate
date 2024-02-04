@@ -6,7 +6,6 @@ import Button from "../components/HelloPage/Button";
 import ButtonIn from "../components/HelloPage/ButtonIn";
 import Description from "../components/HelloPage/Description";
 import Container from "../components/Container";
-
 import HelloImage from "../components/HelloPage/HelloImage";
 import LogoImage from "../components/HelloPage/LogoImage";
 import Title from "../components/HelloPage/Title";
