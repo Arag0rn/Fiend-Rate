@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Block from '../Block';
 import BlockContent from '../BlockContent';
 import showIcon from "../../../images/SignUp/show_icon.svg";
@@ -13,11 +13,19 @@ import BlockInput from '../BlockInput';
 import ButtonSubmit, { TypeButton } from '../ButtonSubmit';
 import styles from './styles.module.scss';
 import Image from 'next/image';
+import Loader from '../../Loader';
 
 const NewPassword = () => {
   const [activeButton, setActiveButton] = useState<string>('SIGN IN');
   const [showPassword, setShowPassword] = useState(false);
   const [isAccept, setIsAccept] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setLoading(true), 1000)
+  }, []);
+
+  if (!loading) return <Loader />;
 
   return (
     <Block className={styles["block"]}>
@@ -80,9 +88,9 @@ const NewPassword = () => {
               <Field className={styles.field}
                 id="confirm-password"
                 type={showPassword ? 'text' : 'password'}
-                name="password"
+                name="confirm-password"
                 placeholder="Enter your password"
-                title="password"
+                title="confirm-password"
               ></Field>
 
               <Block
@@ -99,7 +107,7 @@ const NewPassword = () => {
           </BlockInput>
 
           <Block className={styles['confirm-rule']}>
-            Password must be 8-30 characters and a combination of numbers <br /> and letters
+            Password must be 8-30 characters and a combination of numbers, <br /> letters and special symbols
           </Block>
 
           <Block className={styles['block-submit']}>

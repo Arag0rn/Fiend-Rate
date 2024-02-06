@@ -22,36 +22,58 @@
 }
 
 .block {
-  padding: 32px 16px 16px 20px;
+  padding: 32px 16px 0 16px;
 }
 
 .head {
   color: $main-beige;
   text-align: center;
-  font-family: "Helvetica Neue";
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%;
 }
 
+.buttonMarginTop {
+  display: block;
+  margin: 0 auto;
+  transition: none;
+
+    @include mainBtn;
+    margin-top: 42px;
+    width: 100%;
+
+    // &:active {
+    //   background: $disable-button-color;
+    // }
+
+    &:disabled {
+      @include mainBtn;
+      margin-top: 41px;
+      width: 100%;
+      background: $disable-button-color;
+      cursor: not-allowed;
+    }
+}
+
 .signupBtn {
   display: block;
   margin: 0 auto;
+  transition: none;
 
     @include mainBtn;
-    margin-top: calc(66px - 25px);
+    margin-top: 10px;
     width: 100%;
 
     &:active {
-      background-color: $disable-button-color;
+      background: $background-button-active;
     }
 
     &:disabled {
       @include mainBtn;
-      margin-top: calc(66px - 25px);
+      margin-top: 10px;
       width: 100%;
-      background-color: $disable-button-color;
+      background: $disable-button-color;
       cursor: not-allowed;
     }
 }
@@ -202,7 +224,6 @@
 .reset {
   margin-top: 8px;
   color: #BA4242;
-  font-family: "Helvetica Neue";
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
@@ -212,7 +233,6 @@
 
   &__link {
     color: #FCFBF5;
-    font-family: "Helvetica Neue";
     font-size: 15px;
     font-style: normal;
     font-weight: 700;

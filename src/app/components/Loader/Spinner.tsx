@@ -4,8 +4,8 @@ const Spinner = () => {
   return (
     <Oval
       visible={true}
-      height="80"
-      width="80"
+      height="30"
+      width="30"
       color="#FCFBF5"
       secondaryColor='#FCFBF5'
       ariaLabel="oval-loading"
