@@ -13,9 +13,8 @@
   background-color: $background-main;
 
   &:active {
-    color: $background-button;
-    background: $color-title;
-    border-color: $background-button;
+    background: #6E6E6E;
+    border-color: $color-title
   }
 
   &:disabled {

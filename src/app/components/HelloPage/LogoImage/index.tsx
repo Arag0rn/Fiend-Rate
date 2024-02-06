@@ -7,8 +7,8 @@ const LogoImage = () => {
       src={image}
       width={181}
       height={44}
+      quality={100}
       alt='Hello page image'
-      style={{objectFit: 'cover', objectPosition: 'center'}}
     />
   )
 }

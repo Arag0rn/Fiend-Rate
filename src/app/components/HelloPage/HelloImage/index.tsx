@@ -1,4 +1,4 @@
-import image from '../../../images/hello-page.svg';
+import image from '../../../images/hello-page.png';
 import Image from 'next/image';
 
 const HelloImage = () => {
@@ -7,8 +7,8 @@ const HelloImage = () => {
       src={image}
       width={181}
       height={169}
-      alt='Hello page image'
-      style={{objectFit: 'cover', objectPosition: 'center'}}
+      quality={100}
+      alt='Happy palce'
     />
   )
 }
