@@ -13,23 +13,29 @@ import checkTrue from "../../images/SignUp/checkTrue.svg";
 import facebook from "../../images/SignUp/FB.svg";
 import Google from "../../images/SignUp/Google.svg";
 import TogleBtn from './TogleBtn';
+import Link from 'next/link';
 
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email address')
-    .matches(
-      /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
-      'Enter a valid email. For example user@gmail.com'
-    )
-    .required('Required'),
+  .email('Invalid email address')
+  .matches(
+    /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
+    'Please enter a valid email address.'
+  )
+  .min(5, 'Email should be at least 5 characters')
+  .max(50, 'Email should not exceed 50 characters')
+  .required('Required'),
   password: Yup.string()
-    .min(8, 'Too Short!')
-    .max(48, 'Too Long!')
-    .matches(/[a-zA-Z]/, 'Must contain at least one letter')
-    .required('Required'),
+  .required('Password is required')
+  .min(8, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
+  .max(30, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
+  .matches(
+    /^(?=.*[a-z])(?=.*\d)(?=.*[_@+.\-*$£€&!?:;,~^#(){}[\]|\/\\'"])/,
+    'Password must be 8-30 characters and a combination of numbers, letters and special symbols.'
+  ),
   passwordRepeat: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords must match')
+    .oneOf([Yup.ref('password')], 'Passwords do not match. Please re-enter your password.')
     .required('Required'),
 });
 
@@ -143,8 +149,12 @@ const SignUpComp= () => {
 
         </div>
 
-        <p className={styles.bottomTxt}>Already have an account? <span className={styles.socialTxt}>Sign in!</span></p>
-        <div className={styles.bottomLine}></div>
+        <p className={styles.bottomTxt}>Already have an account? 
+            <Link className={styles.socialTxt} href="/sign-in">
+              Sign in!
+            </Link>
+        </p>
+
 
     
     </Container>
