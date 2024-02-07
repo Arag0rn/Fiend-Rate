@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 const TitleSignIn = (
   { children, className }:
-  { children: string, className: string }
+  { children: ReactNode, className: string }
 ) => {
   return (
     <h2 className={className}>{children}</h2>
