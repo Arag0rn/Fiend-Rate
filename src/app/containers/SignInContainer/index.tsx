@@ -24,7 +24,10 @@ import SocialBlock from "../../components/SignIn/SocialBlock";
 import Label from "../../components/SignIn/Label";
 import Restore from "@/app/components/SignIn/Restore";
 import Loader from '../../components/Loader';
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import Container from "@/app/components/Container";
+import SignInContent from "@/app/components/SignIn/SignInContent";
+import NewPassword from "@/app/components/SignIn/NewPassword";
 
 export const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -43,7 +46,7 @@ export const SignupSchema = Yup.object().shape({
     .required('Required'),
 });
 
-type FormValue = {
+export type FormValue = {
   email: string,
   password: string,
 }
@@ -56,6 +59,7 @@ const SignInContainer = () => {
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     setTimeout(() => setLoading(true), 1000)
@@ -68,155 +72,117 @@ const SignInContainer = () => {
   if (!loading) return <Loader />;
 
   return (
-    <Block className={styles["block"]}>
-      <BlockContent>
-        <BlockToggle>
-          <ButtonToggle
-            className={`${activeButton === 'SIGN UP'
-            ? styles.smallButton1
-            : styles.secondaryButton}`}
-            onClick={() => handleButtonClick('SIGN UP')}
-          >
-            SIGN UP
-          </ButtonToggle>
+    <Container>
+      <Block className={styles["block"]}>
+        <BlockContent>
+          <BlockToggle>
+            <ButtonToggle
+              className={`${activeButton === 'SIGN UP'
+              ? styles.smallButton1
+              : styles.secondaryButton}`}
+              onClick={() => handleButtonClick('SIGN UP')}
+            >
+              SIGN UP
+            </ButtonToggle>
 
-          <ButtonToggle
-            className={`${activeButton === 'SIGN IN'
-            ? styles.smallButton2
-            : styles.secondaryButton2}`}
-            onClick={() => handleButtonClick('SIGN IN')}
-          >
-            SIGN IN
-          </ButtonToggle>
-        </BlockToggle>
-        <TitleSignIn className={styles.head}>Welcome back!</TitleSignIn>
-        <Block className={styles.description}>
-          <Description>
-            Please, enter your email or username and <br /> password
-          </Description>
-        </Block>
-      </BlockContent>
+            <ButtonToggle
+              className={`${activeButton === 'SIGN IN'
+              ? styles.smallButton2
+              : styles.secondaryButton2}`}
+              onClick={() => handleButtonClick('SIGN IN')}
+            >
+              SIGN IN
+            </ButtonToggle>
+          </BlockToggle>
 
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        validationSchema={SignupSchema}
-        onSubmit={async (values: FormValue, action) => {
-          setIsReset(false);
-        }}
-      >
-        {({ errors, values }) => (
-        <Form className={styles.imputForm}>
-          <BlockInput>
-            <Label className={styles.fieldLabel} htmlFor="email">Email/Username</Label>
-            <Field
-              className={styles.field}
-              id="email"
-              name="email"
-              placeholder="Email/Username"
-            />
-            <ErrorMessage className={styles.errMes} component="span" name="email" />
-          </BlockInput>
+          {pathname === '/sign-in' && (
+            <TitleSignIn className={styles.head}>Welcome back!</TitleSignIn>
+          )}
 
-          <BlockInput>
-            <Label className={styles.fieldLabel} htmlFor="password">
-              Password
-            </Label>
-            <Block className={styles["block-password"]}>
-              <Field className={errors.password ? styles.errorPasword : styles.field}
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                placeholder="Enter your password"
-                title="password"
-              ></Field>
-              {errors.password
-                ? <Block
-                className={styles.icon}
-              >
-                <Image className={styles.icon} src={cross} alt="show_icon" />
-              </Block>
-                :
-              <Block
-                className={styles.icon}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                  {showPassword ? (
-                  <Image className={styles.icon} src={showIcon} alt="show_icon" />
-                ) : (
-                  <Image className={styles.icon} src={hideIcon} alt="hide_icon" />
-                )}
-              </Block>
-              }
+          {pathname === '/sign-in/restore' && (
+            <TitleSignIn className={styles['head-restore']}>
+              Restore Password
+            </TitleSignIn>
+          )}
+
+          {pathname === '/sign-in/restore/check-email/new-password' && (
+            <TitleSignIn className={styles['head']}>
+              Set new password
+            </TitleSignIn>
+          )}
+
+          {pathname === '/sign-in' && (
+            <Block className={styles.description}>
+              <Description>
+                Please, enter your email or username and <br /> password
+              </Description>
             </Block>
-            {errors.password && (
-              <div className={styles["reset"]}>
-                  {errors.password}. <Link
-                  onClick={() => setRedirect(true)}
-                  className={styles["reset__link"]}
-                  href={"sign-in/restore"}
-                >
-                  Try to reset your password first
-                </Link>
-              </div>
-            )}
-            {!showPassword && (
-              <Link className={styles.forgetPassword} href={'sign-in/restore'}>Forgot your password?</Link>
-            )}
-          </BlockInput>
+          )}
 
-          <ButtonSubmit
-            className={showPassword === false
-              ? styles.signupBtn
-              : styles.buttonMarginTop
-            }
-            type={TypeButton.SUBMIT}
-            disabled={!values.email || !values.password}
-          >
-            CONTINUE
-          </ButtonSubmit>
+          {pathname === '/sign-in/restore' && (
+            <Block className={styles['description-restore']}>
+              Please, enter your email or username to reset <br /> your password
+            </Block>
+          )}
 
-          
-        </Form>
-        )}
-      </Formik>
+          {pathname === '/sign-in/restore/check-email/new-password' && (
+            <Block className={styles['description-new-password']}>
+                Please, set a strong password
+            </Block>
+          )}
+        </BlockContent>
 
-      <Block className={styles.signInTxt}>
-        <Block className={styles["line"]}></Block>
-        <Block>or Sign in with</Block>
-        <Block className={styles["line"]}></Block>
-      </Block>
-
-      <SocialBlock className={styles.socialBox}>
-        <Link href='/' className={styles.socialIcon}>
-        <Image
-          src={facebook}
-          alt="facebook"
-        />
-        <SocialText className={styles.socialTxt}>Facebook</SocialText>
-        </Link>
-        <Link href='/' className={styles.socialIcon}>
-          <Image
-            src={Google}
-            alt="Google"
+        {pathname === '/sign-in' && (
+          <SignInContent
+            showPassword={showPassword}
+            setRedirect={setRedirect}
+            setShowPassword={setShowPassword}
           />
-          <SocialText className={styles.socialTxt}>Google</SocialText>
-        </Link>
-      </SocialBlock>
+        )}
 
-      <LinkSignUp
-        className={styles.bottomTxt}
-      >
-        Don’t have an account? <Link
-          href='/signup'
-          className={styles.socialTxt}
-        >
-          Sign up!
-        </Link>
-      </LinkSignUp>
-    </Block>
+        {pathname === '/sign-in/restore' && <Restore />}
+        {pathname === '/sign-in/restore/check-email/new-password' && <NewPassword />}
+
+          {pathname !== '/sign-in/restore/check-email/new-password' && (
+            <>
+            <Block className={styles.signInTxt}>
+              <Block className={styles["line"]}></Block>
+              <Block>or Sign in with</Block>
+              <Block className={styles["line"]}></Block>
+            </Block>
+
+            <SocialBlock className={styles.socialBox}>
+              <Link href='/' className={styles.socialIcon}>
+              <Image
+                src={facebook}
+                alt="facebook"
+              />
+              <SocialText className={styles.socialTxt}>Facebook</SocialText>
+              </Link>
+              <Link href='/' className={styles.socialIcon}>
+                <Image
+                  src={Google}
+                  alt="Google"
+                />
+                <SocialText className={styles.socialTxt}>Google</SocialText>
+              </Link>
+            </SocialBlock>
+
+            <LinkSignUp
+              className={styles.bottomTxt}
+            >
+              Don’t have an account? <Link
+                href='/signup'
+                className={styles.socialTxt}
+              >
+                Sign up!
+              </Link>
+            </LinkSignUp>
+            </>
+          )}
+          
+      </Block>
+    </Container>
   )
 }
 

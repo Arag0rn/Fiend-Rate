@@ -22,9 +22,9 @@ const CheckEmail = () => {
   return (
     <Block className={styles.check}>
       <Block className={styles['check__position']}>
-        <Description>
+        <Block className={styles['check__desc']}>
           Please check up your email and reset <br /> your password by link
-        </Description>
+        </Block>
         <Block className={styles['check__content']}>
           <ButtonSubmit
             className={styles.signupBtn}

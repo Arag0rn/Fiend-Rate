@@ -1,8 +1,8 @@
-import NewPassword from '@/app/components/SignIn/NewPassword';
+import SignInContainer from '@/app/containers/SignInContainer';
 
 const Page = () => {
   return (
-    <NewPassword />
+    <SignInContainer />
   )
 }
 
