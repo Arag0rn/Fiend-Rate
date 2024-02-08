@@ -31,7 +31,7 @@ const Restore = () => {
       <Form>
         <Block className={styles['content-bottom']}>
           <Field
-            className={styles.field}
+            className={styles['field-restore']}
             id="email"
             name="email"
             placeholder="Antonio777@gmail.com"

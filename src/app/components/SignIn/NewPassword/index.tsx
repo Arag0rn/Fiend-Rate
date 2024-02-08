@@ -75,7 +75,7 @@ const NewPassword = () => {
               type={TypeButton.SUBMIT}
               disabled={false}
             >
-              CONTINUE
+              COMPLETE
             </ButtonSubmit>
           </Block>
       </Form>
