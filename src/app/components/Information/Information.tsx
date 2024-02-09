@@ -15,7 +15,7 @@ import femalePressed from '../../images/Information/FemalePressed.svg';
 import otherPressed from '../../images/Information/OtherPressed.svg';
 
 const createAccountSchema = Yup.object().shape({
-  username: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
+  username: Yup.string().min(3, 'Username must be 3-25 characters and combination of latin letters, numbers and special symbols.').max(50, 'Too Long!').required('Required'),
   birthday: Yup.string()
   .required('Please enter your birthdate')
   .matches(
