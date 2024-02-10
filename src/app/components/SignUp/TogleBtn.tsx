@@ -42,7 +42,7 @@ const TogleBtn = () => {
             </>
           ) : (
             <>
-              <div className={styles.secondaryButton}>
+              <div className={styles.secondaryButton} style={{width: '52%'}}>
                 SIGN UP
               </div>
               <div className={styles.secondaryButton2}>

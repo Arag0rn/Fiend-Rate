@@ -14,11 +14,12 @@ import facebook from "../../images/SignUp/FB.svg";
 import Google from "../../images/SignUp/Google.svg";
 import TogleBtn from './TogleBtn';
 import Link from 'next/link';
+import { useFormik } from 'formik';
 
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-  .email('Invalid email address')
+  .email('Invalid email Please enter a valid email address.')
   .matches(
     /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
     'Please enter a valid email address.'
@@ -27,7 +28,7 @@ const SignupSchema = Yup.object().shape({
   .max(50, 'Email should not exceed 50 characters')
   .required('Required'),
   password: Yup.string()
-  .required('Password is required')
+  .required('Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
   .min(8, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
   .max(30, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
   .matches(
@@ -39,10 +40,21 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
 });
 
+ 
 
 const SignUpComp= () => {
 
-
+  const formik = useFormik({
+          initialValues:{
+            email: '',
+            password: '',
+            passwordRepeat: '',
+          },
+          validationSchema: SignupSchema,
+          onSubmit: async (values, action) => {
+            
+          }
+        })
   const [showPassword, setShowPassword] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
 
@@ -55,22 +67,22 @@ const SignUpComp= () => {
 
   <h2 className={styles.head}>Create new account</h2>
 
-  <Formik
-          initialValues={{
-            email: '',
-            password: '',
-            passwordRepeat: '',
-          }}
-          validationSchema={SignupSchema}
-          onSubmit={async (values, action) => {
-            
-          }}
-        >
-          <Form className={styles.imputForm}>
-            <label className={styles.fieldLabel} htmlFor="email">Email</label>
-            <Field className={styles.field} id="email" name="email" placeholder="Please enter your email address" />
-            <ErrorMessage className={styles.errMes} component="span" name="email" />
 
+          <form className={styles.imputForm} onSubmit={formik.handleSubmit}>
+            <label className={styles.fieldLabel} htmlFor="email">Email</label>
+            <input className={!formik.touched.email ? styles.field : styles.fieldErr} 
+            id="email" 
+            name="email" 
+            placeholder="Please enter your email address" 
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.email}
+            />
+
+            {formik.touched.email && formik.errors.email && (
+          <span className={styles.errMes}>{formik.errors.email}</span>
+        )}
+             
             <label className={styles.fieldLabel} htmlFor="password">
               Password
               <div onClick={() => setShowPassword(!showPassword)}>
@@ -81,20 +93,31 @@ const SignUpComp= () => {
                 )}
               </div>
             </label>
-            <Field className={styles.field}
+            <input className={!formik.touched.password ? styles.field : styles.fieldErr}
               id="password"
               type={showPassword ? 'text' : 'password'}
               name="password"
               placeholder="Enter your password"
               title="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
             >
               
-            </Field>
+            </input>
 
-            <ErrorMessage className={styles.errMes} component="span" name="password" />
+            {!formik.errors.password && (<span className={styles.passText}>Password must be 8-30 characters and a combination of numbers, letters, and special symbols.
+            </span>
+              )}
+
+          {formik.touched.password && formik.errors.password && (
+          <span className={styles.errMes}>{formik.errors.password}</span>
+            )}
+
+     
 
             <label className={styles.fieldLabel} htmlFor="passwordRepeat">
-              Repeat password
+                Confirm password
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image className={styles.icon} src={showIcon} alt="show_icon" />
@@ -103,15 +126,22 @@ const SignUpComp= () => {
                 )}
               </div>
             </label>
-            <Field className={styles.field}
+            <input className={!formik.touched.passwordRepeat ? styles.field : styles.fieldErr}
               id="passwordRepeat"
               type={showPassword ? 'text' : 'password'}
               name="passwordRepeat"
               placeholder="Confirm your password"
               title="passwordRepeat"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.passwordRepeat}
             />
 
-            <ErrorMessage className={styles.errMes} component="span" name="passwordRepeat" />
+              {formik.touched.passwordRepeat && formik.errors.passwordRepeat && (
+                        <span className={styles.errMes}>{formik.errors.passwordRepeat}</span>
+                          )}
+
+
 
 
                   <div className={styles.checkbox}>
@@ -126,8 +156,7 @@ const SignUpComp= () => {
                       <p className={styles.checkboxTxt}>I agree to the Terms & Conditions and Privacy Policy</p> 
                   </div>
             <button className={styles.signupBtn} type='submit' disabled={!isAccept}>CONTINUE</button>
-          </Form>
-        </Formik>
+          </form>
 
         <div className={styles.signInTxt}>or Sign in with</div>
 
