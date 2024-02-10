@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from "./SignUp.module.scss"; 
 import { useState } from 'react';
 import Container from '../Container';
@@ -57,9 +57,8 @@ const SignUpComp= () => {
         })
   const [showPassword, setShowPassword] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
-
-
-
+  
+ 
   return (
     <>
     <Container>
