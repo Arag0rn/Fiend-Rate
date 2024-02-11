@@ -4,7 +4,7 @@
 
 
 .head{
-  margin-top: 8.8vh;
+  margin-top: 7.3vh;
   color: $main-beige;
   text-align: center;
   font-size: 24px;
@@ -16,10 +16,10 @@
 
 .signupBtn{
     @include mainBtn;
-    margin-top: 4.7vh;
+    margin-top: 16vh;
     &:disabled {
       @include mainBtn;
-      margin-top: 4.7vh;
+      margin-top: 16vh;
       background-color: $disable-button-color;
       cursor: not-allowed;
     }
@@ -30,8 +30,9 @@
    
     display: flex;
     margin: 0 auto; 
-    margin-top: 5.0vh;
+    margin-top: 32px;
     position: relative;
+    height: 32px;
   }
   
   .smallButton1 {
@@ -72,6 +73,7 @@
   .imputForm{
     display: flex;
     flex-direction: column;
+    margin-top: 7.3vh;
   }
 
   .field{
@@ -85,7 +87,7 @@
 
   .fieldLabel{
     position: relative;
-    margin-top: 1.3vh;
+    margin-top: 8px;
     margin-left: 8px;
     color: $main-beige;
     font-size: 14px;
@@ -199,4 +201,5 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 2; 
+
   }

@@ -67,7 +67,7 @@ const Information = () => {
         <label className={styles.fieldLabel} htmlFor="username">
           Username
         </label>
-        <input className={!formik.touched.username ? styles.field : styles.fieldErr}
+        <input className={!formik.touched.username || !formik.errors.username ? styles.field : styles.fieldErr}
           id="username"
           name="username"
           placeholder="Please enter your username"
@@ -82,7 +82,7 @@ const Information = () => {
         <label className={styles.fieldLabel} htmlFor="birthday">
           Birthday
         </label>
-        <input className={!formik.touched.birthday ? styles.field : styles.fieldErr}
+        <input className={!formik.touched.birthday || !formik.errors.birthday  ? styles.field : styles.fieldErr}
           type="text"
           id="birthday"
           name="birthday"
