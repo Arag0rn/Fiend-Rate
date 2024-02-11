@@ -69,7 +69,7 @@ const SignUpComp= () => {
 
           <form className={styles.imputForm} onSubmit={formik.handleSubmit}>
             <label className={styles.fieldLabel} htmlFor="email">Email</label>
-            <input className={!formik.touched.email ? styles.field : styles.fieldErr} 
+            <input className={!formik.touched.email || !formik.errors.email ? styles.field : styles.fieldErr} 
             id="email" 
             name="email" 
             placeholder="Please enter your email address" 
@@ -92,7 +92,7 @@ const SignUpComp= () => {
                 )}
               </div>
             </label>
-            <input className={!formik.touched.password ? styles.field : styles.fieldErr}
+            <input className={!formik.touched.password || !formik.errors.password ? styles.field : styles.fieldErr}
               id="password"
               type={showPassword ? 'text' : 'password'}
               name="password"
@@ -125,7 +125,7 @@ const SignUpComp= () => {
                 )}
               </div>
             </label>
-            <input className={!formik.touched.passwordRepeat ? styles.field : styles.fieldErr}
+            <input className={!formik.touched.passwordRepeat || !formik.errors.passwordRepeat  ? styles.field : styles.fieldErr}
               id="passwordRepeat"
               type={showPassword ? 'text' : 'password'}
               name="passwordRepeat"
@@ -154,7 +154,7 @@ const SignUpComp= () => {
               
                       <p className={styles.checkboxTxt}>I agree to the Terms & Conditions and Privacy Policy</p> 
                   </div>
-            <button className={styles.signupBtn} type='submit' disabled={!isAccept}>CONTINUE</button>
+            <button className={styles.signupBtn} type='submit' disabled={!isAccept}>SIGN UP</button>
           </form>
 
         <div className={styles.signInTxt}>or Sign in with</div>
