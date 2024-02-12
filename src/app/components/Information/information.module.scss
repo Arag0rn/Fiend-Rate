@@ -52,10 +52,10 @@
 
   .continueBtn{
     @include mainBtn;
-    margin-top: calc(62px + (100vh - 640px)/2);
+    margin-top: calc(62px + (100vh - 640px)/3);
     &:disabled {
       @include mainBtn;
-      margin-top: calc(62px + (100vh - 640px)/2);
+      margin-top: calc(62px + (100vh - 640px)/3);
       background-color: $disable-button-color;
       cursor: not-allowed;
     }

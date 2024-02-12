@@ -106,7 +106,7 @@ const SignUpComp= () => {
               
             </input>
 
-            {!formik.errors.password && (<span className={styles.passText}>Password must be 8-30 characters and a combination of numbers, letters, and special symbols.
+            { !formik.touched.password && !formik.errors.password && (<span className={styles.passText}>Password must be 8-30 characters and a combination of numbers, letters, and special symbols.
             </span>
               )}
 
@@ -153,7 +153,7 @@ const SignUpComp= () => {
                       alt="Icon"
                   />
               
-                      <p className={styles.checkboxTxt}>I agree to the Terms & Conditions and Privacy Policy</p> 
+                      <p className={styles.checkboxTxt}>I agree to the <a className={styles.tearms} href="">Terms & Conditions</a> and <a className={styles.tearms} href="">Privacy Policy</a></p> 
                   </div>
         
                   <div className={styles.bottomBox}>
