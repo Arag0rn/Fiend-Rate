@@ -4,22 +4,21 @@
 
 
 .head{
-  margin-top: 7.3vh;
+  margin-top: calc(24px + (100vh - 640px)/7.25);
   color: $main-beige;
   text-align: center;
   font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: 100%; 
+ 
 }
 
 
 .signupBtn{
     @include mainBtn;
-    margin-top: 16vh;
     &:disabled {
       @include mainBtn;
-      margin-top: 16vh;
       background-color: $disable-button-color;
       cursor: not-allowed;
     }
@@ -73,7 +72,7 @@
   .imputForm{
     display: flex;
     flex-direction: column;
-    margin-top: 7.3vh;
+    margin-top: calc(8px + (100vh - 640px)/3.1);
   }
 
   .field{
@@ -87,7 +86,7 @@
 
   .fieldLabel{
     position: relative;
-    margin-top: 8px;
+    margin-top: 2px;
     margin-left: 8px;
     color: $main-beige;
     font-size: 14px;
@@ -123,7 +122,7 @@
   }
 
   .errMes{
-    margin-top: 0.6vh;
+    margin-top: 0;
     margin-left: 8px;
     color: #BA4242;
     font-size: 12px;
@@ -201,5 +200,10 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 2; 
+
+  }
+
+  .bottomBox{
+    margin-top: calc(14px + (100vh - 640px)/2);
 
   }
