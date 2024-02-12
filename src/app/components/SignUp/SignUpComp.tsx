@@ -52,6 +52,7 @@ const SignUpComp= () => {
           },
           validationSchema: SignupSchema,
           onSubmit: async (values, action) => {
+            console.log(values);
             
           }
         })
@@ -154,9 +155,9 @@ const SignUpComp= () => {
               
                       <p className={styles.checkboxTxt}>I agree to the Terms & Conditions and Privacy Policy</p> 
                   </div>
-            <button className={styles.signupBtn} type='submit' disabled={!isAccept}>SIGN UP</button>
-          </form>
-
+        
+                  <div className={styles.bottomBox}>
+        <button className={styles.signupBtn} type='submit' disabled={!isAccept}>SIGN UP</button>
         <div className={styles.signInTxt}>or Sign in with</div>
 
         <div className={styles.socialBox}>
@@ -182,7 +183,11 @@ const SignUpComp= () => {
               Sign in!
             </Link>
         </p>
+        </div>
 
+          </form>
+
+      
 
     
     </Container>
