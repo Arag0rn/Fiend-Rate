@@ -2,7 +2,7 @@
 @import '../../styles/mixins.module';
 
 .infoHead{
-  margin-top: 56px;
+  margin-top: calc(24px + (100vh - 640px)/7.25);
   color:  $main-beige;
   text-align: center;
   font-size: 24px;
@@ -11,7 +11,7 @@
 }
 
 .imputForm{
-    margin-top: 24px;
+    margin-top: calc(8px + (100vh - 640px)/3.1);
     display: flex;
     flex-direction: column;
   }
@@ -52,10 +52,10 @@
 
   .continueBtn{
     @include mainBtn;
-    margin-top: 62px;
+    margin-top: calc(62px + (100vh - 640px)/2);
     &:disabled {
       @include mainBtn;
-      margin-top: 62px;
+      margin-top: calc(62px + (100vh - 640px)/2);
       background-color: $disable-button-color;
       cursor: not-allowed;
     }
