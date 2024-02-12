@@ -16,9 +16,10 @@ import otherPressed from '../../images/Information/OtherPressed.svg';
 
 const createAccountSchema = Yup.object().shape({
   username: Yup.string()
-  .min(3, 'Username must be 3-25 characters and combination of latin letters, numbers and special symbols.')
-  .max(25, 'Username must be 3-25 characters and combination of latin letters, numbers and special symbols.')
-  .required('Username must be 3-25 characters and combination of latin letters, numbers and special symbols.'),
+  .min(3, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
+  .max(25, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
+  .matches(/^[a-zA-Z]+$/, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
+  .required('Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.'),
   birthday: Yup.string()
   .required('Please enter your birthdate')
   .matches(
