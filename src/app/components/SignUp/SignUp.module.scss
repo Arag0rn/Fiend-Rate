@@ -4,7 +4,7 @@
 
 
 .head{
-  margin-top: calc(24px + (100vh - env(safe-area-inset-bottom) - 640px)/7.25);
+  margin-top: calc(24px + (100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top) - 640px)/7.25);
   color: $main-beige;
   text-align: center;
   font-size: 24px;
@@ -72,7 +72,7 @@
   .imputForm{
     display: flex;
     flex-direction: column;
-    margin-top: calc(8px + (100vh - env(safe-area-inset-bottom) - 640px)/3.1);
+    margin-top: calc(8px + (100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top) - 640px)/3.1);
   }
 
   .field{
@@ -204,6 +204,6 @@
   }
 
   .bottomBox{
-    margin-top: calc(14px + (100vh - env(safe-area-inset-bottom) - 640px) / 2);
+    margin-top: calc(14px + (100vh - env(safe-area-inset-bottom) -  env(safe-area-inset-top) - 640px) / 2);
 
   }
