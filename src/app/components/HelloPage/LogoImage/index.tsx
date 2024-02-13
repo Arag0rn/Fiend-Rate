@@ -5,7 +5,7 @@ const LogoImage = () => {
   return (
     <Image
       src={image}
-      width={181}
+      width={219}
       height={44}
       quality={100}
       alt='Hello page image'

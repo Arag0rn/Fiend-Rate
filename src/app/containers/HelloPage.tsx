@@ -9,11 +9,12 @@ import Container from "../components/Container";
 import HelloImage from "../components/HelloPage/HelloImage";
 import LogoImage from "../components/HelloPage/LogoImage";
 import Title from "../components/HelloPage/Title";
-import styles from './page.module.scss';
+import styles from './styles.module.scss';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from '../components/Loader';
 import BlockButton from "../components/HelloPage/BlockButton";
+import Block from "../components/SignIn/Block";
 
 const HelloPage = () => {
   const router = useRouter();
@@ -26,25 +27,29 @@ const HelloPage = () => {
   if (!loading) return <Loader />;
 
   return (
-    <Container>
-      <BlockLogo>
-        <HelloImage></HelloImage>
-        <LogoImage></LogoImage>
-      </BlockLogo>
-      <BlockTitle>
-        <Title>Discover interesting people <br /> to talk with</Title>
-        <Description>
-          You need to Sing up or Sign in your account
-          <br />
-          to use all features
-        </Description>
-      </BlockTitle>
-      <BlockButton>
-        <Button onClick={() => router.push('/signup')}>Sign Up</Button>
-        <ButtonIn onClick={() => router.push('/sign-in')}>Sign In</ButtonIn>
-      </BlockButton>
-      <Link className={styles['none-registration']} href='/'>Try without registration</Link>
-    </Container>
+    <Block className={styles.main}>
+      <Container>
+        <Block className={styles.content}>
+          <BlockLogo>
+          <HelloImage></HelloImage>
+          <LogoImage></LogoImage>
+          </BlockLogo>
+          <BlockTitle>
+          <Title>Discover interesting people <br /> to talk with</Title>
+          <Description>
+            You need to Sing up or Sign in your account
+            <br />
+            to use all features
+          </Description>
+          </BlockTitle>
+          <BlockButton>
+          <Button onClick={() => router.push('/signup')}>Sign Up</Button>
+          <ButtonIn onClick={() => router.push('/sign-in')}>Sign In</ButtonIn>
+          </BlockButton>
+          <Link className={styles['none-registration']} href='/'>Try without registration</Link>
+        </Block>
+      </Container>
+    </Block>
   )
 }
 

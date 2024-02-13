@@ -1,15 +1,24 @@
-import image from '../../../images/hp.png';
+import image from '../../../images/Stuck at Home Happy Place.png';
 import Image from 'next/image';
+import styles from './styles.module.scss';
+
+const imageStyle = {
+  objectFit: 'cover',
+  objectPosition: 'center',
+}
 
 const HelloImage = () => {
   return (
-    <Image
-      src={image}
-      width={181}
-      height={169}
-      quality={100}
-      alt='Happy palce'
-    />
+    <div className={styles['hello-image']}>
+      <Image
+        src={image}
+        quality={100}
+        priority={true}
+        alt='Happy palce'
+      style={{ objectFit: 'contain', objectPosition: 'center', width: '100%', height: '100%' }}
+      />
+    </div>
+    
   )
 }
 
