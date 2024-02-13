@@ -19,7 +19,7 @@ import { useFormik } from 'formik';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-  .email('Invalid email Please enter a valid email address.')
+  .email('Please enter a valid email address.')
   .matches(
     /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
     'Please enter a valid email address.'
