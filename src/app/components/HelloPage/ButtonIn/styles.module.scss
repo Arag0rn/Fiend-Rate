@@ -11,6 +11,7 @@
   text-transform: uppercase;
   border: 3px solid $color-title;
   background-color: $background-main;
+  user-select: none;
 
   &:active {
     background: #6E6E6E;
