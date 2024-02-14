@@ -8,22 +8,17 @@ import Link from 'next/link';
 const TogleBtn = () => {
 
     const [activeButton, setActiveButton] = useState<string>('SIGN UP');
-    const [enabledTogleBtn, setEnabledTogleBtn]= useState<boolean>(true);
+
 
     const handleButtonClick = (buttonName: string) => {
         setActiveButton(buttonName);
       };
     
 
-      useEffect(() => {
-        if ( window.location.pathname !== '/signup' && window.location.pathname !== '/sign-in') {
-          setEnabledTogleBtn(false)
-        }
-      }, []);
 
       return (
         <div className={styles.btnBox}>
-          {enabledTogleBtn ? (
+      
             <>
               <Link href="/signup"
                   className={`${activeButton === 'SIGN UP' ? styles.smallButton1 : styles.secondaryButton}`}
@@ -40,16 +35,7 @@ const TogleBtn = () => {
   
               </Link>
             </>
-          ) : (
-            <>
-              <div className={styles.secondaryButton} style={{width: '52%'}}>
-                SIGN UP
-              </div>
-              <div className={styles.secondaryButton2}>
-                SIGN IN
-              </div>
-            </>
-          )}
+
         </div>
       );
 }

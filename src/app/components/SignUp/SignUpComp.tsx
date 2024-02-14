@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React from 'react'
 import styles from "./SignUp.module.scss"; 
 import { useState } from 'react';
 import Container from '../Container';
@@ -53,6 +53,7 @@ const SignUpComp= () => {
           validationSchema: SignupSchema,
           onSubmit: async (values, action) => {
             console.log(values);
+            action.resetForm();
             
           }
         })

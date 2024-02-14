@@ -42,6 +42,7 @@ const Information = () => {
     onSubmit: async (values, actions) => {
   
       console.log(values);
+      actions.resetForm();
     },
   });
 
