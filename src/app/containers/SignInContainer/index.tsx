@@ -50,9 +50,11 @@ const SignInContainer = () => {
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
+  const [modalIcon, setModalIcon] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setLoading(true), 1000)
+    setTimeout(() =>
+    setLoading(true), 1000);
   }, []);
 
   const handleButtonClick = (buttonName: string) => {
@@ -64,7 +66,9 @@ const SignInContainer = () => {
   return (
     <Block className={styles.content}>
       <Container>
-        <Block className={styles["content__block"]}>
+        <Block
+          className={styles["content__block"]}
+        >
           <BlockContent>
             <BlockToggle>
               <ButtonToggle
@@ -96,8 +100,8 @@ const SignInContainer = () => {
               </TitleSignIn>
             )}
 
-            {pathname === '/sign-in/restore/check-email/new-password' && (
-              <TitleSignIn className={styles['head']}>
+            {pathname === '/sign-in/restore/new-password' && (
+              <TitleSignIn className={styles.head}>
                 Set new password
               </TitleSignIn>
             )}
@@ -112,11 +116,11 @@ const SignInContainer = () => {
 
             {pathname === '/sign-in/restore' && (
               <Block className={styles['description-restore']}>
-                Please, enter your email or username to reset <br /> your password
+                Please, enter your email to reset <br /> your password
               </Block>
             )}
 
-            {pathname === '/sign-in/restore/check-email/new-password' && (
+            {pathname === '/sign-in/restore/new-password' && (
               <Block className={styles['description-new-password']}>
                   Please, set a strong password
               </Block>
@@ -131,48 +135,52 @@ const SignInContainer = () => {
             />
           )}
 
-          {pathname === '/sign-in/restore' && <Restore />}
-          {pathname === '/sign-in/restore/check-email/new-password' && <NewPassword />}
+          {pathname === '/sign-in/restore' &&
+            <Restore
+              modalIcon={modalIcon}
+              setModalIcon={setModalIcon}
+            />
+          }
+          {pathname === '/sign-in/restore/new-password' && <NewPassword />}
 
-            {pathname !== '/sign-in/restore/check-email/new-password' && (
-              <>
-              <Block className={styles.signInTxt}>
-                <Block className={styles["line"]}></Block>
-                <Block>or Sign in with</Block>
-                <Block className={styles["line"]}></Block>
-              </Block>
-              <Block className={styles.flex}>
-                <SocialBlock className={styles.socialBox}>
-                  <Link href='/' className={styles.socialIcon}>
+          {pathname !== '/sign-in/restore/new-password' && (
+            <>
+            <Block className={styles.signInTxt}>
+              <Block className={styles["line"]}></Block>
+              <Block>or Sign in with</Block>
+              <Block className={styles["line"]}></Block>
+            </Block>
+            <Block className={styles.flex}>
+              <SocialBlock className={styles.socialBox}>
+                <Link href='/' className={styles.socialIcon}>
+                <Image
+                  src={facebook}
+                  alt="facebook"
+                />
+                <SocialText className={styles.socialTxt}>Facebook</SocialText>
+                </Link>
+                <Link href='/' className={styles.socialIcon}>
                   <Image
-                    src={facebook}
-                    alt="facebook"
+                    src={Google}
+                    alt="Google"
                   />
-                  <SocialText className={styles.socialTxt}>Facebook</SocialText>
-                  </Link>
-                  <Link href='/' className={styles.socialIcon}>
-                    <Image
-                      src={Google}
-                      alt="Google"
-                    />
-                    <SocialText className={styles.socialTxt}>Google</SocialText>
-                  </Link>
-                </SocialBlock>
+                  <SocialText className={styles.socialTxt}>Google</SocialText>
+                </Link>
+              </SocialBlock>
 
-                <LinkSignUp
-                  className={styles.bottomTxt}
+              <LinkSignUp
+                className={styles.bottomTxt}
+              >
+                Don’t have an account? <Link
+                  href='/signup'
+                  className={styles.socialTxt}
                 >
-                  Don’t have an account? <Link
-                    href='/signup'
-                    className={styles.socialTxt}
-                  >
-                    Sign up!
-                  </Link>
-                </LinkSignUp>
-              </Block>
-              </>
-            )}
-            
+                  Sign up!
+                </Link>
+              </LinkSignUp>
+            </Block>
+            </>
+          )}
         </Block>
       </Container>
     </Block>
