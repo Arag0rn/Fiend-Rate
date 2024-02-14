@@ -64,7 +64,7 @@ const NewPassword = () => {
               </Block>
             </Block>
             <Block className={styles['confirm-rule']}>
-              Password must be 8-30 characters and a combination of numbers, <br /> letters and special symbols
+              Password must be 8-30 characters and a combination of <br /> numbers, letters and special symbols
             </Block>
               <ErrorMessage className={styles.errMes} component="span" name="password" />
           </BlockInput>
@@ -73,7 +73,7 @@ const NewPassword = () => {
             <ButtonSubmit
               className={styles.signupBtn}
               type={TypeButton.SUBMIT}
-              disabled={false}
+              disabled={true}
             >
               COMPLETE
             </ButtonSubmit>
