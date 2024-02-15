@@ -50,6 +50,7 @@ const SignInContainer = () => {
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const [modalIcon, setModalIcon] = useState(false);
 
   useEffect(() => {
@@ -59,6 +60,10 @@ const SignInContainer = () => {
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
+
+    if (buttonName === 'SIGN UP') {
+      router.push('/signup');
+    }
   };
 
   if (!loading) return <Loader />;
