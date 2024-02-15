@@ -37,7 +37,10 @@ const NewPassword = () => {
                 title="password"
               ></Field>
             </Block>
-              <ErrorMessage className={styles.errMes} component="span" name="password" />
+            <Block className={styles['confirm-rule']}>
+              Password must be 8-30 characters and a combination of numbers, letters and special symbols
+            </Block>
+            <ErrorMessage className={styles.errMes} component="span" name="password" />
           </BlockInput>
 
           <BlockInput>
@@ -63,10 +66,7 @@ const NewPassword = () => {
                 }
               </Block>
             </Block>
-            <Block className={styles['confirm-rule']}>
-              Password must be 8-30 characters and a combination of <br /> numbers, letters and special symbols
-            </Block>
-              <ErrorMessage className={styles.errMes} component="span" name="password" />
+            <ErrorMessage className={styles.errMes} component="span" name="password" />
           </BlockInput>
 
           <Block className={styles['block-submit']}>

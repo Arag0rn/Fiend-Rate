@@ -82,7 +82,7 @@ const SignInContent: FC<Props> = ({ showPassword, setRedirect, setShowPassword }
                     className={styles["reset__link"]}
                     href={"sign-in/restore"}
                   >
-                    Try to reset your <br /> password first
+                    Try to reset your password first
                   </Link>
                 </div>
               ) : (
