@@ -3,14 +3,10 @@
 .hello-image {
   width: 181px;
   height: 169px;
-  @include onAppleMiniAndEight {
-    width: 196px;
-    height: 214.419px;
-  }
 
-  @include onApple {
-    width: 211px;
-    height: 222.869px;
+  @include onAppleProMax {
+    width: 251px;
+    height: 246.106px;
   }
 
   @include onApplePro {
@@ -18,8 +14,18 @@
     height: 224.981px;
   }
 
-  @include onAppleProMax {
-    width: 251px;
-    height: 246.106px;
+  @include onApple {
+    width: 211px;
+    height: 222.869px;
+  }
+
+  @include onAppleMiniAndEight {
+    width: 196px;
+    height: 214.419px;
+  }
+
+  @include onGalaxyFold {
+    width: 181px;
+    height: 169px;
   }
 }
