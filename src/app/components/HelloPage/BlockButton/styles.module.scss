@@ -16,6 +16,11 @@
     margin-bottom: 30px;
   }
 
+  @include onSamsungA30s {
+    gap: 14.01px;
+    margin-bottom: 30.01px;
+  }
+
   @include onAppleProMax {
     gap: 13.92px;
     margin-bottom: 29.92px;

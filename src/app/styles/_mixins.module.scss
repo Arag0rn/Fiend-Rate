@@ -75,8 +75,14 @@
   }
 }
 
+@mixin onSamsungA30s {
+  @media (width: 412px) {
+    @content;
+  }
+}
+
 @mixin onAppleProMax {
-  @media ((min-width: 412px) and (max-width: 430px)) {
+  @media ((min-width: 413px) and (max-width: 430px)) {
     @content;
   }
 }
