@@ -6,9 +6,9 @@ const LogoImage = () => {
     <Image
       src={image}
       width={219}
-      height={44}
+      height={40}
       quality={100}
-      alt='Hello page image'
+      alt='logo'
     />
   )
 }
