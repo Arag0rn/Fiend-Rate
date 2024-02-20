@@ -1,0 +1,37 @@
+{
+    "topUsers": [
+      {
+        "id": 1,
+        "name": "John Doe",
+        "avatar": "",
+        "rating": 4.5,
+        "ratingStars": "⭐⭐⭐⭐⭐",
+        "numberOfRatings": 120
+      },
+      {
+        "id": 2,
+        "name": "Jane Smith",
+        "avatar": "",
+        "rating": 4.2,
+        "ratingStars": "⭐⭐⭐⭐",
+        "numberOfRatings": 85
+      },
+      {
+        "id": 3,
+        "name": "Bob Johnson",
+        "avatar": false,
+        "rating": 4.8,
+        "ratingStars": "⭐⭐⭐⭐⭐",
+        "numberOfRatings": 150
+      },
+      {
+        "id": 4,
+        "name": "Bob ",
+        "avatar": false,
+        "rating": 4.8,
+        "ratingStars": "⭐⭐⭐⭐⭐",
+        "numberOfRatings": 1
+      }
+
+    ]
+  }
