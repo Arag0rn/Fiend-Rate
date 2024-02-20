@@ -3,7 +3,6 @@ import React from 'react'
 import styles from "./SignUp.module.scss"; 
 import { useState } from 'react';
 import Container from '../Container';
-import { Formik, Field, Form, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import Image from 'next/image';
 import showIcon from "../../images/SignUp/show_icon.svg";
