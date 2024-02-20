@@ -1,36 +1,35 @@
 @import '../styles/mixins.module';
 
-.none-registration {
-  display: flex;
-  justify-content: center;
-  color: rgba(252, 251, 245, 0.50);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-  text-decoration: none;
-}
-
 .content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  min-height: 100vh;
   padding: 36px 0 40px 0;
 
-  @include onAppleMiniAndEight {
-    padding: 56.3px 0 40.8px 0;
+  @include onAppleProMax {
+    padding: 64.55px 0 40.8px 0;
   }
 
   @include onApple {
     padding: 59px 0 40.8px 0;
   }
 
-  @include onAppleProMax {
-    padding: 64.55px 0 40.8px 0;
+  @include onAppleMiniAndEight {
+    padding: 56.3px 0 40.8px 0;
   }
 }
 
 .main {
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.none-registration {
+  text-align: center;
+  color: rgba(252, 251, 245, 0.50);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  text-decoration: none;
 }
