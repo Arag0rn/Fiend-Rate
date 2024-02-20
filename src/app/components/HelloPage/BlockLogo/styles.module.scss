@@ -17,6 +17,11 @@
     padding: 0 0 11px 0;
   }
 
+  @include onSamsungA30s {
+    gap: 56.94px;
+    padding: 0 0 9.15px 0;
+  }
+
   @include onAppleProMax {
     gap: 63.58px;
     padding: 0 0 7.34px 0;

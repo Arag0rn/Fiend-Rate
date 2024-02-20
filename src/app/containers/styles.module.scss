@@ -11,6 +11,10 @@
     padding: 64.55px 0 40.8px 0;
   }
 
+  @include onSamsungA30s {
+    padding: 61.8px 0 40.8px 0;
+  }
+
   @include onApple {
     padding: 59px 0 40.8px 0;
   }
