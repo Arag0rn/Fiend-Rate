@@ -51,12 +51,18 @@
 
 .rating{
     position: absolute;
+    display: flex;
+    align-items: center;
     right: 59px;
     color: $main-beige;
     font-size: 12px;
     font-weight: 500;
     line-height: 2; 
     background: inherit;
+}
+
+.ratingStar{
+    margin-right: 2px;
 }
 
 .numberOfRatings {
@@ -69,4 +75,3 @@
     line-height: 2; 
     background: inherit;
   }
-

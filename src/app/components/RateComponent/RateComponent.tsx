@@ -4,7 +4,9 @@ import styles from "./Rate.module.scss";
 import Container from '../Container';
 import Image from 'next/image';
 import rateData from './rate.json';
-import DefaltFoto from '../../images/defaultFoto.png'
+import DefaltFoto from '../../images/Top/defaultFoto.png'
+import Star from '../../images/Top/star.svg'
+import { Navbar } from '../NavBar/Navbar';
 
 export const RateComponent = () => {
 
@@ -31,7 +33,16 @@ export const RateComponent = () => {
                
               <div className={styles.rateName}>{name}</div>
 
-              <div className={styles.rating}>{rating}</div>
+             
+              <div className={styles.rating}>
+
+                 <Image className={styles.ratingStar}
+                    src={Star}
+                    alt={`Star`}
+                    width={12}
+                    height={12}
+                />
+                {rating}</div>
               <div className={styles.numberOfRatings} >
                 ({numberOfRatings})
                 </div>
@@ -40,6 +51,8 @@ export const RateComponent = () => {
             </li>
           ))}
         </ul>
+
+        <Navbar/>
     </Container>
   );
 }
