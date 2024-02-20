@@ -24,7 +24,7 @@ export const RateComponent = () => {
             <li className={styles.rateCard} key={id}>
                 <div className={styles.imgWrap}>
                <Image
-                    src={avatar ? avatar : DefaltFoto}
+                    src={typeof avatar === 'string' ? avatar : DefaltFoto}
                     alt={`${name}'s Profile Icon`}
                     width={40}
                     height={40}
