@@ -15,7 +15,9 @@ const SignupSchema = Yup.object().shape({});
 const EditProfile = () => {
     const [date, setDate] = useState('');
     const [open, setOpen] = useState(false);
+    const [openGen, setOpenGen] = useState(false);
     const [language, setLanguage] = useState("UKR");
+    const [gender, setGender] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
     const formik = useFormik({
@@ -47,6 +49,13 @@ const EditProfile = () => {
       const handleSelectChange = (selectedLanguage) => {
         setLanguage(selectedLanguage);
         setOpen(true);
+        
+      };
+
+      const handleSelectGenderChange = (selectedGender) => {
+        setGender(selectedGender);
+        setOpenGen(true);
+        
       };
 
   return (
@@ -97,15 +106,25 @@ const EditProfile = () => {
         <label className={styles.fieldLabel} htmlFor="gender">
             Gender
         </label>
-        <input
-            className={!formik.touched.gender || !formik.errors.gender ? styles.field : styles.fieldErr}
-            id="gender"
-            name="gender"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.gender}
-        />
+        <div className={styles.customSelectContainer}>
+            <div className={openGen ? styles.customSelectOpen : styles.customSelect} onClick={() => setOpenGen(!openGen)}>
+            {!openGen ? (
+                <span className={styles.options}>{gender}</span>
+            ) : (
+                <div className={styles.options2}>
+                <div className={styles.options2} onClick={() => handleSelectGenderChange('Male')}>
+                    Male
+                </div>
+                <div className={styles.options2} onClick={() => handleSelectGenderChange('Female')}>
+                    Female
+                </div>
+                <div className={styles.options2} onClick={() => handleSelectGenderChange('Other')}>
+                    Other
+                </div>
+                </div>
+            )}
+            </div>
+        </div>
 
         <label className={styles.fieldLabel} htmlFor="language">
             Language
