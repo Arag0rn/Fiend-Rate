@@ -6,7 +6,8 @@ import Image from 'next/image';
 import rateData from './rate.json';
 import DefaltFoto from '../../images/Top/defaultFoto.png'
 import Star from '../../images/Top/star.svg'
-import { Navbar } from '../NavBar/Navbar';
+import Navbar from '../NavBar/Navbar';
+
 
 export const RateComponent = () => {
 
