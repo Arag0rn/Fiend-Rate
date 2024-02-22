@@ -106,9 +106,10 @@ const ProfileContainer = () => {
               <Navbar />
             </Block>
           </Block>
-          
         </Block>
+        
       </Container>
+      
     </Block>
   )
 }

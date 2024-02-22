@@ -42,10 +42,7 @@
     }
 
     &-navbar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      height: 60px;
     }
   }
 
@@ -138,7 +135,6 @@
   }
 
   &__position {
-    position: relative;
     height: 60px;
   }
 }
