@@ -42,7 +42,11 @@
     }
 
     &-navbar {
-      height: 60px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      min-height: 60px;
     }
   }
 
@@ -135,6 +139,6 @@
   }
 
   &__position {
-    height: 60px;
+    min-height: 60px;
   }
 }
