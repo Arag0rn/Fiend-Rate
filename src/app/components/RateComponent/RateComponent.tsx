@@ -1,7 +1,6 @@
 "use client"
 import React from 'react';
 import styles from "./Rate.module.scss"; 
-import Container from '../Container';
 import Image from 'next/image';
 import rateData from './rate.json';
 import DefaltFoto from '../../images/Top/defaultFoto.png'
