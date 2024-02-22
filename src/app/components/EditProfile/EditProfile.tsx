@@ -52,6 +52,8 @@ const SignupSchema = Yup.object().shape({
 
 });
 
+
+
 const EditProfile = () => {
 
     const {UserData} = User;
