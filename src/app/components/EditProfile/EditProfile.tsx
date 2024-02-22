@@ -9,6 +9,7 @@ import showIcon from "../../images/SignUp/show_icon.svg";
 import hideIcon from "../../images/SignUp/hide_icon.svg";
 import Navbar from '../NavBar/Navbar';
 import User from './user.json';
+import BasicModal from './DeleteModal';
 
 
 
@@ -54,6 +55,8 @@ const SignupSchema = Yup.object().shape({
 const EditProfile = () => {
 
     const {UserData} = User;
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+ 
     
     const [date, setDate] = useState(UserData.birthday);
     const [open, setOpen] = useState(false);
@@ -106,7 +109,19 @@ const EditProfile = () => {
         
       };
 
+
+      const handleOpenModal = () => {
+        console.log("Modal open btn");
+        
+        setIsModalOpen(true);
+      };
+    
+      const handleCloseModal = () => {
+        setIsModalOpen(false);
+      };
+
   return (
+    <>
     <Container style={{ paddingBottom: "30px", overflowY: 'auto' }}>
     <h2 className={styles.editHeaad}>EditProfile</h2>
 
@@ -279,14 +294,20 @@ const EditProfile = () => {
 
             <button type='submit' className={styles.saveBtn}>SAVE</button>
 
-            <div className={styles.deleteBtn}>Delete my account</div>
+            <div className={styles.deleteBtn} onClick={handleOpenModal}>Delete my account</div>
+            <BasicModal
+                openModal={isModalOpen}
+                handleCloseModal={handleCloseModal}
+                modalTitle="Text in a modal"
+                modalContent="Duis mollis, est non commodo luctus, nisi erat porttitor ligula."
+              />
                  
 </form>
 
-<Navbar style={{ position: 'static', transform: "none", marginTop:' 23px'}} />
+
     </Container> 
-   
-    
+  <Navbar style={{ position: 'static', transform: "none", marginTop:' 23px'}} /> 
+  </>
   )
 }
 
