@@ -54,7 +54,6 @@ const SignupSchema = Yup.object().shape({
 const EditProfile = () => {
 
     const {UserData} = User;
-    console.log(UserData);
     
     const [date, setDate] = useState(UserData.birthday);
     const [open, setOpen] = useState(false);
@@ -75,7 +74,12 @@ const EditProfile = () => {
       },
         validationSchema: SignupSchema,
         onSubmit: async (values, action) => {
-          console.log(values);
+          const updatedValues = {
+            ...values,
+            gender: gender, 
+          };
+    
+          console.log(updatedValues);
           action.resetForm();
           
         }
@@ -106,7 +110,7 @@ const EditProfile = () => {
     <Container style={{ paddingBottom: "30px", overflowY: 'auto' }}>
     <h2 className={styles.editHeaad}>EditProfile</h2>
 
-    <form className={styles.inputForm}>
+    <form className={styles.inputForm} onSubmit={formik.handleSubmit}>
         <label className={styles.fieldLabelM32} htmlFor="username">
             Username
         </label>
@@ -273,7 +277,7 @@ const EditProfile = () => {
         )}
 
 
-            <button className={styles.saveBtn}>SAVE</button>
+            <button type='submit' className={styles.saveBtn}>SAVE</button>
 
             <div className={styles.deleteBtn}>Delete my account</div>
                  
