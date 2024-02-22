@@ -101,9 +101,12 @@ const ProfileContainer = () => {
             <Link className={styles['profile__link']} href='/'>Feedback</Link>
           </Block>
 
-          <Block className={styles['profile__block-navbar']}>
-            <Navbar />
+          <Block className={styles['profile__position']}>
+            <Block className={styles['profile__block-navbar']}>
+              <Navbar />
+            </Block>
           </Block>
+          
         </Block>
       </Container>
     </Block>
