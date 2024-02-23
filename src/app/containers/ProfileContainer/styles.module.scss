@@ -2,7 +2,9 @@
 
 .profile {
   position: relative;
+  height: 100vh;
   bottom: 60px;
+  padding-bottom: 60px;
 
   &__content {
     display: flex;
