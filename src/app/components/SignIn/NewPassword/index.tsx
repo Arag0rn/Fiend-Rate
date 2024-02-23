@@ -1,52 +1,20 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Block from '../Block';
-import BlockContent from '../BlockContent';
 import showIcon from "../../../images/SignUp/show_icon.svg";
 import hideIcon from "../../../images/SignUp/hide_icon.svg";
-import BlockToggle from '../BlockToogle';
-import ButtonToggle from '../ButtonToggle';
-import TitleSignIn from '../TitleSignIn';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Label from '../Label';
 import BlockInput from '../BlockInput';
 import ButtonSubmit, { TypeButton } from '../ButtonSubmit';
-import styles from './styles.module.scss';
+import styles from '../../../containers/SignInContainer/styles.module.scss';
 import Image from 'next/image';
 
 const NewPassword = () => {
-  const [activeButton, setActiveButton] = useState<string>('SIGN IN');
   const [showPassword, setShowPassword] = useState(false);
-  const [isAccept, setIsAccept] = useState(true);
 
   return (
-    <Block className={styles["block"]}>
-      <BlockContent>
-        <BlockToggle>
-          <ButtonToggle
-            className={`${activeButton === 'SIGN UP'
-            ? styles.smallButton1
-            : styles.secondaryButton}`}
-            onClick={() => setActiveButton('SIGN UP')}
-          >
-            SIGN UP
-          </ButtonToggle>
-
-          <ButtonToggle
-            className={`${activeButton === 'SIGN IN'
-            ? styles.smallButton2
-            : styles.secondaryButton2}`}
-            onClick={() => setActiveButton('SIGN IN')}
-          >
-            SIGN IN
-          </ButtonToggle>
-        </BlockToggle>
-        <TitleSignIn className={styles.head}>Set new password</TitleSignIn>
-        <Block className={styles.description}>
-          Please, set a strong password
-        </Block>
-      </BlockContent>
-
+    <>
       <Formik
         initialValues={{
           password: '',
@@ -55,7 +23,7 @@ const NewPassword = () => {
         onSubmit={async (values, action) => {
         }}
       >
-      <Form className={styles.imputForm}>
+      <Form className={styles['imputForm-new-password']}>
           <BlockInput>
             <Label className={styles.fieldLabel} htmlFor="password">
               Password
@@ -69,7 +37,10 @@ const NewPassword = () => {
                 title="password"
               ></Field>
             </Block>
-              <ErrorMessage className={styles.errMes} component="span" name="password" />
+            <Block className={styles['confirm-rule']}>
+              Password must be 8-30 characters and a combination of numbers, letters and special symbols
+            </Block>
+            <ErrorMessage className={styles.errMes} component="span" name="password" />
           </BlockInput>
 
           <BlockInput>
@@ -80,9 +51,9 @@ const NewPassword = () => {
               <Field className={styles.field}
                 id="confirm-password"
                 type={showPassword ? 'text' : 'password'}
-                name="password"
+                name="confirm-password"
                 placeholder="Enter your password"
-                title="password"
+                title="confirm-password"
               ></Field>
 
               <Block
@@ -95,25 +66,21 @@ const NewPassword = () => {
                 }
               </Block>
             </Block>
-              <ErrorMessage className={styles.errMes} component="span" name="password" />
+            <ErrorMessage className={styles.errMes} component="span" name="password" />
           </BlockInput>
-
-          <Block className={styles['confirm-rule']}>
-            Password must be 8-30 characters and a combination of numbers <br /> and letters
-          </Block>
 
           <Block className={styles['block-submit']}>
             <ButtonSubmit
               className={styles.signupBtn}
               type={TypeButton.SUBMIT}
-              disabled={false}
+              disabled={true}
             >
-              CONTINUE
+              COMPLETE
             </ButtonSubmit>
           </Block>
       </Form>
       </Formik>
-    </Block>
+    </>
   )
 }
 
