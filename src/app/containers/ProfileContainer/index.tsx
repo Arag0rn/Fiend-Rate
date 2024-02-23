@@ -100,7 +100,7 @@ const ProfileContainer = () => {
             <Link className={styles['profile__link']} href='/'>Terms & Conditions</Link>
             <Link className={styles['profile__link']} href='/'>Feedback</Link>
           </Block>
-          <Navbar />
+          <Navbar style={{ height: '60px' }} />
         </Block>
       </Container>
     </Block>
