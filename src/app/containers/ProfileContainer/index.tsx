@@ -1,7 +1,7 @@
 'use client';
 import Container from '@/app/components/Container';
 import Title from '@/app/components/HelloPage/Title';
-import { Navbar } from '@/app/components/NavBar/Navbar';
+import Navbar from '@/app/components/NavBar/Navbar';
 import List from '@/app/components/ProfilePage/List';
 import ListItem from '@/app/components/ProfilePage/ListItem';
 import UserName from '@/app/components/ProfilePage/UserName';
