@@ -3,6 +3,7 @@
 @mixin mainBtn(){
     display: flex;
     padding: 16px ;
+    width: 100%;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -19,12 +20,10 @@
 
 @mixin smalBtn {
     display: flex;
-    width: 168px;
     height: 32px;
-    padding: 4px;
+    padding: 4px 0;
     justify-content: center;
     align-items: center;
-    gap: 10px;
     flex-shrink: 0;
     border-radius: 6px;
     border: none;

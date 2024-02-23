@@ -1,0 +1,54 @@
+{
+    "topUsers": [
+      {
+        "id": 1,
+        "name": "John Doe",
+        "avatar": false,
+        "rating": 4.5,
+        "ratingStars": "⭐⭐⭐⭐⭐",
+        "numberOfRatings": 120
+      },
+      {
+        "id": 2,
+        "name": "Jane Smith",
+        "avatar": false,
+        "rating": 4.5,
+        "ratingStars": "⭐⭐⭐⭐",
+        "numberOfRatings": 85
+      },
+      {
+        "id": 3,
+        "name": "Bob Johnson",
+        "avatar": false,
+        "rating": 4.8,
+        "ratingStars": "⭐⭐⭐⭐⭐",
+        "numberOfRatings": 150
+      },
+      {
+        "id": 5,
+        "name": "Bob ",
+        "avatar": false,
+        "rating": 4.8,
+        "ratingStars": "⭐⭐⭐⭐⭐",
+        "numberOfRatings": 1
+      },
+      {
+        "id": 6,
+        "name": "Din Tomas ",
+        "avatar": false,
+        "rating": 4.0,
+        "ratingStars": "⭐⭐⭐⭐⭐",
+        "numberOfRatings": 300
+      },
+      {
+        "id": 7,
+        "name": "Mark Johnson ",
+        "avatar": false,
+        "rating": 3.5,
+        "ratingStars": "⭐⭐⭐⭐⭐",
+        "numberOfRatings": 30
+      }
+
+
+    ]
+  }

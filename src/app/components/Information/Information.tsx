@@ -15,8 +15,17 @@ import femalePressed from '../../images/Information/FemalePressed.svg';
 import otherPressed from '../../images/Information/OtherPressed.svg';
 
 const createAccountSchema = Yup.object().shape({
-  username: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
-  birthday: Yup.string().required('Please enter your birthdate'),
+  username: Yup.string()
+  .min(3, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
+  .max(25, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
+  .matches(/^[a-zA-Z0-9]+$/, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
+  .required('Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.'),
+  birthday: Yup.string()
+  .required('Please enter your birthdate')
+  .matches(
+    /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(192[5-9]|19[3-9]\d|20[0-1]\d|202[0-3])$/,
+    `Invalid date format: "Birthdate must be written in 'DD.MM.YYYY' format.`
+  ),
 });
 
 const Information = () => {
@@ -33,6 +42,7 @@ const Information = () => {
     onSubmit: async (values, actions) => {
   
       console.log(values);
+      actions.resetForm();
     },
   });
 
@@ -59,8 +69,7 @@ const Information = () => {
         <label className={styles.fieldLabel} htmlFor="username">
           Username
         </label>
-        <input
-          className={styles.field}
+        <input className={!formik.touched.username || !formik.errors.username ? styles.field : styles.fieldErr}
           id="username"
           name="username"
           placeholder="Please enter your username"
@@ -75,8 +84,7 @@ const Information = () => {
         <label className={styles.fieldLabel} htmlFor="birthday">
           Birthday
         </label>
-        <input
-          className={styles.field}
+        <input className={!formik.touched.birthday || !formik.errors.birthday  ? styles.field : styles.fieldErr}
           type="text"
           id="birthday"
           name="birthday"
@@ -117,7 +125,6 @@ const Information = () => {
         </button>
       </form>
 
-      <div className={styles.bottomLine}></div>
     </Container>
   );
 };
