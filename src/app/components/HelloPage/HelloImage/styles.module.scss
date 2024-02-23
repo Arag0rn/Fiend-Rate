@@ -6,22 +6,27 @@
 
   @include onAppleProMax {
     width: 251px;
-    height: 246.106px;
+    height: 246px;
   }
 
   @include onApplePro {
     width: 214px;
-    height: 224.981px;
+    height: 224px;
   }
 
   @include onApple {
     width: 211px;
-    height: 222.869px;
+    height: 222px;
+  }
+
+  @include onApplePro {
+    width: 211px;
+    height: 222px;
   }
 
   @include onAppleMiniAndEight {
     width: 196px;
-    height: 214.419px;
+    height: 214px;
   }
 
   @include onGalaxyFold {

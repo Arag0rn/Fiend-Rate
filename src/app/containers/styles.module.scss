@@ -1,31 +1,34 @@
 @import '../styles/mixins.module';
+.main {
+  height: 100vh;
+}
 
 .content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh;
+  height: 100vh;
   padding: 36px 0 40px 0;
 
   @include onAppleProMax {
-    padding: 64.55px 0 40.8px 0;
+    padding: 64px 0 40px 0;
   }
 
   @include onSamsungA30s {
-    padding: 61.8px 0 40.8px 0;
+    padding: 62px 0 40px 0;
   }
 
   @include onApple {
-    padding: 59px 0 40.8px 0;
+    padding: 60px 0 40px 0;
+  }
+
+  @include onApplePro {
+    padding: 60px 0 40px 0;
   }
 
   @include onAppleMiniAndEight {
-    padding: 56.3px 0 40.8px 0;
+    padding: 56px 0 40px 0;
   }
-}
-
-.main {
-  min-height: 100vh;
 }
 
 .none-registration {

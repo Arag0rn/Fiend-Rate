@@ -7,22 +7,27 @@
   margin-bottom: 32px;
 
   @include onAppleMiniAndEight {
-    gap: 14.21px;
-    margin-bottom: 30.21px;
+    gap: 14px;
+    margin-bottom: 30px;
   }
 
   @include onApple {
-    gap: 14.21px;
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+
+  @include onApplePro {
+    gap: 14px;
     margin-bottom: 30px;
   }
 
   @include onSamsungA30s {
-    gap: 14.01px;
-    margin-bottom: 30.01px;
+    gap: 14px;
+    margin-bottom: 30px;
   }
 
   @include onAppleProMax {
-    gap: 13.92px;
-    margin-bottom: 29.92px;
+    gap: 14px;
+    margin-bottom: 30px;
   }
 }
