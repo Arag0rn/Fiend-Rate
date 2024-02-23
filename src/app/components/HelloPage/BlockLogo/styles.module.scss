@@ -19,7 +19,7 @@
 
   @include onApplePro {
     gap: 50px;
-    margin: 0 0 32px 0;
+    margin: 0 0 10px 0;
   }
 
   @include onSamsungA30s {
@@ -29,6 +29,6 @@
 
   @include onAppleProMax {
     gap: 64px;
-    margin: 0 0 8px 0;
+    margin: 0 0 16px 0;
   }
 }
