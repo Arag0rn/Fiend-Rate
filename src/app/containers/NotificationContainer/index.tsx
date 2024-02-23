@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Title from '@/app/components/HelloPage/Title';
-import { Navbar } from '@/app/components/NavBar/Navbar';
+import Navbar from '@/app/components/NavBar/Navbar';
 import Block from '@/app/components/SignIn/Block';
 import styles from './styles.module.scss';
 import Image from 'next/image';
