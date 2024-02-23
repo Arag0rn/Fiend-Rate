@@ -5,25 +5,30 @@
   flex-direction: column;
   align-items: center;
   gap: 21px;
-  padding: 0 0 21px 0;
+  margin: 0 0 21px 0;
 
   @include onAppleMiniAndEight {
-    gap: 43.66px;
-    padding: 0 0 12.78px 0;
+    gap: 44px;
+    margin: 0 0 12px 0;
   }
 
   @include onApple {
     gap: 50px;
-    padding: 0 0 11px 0;
+    margin: 0 0 10px 0;
+  }
+
+  @include onApplePro {
+    gap: 50px;
+    margin: 0 0 10px 0;
   }
 
   @include onSamsungA30s {
-    gap: 56.94px;
-    padding: 0 0 9.15px 0;
+    gap: 56px;
+    margin: 0 0 10px 0;
   }
 
   @include onAppleProMax {
-    gap: 63.58px;
-    padding: 0 0 7.34px 0;
+    gap: 64px;
+    margin: 0 0 16px 0;
   }
 }
