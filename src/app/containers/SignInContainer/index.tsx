@@ -1,6 +1,6 @@
 "use client"
 import styles from "./styles.module.scss";
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import Image from 'next/image';
 import facebook from "../../images/SignUp/FB.svg";
