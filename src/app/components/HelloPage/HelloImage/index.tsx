@@ -1,4 +1,4 @@
-import image from '../../../images/happy-place.png';
+import image from '../../../images/hello-page/happy-place.png';
 import Image from 'next/image';
 import styles from './styles.module.scss';
 
