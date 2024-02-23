@@ -173,9 +173,7 @@ const NotificationContainer = () => {
               <TimeMessage>Yesterday at 12:22</TimeMessage>
             </Block>
           </Block>
-          <Block className={styles['notification__navbar']}>
-            <Navbar />
-          </Block>
+          <Navbar style={{ position: 'fixed' }}/>
         </Block>
     </Block>
   )
