@@ -7,7 +7,6 @@ import DefaltFoto from '../../images/Top/defaultFoto.png'
 import Star from '../../images/Top/star.svg'
 import Navbar from '../NavBar/Navbar';
 
-
 export const RateComponent = () => {
 
     const { topUsers } = rateData;
