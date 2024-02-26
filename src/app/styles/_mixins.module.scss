@@ -70,7 +70,7 @@
 }
 
 @mixin onApplePro {
-  @media ((min-width: 390px) and (max-width: 393px)) {
+  @media (width: 393px) {
     @content;
   }
 }

@@ -1,7 +1,6 @@
 "use client"
 import React from 'react';
 import styles from "./Rate.module.scss"; 
-import Container from '../Container';
 import Image from 'next/image';
 import rateData from './rate.json';
 import DefaltFoto from '../../images/Top/defaultFoto.png'
@@ -12,15 +11,20 @@ export const RateComponent = () => {
 
     const { topUsers } = rateData;
 
-    console.log(topUsers);
+    const sortedUsers = topUsers.sort((a, b) => {
+      if (a.rating !== b.rating) {
+        return b.rating - a.rating;  
+      }
+      return b.numberOfRatings - a.numberOfRatings;  
+    });
     
 
   return (
-    <Container>
+    <>
 
         <h2 className={styles.ratehead}>FriendRate TOP</h2>
         <ul className={styles.rateList}>
-          {topUsers.map(({ name, avatar, rating, id, numberOfRatings }) => (
+          {sortedUsers.map(({ name, avatar, rating, id, numberOfRatings }, index) => (
             <li className={styles.rateCard} key={id}>
                 <div className={styles.imgWrap}>
                <Image
@@ -29,8 +33,9 @@ export const RateComponent = () => {
                     width={40}
                     height={40}
                 />
+
                 </div>
-               
+              <div className={styles.rateNumber}>{`${index + 1}`}</div>
               <div className={styles.rateName}>{name}</div>
 
              
@@ -53,6 +58,6 @@ export const RateComponent = () => {
         </ul>
 
         <Navbar/>
-    </Container>
+    </>
   );
 }
