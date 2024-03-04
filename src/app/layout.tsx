@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import './global.scss';
 import localFont from 'next/font/local';
 import { ReactNode } from "react";
+import { Provider } from "./components/Providers";
 
 const helvetica = localFont({
   src: [
@@ -36,7 +37,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={helvetica.className}>{children}</body>
+      <body className={helvetica.className}>
+       <Provider>
+          {children}
+       </Provider> 
+      </body>
+      
     </html>
   )
 }

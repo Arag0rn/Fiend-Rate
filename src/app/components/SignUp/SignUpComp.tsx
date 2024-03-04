@@ -15,6 +15,9 @@ import TogleBtn from './TogleBtn';
 import Link from 'next/link';
 import { useFormik } from 'formik';
 
+import { useAppContext } from '../context';
+import { useRouter } from "next/navigation";
+
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -42,6 +45,11 @@ const SignupSchema = Yup.object().shape({
  
 
 const SignUpComp= () => {
+  const router = useRouter();
+
+  const { state, setFormData } = useAppContext();
+
+  
 
   const formik = useFormik({
           initialValues:{
@@ -51,9 +59,11 @@ const SignUpComp= () => {
           },
           validationSchema: SignupSchema,
           onSubmit: async (values, action) => {
-            console.log(values);
+            const { passwordRepeat, ...valuesWithoutPasswordRepeat } = values;
+            setFormData(valuesWithoutPasswordRepeat);
+            console.log(valuesWithoutPasswordRepeat);
             action.resetForm();
-            
+             router.push('/information');
           }
         })
   const [showPassword, setShowPassword] = useState(false);

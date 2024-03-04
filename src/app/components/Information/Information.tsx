@@ -13,6 +13,10 @@ import other from '../../images/Information/Other.svg';
 import malePressed from '../../images/Information/MalePressed.svg';
 import femalePressed from '../../images/Information/FemalePressed.svg';
 import otherPressed from '../../images/Information/OtherPressed.svg';
+import { useAppContext } from '../context';
+import {register} from "../../REDUX/Auth/operations"
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/app/REDUX/store';
 
 const createAccountSchema = Yup.object().shape({
   username: Yup.string()
@@ -29,6 +33,12 @@ const createAccountSchema = Yup.object().shape({
 });
 
 const Information = () => {
+  const { state } = useAppContext();
+  const formData = state.formData;
+  console.log(formData);
+  
+  const dispatch: AppDispatch = useDispatch();
+  
   const [date, setDate] = useState('');
   const [gender, setGender] = useState('');
 
@@ -41,7 +51,9 @@ const Information = () => {
     validationSchema: createAccountSchema,
     onSubmit: async (values, actions) => {
   
-      console.log(values);
+      const combinedData = { ...formData, ...values };
+      console.log(combinedData);
+      dispatch(register(combinedData))
       actions.resetForm();
     },
   });
@@ -100,18 +112,18 @@ const Information = () => {
 
         <ul className={styles.genderBox}>
           <p className={styles.boxTxt}>Gender</p>
-          <li className={styles.genderItem} onClick={() => handleOptionClick('male')}>
-            <Image src={gender === 'male' ? malePressed : male} alt="male" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('M')}>
+            <Image src={gender === 'M' ? malePressed : male} alt="male" />
             <p className={styles.genderTxt}>male</p>
           </li>
 
-          <li className={styles.genderItem} onClick={() => handleOptionClick('female')}>
-            <Image src={gender === 'female' ? femalePressed : female} alt="female" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('W')}>
+            <Image src={gender === 'W' ? femalePressed : female} alt="female" />
             <p className={styles.genderTxt}>female</p>
           </li>
 
-          <li className={styles.genderItem} onClick={() => handleOptionClick('other')}>
-            <Image src={gender === 'other' ? otherPressed : other} alt="other" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('NB')}>
+            <Image src={gender === 'NB' ? otherPressed : other} alt="other" />
             <p className={styles.genderTxt}>other</p>
           </li>
         </ul>

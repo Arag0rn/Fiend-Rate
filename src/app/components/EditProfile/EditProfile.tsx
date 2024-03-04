@@ -125,7 +125,7 @@ const EditProfile = () => {
   return (
     <>
     <Container style={{ paddingBottom: "30px", overflowY: 'auto' }}>
-    <h2 className={styles.editHeaad}>EditProfile</h2>
+    <h2 className={styles.editHeaad}>Edit</h2>
 
     <form className={styles.inputForm} onSubmit={formik.handleSubmit}>
         <label className={styles.fieldLabelM32} htmlFor="username">
