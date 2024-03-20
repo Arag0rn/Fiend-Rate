@@ -4,9 +4,11 @@ import styles from './NotFound.module.scss';
 import Container from './components/Container';
 import Image from 'next/image';
 import NotFoundImg from '../app/images/NotFound/404 page.png';
+import { useRouter } from "next/navigation";
 
 
 export default function NotFound() {
+  const router = useRouter();
   return (
     <>
   <Container>
@@ -21,7 +23,7 @@ export default function NotFound() {
             />
             <p className={styles.notFoundPageTxt}>Well... it seems, that this page is missing</p>
       </div>
-    <button className={styles.notFoundBtn}>HOME</button>
+    <button onClick={router.push('/')} className={styles.notFoundBtn}>HOME</button>
     </Container>
     </>
 

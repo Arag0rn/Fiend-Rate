@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -13,6 +13,12 @@ import other from '../../images/Information/Other.svg';
 import malePressed from '../../images/Information/MalePressed.svg';
 import femalePressed from '../../images/Information/FemalePressed.svg';
 import otherPressed from '../../images/Information/OtherPressed.svg';
+import { refreshUser, updateUserData} from "../../REDUX/Auth/operations"
+import { useDispatch, useSelector } from 'react-redux';
+import {selectIsLoggedIn, selectUser} from '../../REDUX/Auth/selector'
+import { Dispatch } from '@/app/REDUX/store';
+import { useRouter } from "next/navigation";
+
 
 const createAccountSchema = Yup.object().shape({
   username: Yup.string()
@@ -29,6 +35,14 @@ const createAccountSchema = Yup.object().shape({
 });
 
 const Information = () => {
+  
+  const dispatch: Dispatch = useDispatch();
+  const userData = useSelector(selectUser);
+  const isNotError = useSelector(selectIsLoggedIn)
+  const router = useRouter();
+  console.log(userData);
+  
+  
   const [date, setDate] = useState('');
   const [gender, setGender] = useState('');
 
@@ -40,9 +54,22 @@ const Information = () => {
     },
     validationSchema: createAccountSchema,
     onSubmit: async (values, actions) => {
-  
-      console.log(values);
+      const { birthday } = values;
+      const combinedData = {
+        ...values,
+        ...userData,
+        birthday: birthday.toString(),
+        username: values?.username || '',
+        gender: values?.gender || '',
+        email: userData?.email || '', 
+      };
+      console.log(combinedData);
+      dispatch(updateUserData(combinedData));
       actions.resetForm();
+      if (isNotError) {
+        router.push('/profile');
+      }
+    
     },
   });
 
@@ -59,6 +86,10 @@ const Information = () => {
     setGender((prevGender) => (prevGender === option ? '' : option));
     formik.setFieldValue('gender', option); 
   };
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
   return (
     <Container>

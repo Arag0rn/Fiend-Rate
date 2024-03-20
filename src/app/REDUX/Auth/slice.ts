@@ -1,0 +1,78 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { logIn, refreshUser, register, updateUserData } from './operations';
+
+export interface AuthState {
+  isLoggedIn: boolean;
+  isRefreshing: boolean;
+  isError: boolean;
+  token: string | null;
+  user: {
+    username?: string | '';
+    birthday?: string | '';
+    gender?: string | '';
+    email: string | '';
+    password: string | '';
+    avatar?: string | '';
+    verify?:boolean ;
+  } | null;
+}
+
+type InitState = AuthState;  
+
+const initialState: InitState = {
+  user: null,
+  token: null,
+  isLoggedIn: false,
+  isRefreshing: false,
+  isError: false,
+};
+
+  const authSlice = createSlice({
+    name: 'auth',
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+      //fullfilled
+      builder.addCase(register.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+        console.log(action.payload);
+      });
+        builder.addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      builder.addCase(logIn.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+        state.isError = false;
+      });
+      builder.addCase(updateUserData.fulfilled, (state, action) => {
+        state.user = { ...state.user, ...action.payload };
+        state.token = action.payload.token;
+        state.isRefreshing = false;
+        state.isError = false;
+      });
+      //rejected
+      builder.addCase(refreshUser.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.isError = true;
+      });
+      builder.addCase(register.rejected, (state) => {
+        state.isRefreshing = false;
+      });
+      //pending
+      builder.addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
+        state.isError = false;
+    });
+      builder.addCase(register.pending, (state) => {
+        state.isRefreshing = false;
+      });
+    },
+  });
+  export const authReducer = authSlice.reducer;
