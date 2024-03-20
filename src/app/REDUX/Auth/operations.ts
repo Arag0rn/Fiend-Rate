@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AuthState } from './slice';
 
 
-axios.defaults.baseURL = ' http://127.0.0.1:8000/';
+axios.defaults.baseURL = 'http://localhost:3000';
+
+// axios.defaults.baseURL = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com/';
 
 
-
-
-const setAuthHeader = (token) => {
+const setAuthHeader = (token: string) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -16,15 +17,33 @@ const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = '';
 };
 
+interface RegisterData {
+  username?: string;
+  birthday?: string;
+  gender?: string;
+  email: string;
+  password: string;
+  avatar?: string;
+  verify?:boolean;
+};
+
+interface UpdatedData {
+  username?: string;
+  birthday?: string;
+  gender?: string;
+  email: string;
+  avatar?: string;
+  verify?:boolean;
+};
+
 
 export const register = createAsyncThunk(
   'auth/register',
-  async (newUser: any, thunkAPI) => {
+  async (newUser: RegisterData, thunkAPI) => {
     console.log(newUser);
     try {
-      newUser.is_active = true;
-      const res = await axios.post('/user/', newUser);
-      // setAuthHeader(res.data.token);
+      const res = await axios.post('api/user/register', newUser);
+      setAuthHeader(res.data.token);
       console.log(res)
       return res.data;
     } catch (error: any) {
@@ -33,40 +52,52 @@ export const register = createAsyncThunk(
   }
 );
 
-// export const register = async (newUser) => {
-//   try {
-    
-
-//     const token = authResponse;
-//     console.log(token);
-
-//     setAuthHeader(token);
-
-//     const userResponse = await axios.post('user/', newUser);
-
-//     console.log(userResponse.data);
-    
-//     // return userResponse.data;
-//   } catch (error) {
-//     console.error('Ошибка в регистрации:', error);
-//     throw error;
-//   }
-// };
-
-
-export const login = async (newUser) => {
-  try {
-
-    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MjMwODk2LCJpYXQiOjE3MDkyMzA1OTYsImp0aSI6ImNjZjE0YTkxNDIwNjQwNzZhZDgzNzMxYWYyYjk1OTgxIiwidXNlcl9pZCI6OH0.G_KoYtT8YdkX8xEYH1UYx7hb-laSwFj_u0EZoqEImlw";
-    // setAuthHeader(token);
-
-    const userResponse = await axios.get('/user/', newUser);
-
-    console.log(userResponse.data);
-    
-    return userResponse.data;
-  } catch (error) {
-    console.error('Ошибка в регистрации:', error);
-    throw error;
+export const logIn = createAsyncThunk(
+  'auth/login',
+  async (credentials:RegisterData, thunkAPI) => {
+   
+    try {
+      const res = await axios.post('api/user/login', credentials);
+      setAuthHeader(res.data.token);
+      const resUser = await axios.get('/api/user/current');
+      
+      return { user: resUser.data, token: res.data.token };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-};
+);
+
+export const refreshUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as { auth: AuthState };
+    const persistedToken = state.auth.token;
+    console.log(persistedToken);
+    
+    if (persistedToken === null) {
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+    }
+
+    try {
+      setAuthHeader(persistedToken);
+      const res = await axios.get('api/user/current');
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateUserData = createAsyncThunk(
+  'auth/updateUserData',
+  async (userData: UpdatedData, thunkAPI) => {
+    try {
+      const res = await axios.patch('/api/user/update', userData);
+
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);

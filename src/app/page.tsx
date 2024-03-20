@@ -10,6 +10,7 @@ export default function Home() {
     setTimeout(() => setLoading(true), 1000);
   }, []);
 
+
   if (!loading) return <Loader />;
 
   return (

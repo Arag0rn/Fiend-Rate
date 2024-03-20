@@ -14,9 +14,12 @@ import Google from "../../images/SignUp/Google.svg";
 import TogleBtn from './TogleBtn';
 import Link from 'next/link';
 import { useFormik } from 'formik';
-
-import { useAppContext } from '../context';
 import { useRouter } from "next/navigation";
+import { useDispatch } from 'react-redux';
+import { register } from '@/app/REDUX/Auth/operations';
+import { Dispatch } from '@/app/REDUX/store';
+import { useAuth } from '../../REDUX/Hooks/useAuth'
+
 
 
 const SignupSchema = Yup.object().shape({
@@ -46,10 +49,10 @@ const SignupSchema = Yup.object().shape({
 
 const SignUpComp= () => {
   const router = useRouter();
-
-  const { state, setFormData } = useAppContext();
-
-  
+  const dispatch:Dispatch = useDispatch();
+  const { isLoggedIn } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [isAccept, setIsAccept] = useState(false);
 
   const formik = useFormik({
           initialValues:{
@@ -60,14 +63,15 @@ const SignUpComp= () => {
           validationSchema: SignupSchema,
           onSubmit: async (values, action) => {
             const { passwordRepeat, ...valuesWithoutPasswordRepeat } = values;
-            setFormData(valuesWithoutPasswordRepeat);
+
+            dispatch(register(valuesWithoutPasswordRepeat));
             console.log(valuesWithoutPasswordRepeat);
             action.resetForm();
-             router.push('/information');
+            
           }
         })
-  const [showPassword, setShowPassword] = useState(false);
-  const [isAccept, setIsAccept] = useState(false);
+
+       if (isLoggedIn){ router.push('/verify')}
   
  
   return (

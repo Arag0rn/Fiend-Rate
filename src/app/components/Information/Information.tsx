@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -13,10 +13,12 @@ import other from '../../images/Information/Other.svg';
 import malePressed from '../../images/Information/MalePressed.svg';
 import femalePressed from '../../images/Information/FemalePressed.svg';
 import otherPressed from '../../images/Information/OtherPressed.svg';
-import { useAppContext } from '../context';
-import {register} from "../../REDUX/Auth/operations"
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/app/REDUX/store';
+import { refreshUser, updateUserData} from "../../REDUX/Auth/operations"
+import { useDispatch, useSelector } from 'react-redux';
+import {selectIsLoggedIn, selectUser} from '../../REDUX/Auth/selector'
+import { Dispatch } from '@/app/REDUX/store';
+import { useRouter } from "next/navigation";
+
 
 const createAccountSchema = Yup.object().shape({
   username: Yup.string()
@@ -33,11 +35,13 @@ const createAccountSchema = Yup.object().shape({
 });
 
 const Information = () => {
-  const { state } = useAppContext();
-  const formData = state.formData;
-  console.log(formData);
   
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch: Dispatch = useDispatch();
+  const userData = useSelector(selectUser);
+  const isNotError = useSelector(selectIsLoggedIn)
+  const router = useRouter();
+  console.log(userData);
+  
   
   const [date, setDate] = useState('');
   const [gender, setGender] = useState('');
@@ -50,11 +54,22 @@ const Information = () => {
     },
     validationSchema: createAccountSchema,
     onSubmit: async (values, actions) => {
-  
-      const combinedData = { ...formData, ...values };
+      const { birthday } = values;
+      const combinedData = {
+        ...values,
+        ...userData,
+        birthday: birthday.toString(),
+        username: values?.username || '',
+        gender: values?.gender || '',
+        email: userData?.email || '', 
+      };
       console.log(combinedData);
-      dispatch(register(combinedData))
+      dispatch(updateUserData(combinedData));
       actions.resetForm();
+      if (isNotError) {
+        router.push('/profile');
+      }
+    
     },
   });
 
@@ -71,6 +86,10 @@ const Information = () => {
     setGender((prevGender) => (prevGender === option ? '' : option));
     formik.setFieldValue('gender', option); 
   };
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
   return (
     <Container>
@@ -112,18 +131,18 @@ const Information = () => {
 
         <ul className={styles.genderBox}>
           <p className={styles.boxTxt}>Gender</p>
-          <li className={styles.genderItem} onClick={() => handleOptionClick('M')}>
-            <Image src={gender === 'M' ? malePressed : male} alt="male" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('male')}>
+            <Image src={gender === 'male' ? malePressed : male} alt="male" />
             <p className={styles.genderTxt}>male</p>
           </li>
 
-          <li className={styles.genderItem} onClick={() => handleOptionClick('W')}>
-            <Image src={gender === 'W' ? femalePressed : female} alt="female" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('female')}>
+            <Image src={gender === 'female' ? femalePressed : female} alt="female" />
             <p className={styles.genderTxt}>female</p>
           </li>
 
-          <li className={styles.genderItem} onClick={() => handleOptionClick('NB')}>
-            <Image src={gender === 'NB' ? otherPressed : other} alt="other" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('other')}>
+            <Image src={gender === 'other' ? otherPressed : other} alt="other" />
             <p className={styles.genderTxt}>other</p>
           </li>
         </ul>
