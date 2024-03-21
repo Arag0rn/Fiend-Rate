@@ -17,8 +17,15 @@ import styles from './styles.module.scss';
 import TitleAbout from '@/app/components/ProfilePage/TitleAbout';
 import AboutDescription from '@/app/components/ProfilePage/AboutDescription';
 import Label from '@/app/components/SignIn/Label';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn, selectUser } from '@/app/REDUX/Auth/selector';
 
 const ProfileContainer = () => {
+
+  const userData = useSelector(selectUser);
+
+  console.log(userData);
+  
   return (
     <Block className='profile'>
       <Container>

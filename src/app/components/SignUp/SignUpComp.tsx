@@ -53,7 +53,9 @@ const SignUpComp= () => {
   const { isLoggedIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
-
+  const { user } = useAuth();
+  console.log(user);
+  
   const formik = useFormik({
           initialValues:{
             email: '',
