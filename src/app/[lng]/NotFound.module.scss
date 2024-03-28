@@ -1,5 +1,5 @@
-@import '../app/styles/mixins.module';
-@import '../app/styles/utils.module';
+@import '../styles/mixins.module';
+@import '../styles/utils.module';
 
 .notFoundBtn{
     @include mainBtn;

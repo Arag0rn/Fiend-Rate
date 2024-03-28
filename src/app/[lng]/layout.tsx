@@ -1,25 +1,31 @@
 import type { Metadata } from "next";
+import { dir } from 'i18next';
+import { languages } from '../../i18n/settings';
 import './global.scss';
 import localFont from 'next/font/local';
 import { ReactNode } from "react";
-import { Provider } from "./components/Providers";
+import { Provider } from "../components/Providers";
+
+export async function generateStaticParams({lng}) {
+  return languages.map((lng) => ({ lng }))
+}
 
 const helvetica = localFont({
   src: [
     {
-      path: './styles/fonts/HelveticaNeueCyr-Light.ttf',
+      path: '../styles/fonts/HelveticaNeueCyr-Light.ttf',
       weight: '300'
     },
     {
-      path: './styles/fonts/HelveticaNeueCyr-Roman.ttf',
+      path: '../styles/fonts/HelveticaNeueCyr-Roman.ttf',
       weight: '400'
     },
     {
-      path: './styles/fonts/HelveticaNeueCyr-Medium.ttf',
+      path: '../styles/fonts/HelveticaNeueCyr-Medium.ttf',
       weight: '500'
     },
     {
-      path: './styles/fonts/HelveticaNeueCyr-Bold.ttf',
+      path: '../styles/fonts/HelveticaNeueCyr-Bold.ttf',
       weight: '700'
     },
   ]
@@ -32,11 +38,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  params: { lng }
 }: Readonly<{
   children: ReactNode;
+  params: { lng: string }
 }>) {
   return (
-    <html lang="en">
+    <html lang={lng} dir={dir(lng)}>
       <body className={helvetica.className}>
        <Provider>
           {children}

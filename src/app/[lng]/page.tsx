@@ -1,9 +1,9 @@
 'use client';
-import Loader from './components/Loader';
+import Loader from '../components/Loader';
 import { useEffect, useState } from 'react';
-import HelloPage from './containers/HelloPage';
+import HelloPage from '../containers/HelloPage';
 
-export default function Home() {
+export default function Home({ params: { lng } }) {
   const [loading, setLoading] = useState(false);
 
 
@@ -15,6 +15,6 @@ export default function Home() {
   if (!loading) return <Loader />;
 
   return (
-    <HelloPage />
+    <HelloPage params={lng} />
   )
 }

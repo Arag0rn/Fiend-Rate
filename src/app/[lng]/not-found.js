@@ -1,14 +1,17 @@
 "use client"
 import React from 'react';
 import styles from './NotFound.module.scss';
-import Container from './components/Container';
+import Container from '../components/Container';
 import Image from 'next/image';
-import NotFoundImg from '../app/images/NotFound/404 page.png';
+import NotFoundImg from '../images/NotFound/404 page.png';
 import { useRouter } from "next/navigation";
+import { useTranslation } from '../../i18n/client';
 
 
-export default function NotFound() {
+export default function NotFound({ params }) {
   const router = useRouter();
+  const { t } = useTranslation(params, 'error');
+
   return (
     <>
   <Container>
@@ -21,9 +24,9 @@ export default function NotFound() {
                 priority={true}
                 alt='Not found - Illustration of a missing page'
             />
-            <p className={styles.notFoundPageTxt}>Well... it seems, that this page is missing</p>
+            <p className={styles.notFoundPageTxt}>{t("title")}</p>
       </div>
-    <button onClick={router.push('/')} className={styles.notFoundBtn}>HOME</button>
+      <button onClick={() => router.push(`/${params}`)} className={styles.notFoundBtn}>{t('home')}</button>
     </Container>
     </>
 

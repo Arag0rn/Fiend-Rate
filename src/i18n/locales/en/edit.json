@@ -1,0 +1,15 @@
+{
+  "name": "UserName",
+  "email": "Email",
+  "birthDay": "Birthday",
+  "gender": "Gender",
+  "password": "Password",
+  "lng": "Language",
+  "confirm": "Confirm Password",
+  "about": "About",
+  "enterAbout": "Please enter a few words about you",
+  "errorAtLeast": "This field must contain at least 10 characters",
+  "errorLess": "This field must contain less than 255 characters",
+  "save": "Save",
+  "delete": "Delete my account"
+}
