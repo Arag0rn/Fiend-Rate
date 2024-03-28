@@ -1,4 +1,4 @@
-import { RateComponent } from "../components/RateComponent/RateComponent";
+import { RateComponent } from "../../components/RateComponent/RateComponent";
 
 
 

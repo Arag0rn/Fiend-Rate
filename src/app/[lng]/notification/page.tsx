@@ -1,4 +1,4 @@
-import NotificationContainer from '../containers/NotificationContainer';
+import NotificationContainer from '../../containers/NotificationContainer';
 
 const Page = () => {
   return (
