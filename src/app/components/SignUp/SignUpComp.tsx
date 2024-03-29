@@ -19,37 +19,40 @@ import { useDispatch } from 'react-redux';
 import { register } from '@/app/REDUX/Auth/operations';
 import { Dispatch } from '@/app/REDUX/store';
 import { useAuth } from '../../REDUX/Hooks/useAuth'
+import { useTranslation } from '@/i18n/client';
+import { TFunction } from 'i18next';
 
 
 
-const SignupSchema = Yup.object().shape({
+
+const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   email: Yup.string()
-  .email('Please enter a valid email address.')
-  .matches(
-    /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
-    'Please enter a valid email address.'
-  )
-  .min(5, 'Email should be at least 5 characters')
-  .max(50, 'Email should not exceed 50 characters')
-  .required('Required'),
+    .email('Please enter a valid email address.')
+    .matches(
+      /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
+      'Please enter a valid email address.'
+    )
+    .min(5, 'Email should be at least 5 characters')
+    .max(50, 'Email should not exceed 50 characters')
+    .required('Required'),
   password: Yup.string()
-  .required('Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
-  .min(8, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
-  .max(30, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
-  .matches(
-    /^(?=.*[a-z])(?=.*\d)(?=.*[_@+.\-*$£€&!?:;,~^#(){}[\]|\/\\'"])/,
-    'Password must be 8-30 characters and a combination of numbers, letters and special symbols.'
-  ),
+    .required(() => t("errorPassword"))
+    .min(8, () => t("errorPassword"))
+    .max(30, () => t("errorPassword"))
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_@+.\-*$£€&!?:;,~^#(){}[\]|\/\\'"])/,
+      () => t("errorPassword")
+    ),
   passwordRepeat: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords do not match. Please re-enter your password.')
     .required('Required'),
 });
-
  
 
-const SignUpComp= () => {
+const SignUpComp= ({params}) => {
   const router = useRouter();
   const dispatch:Dispatch = useDispatch();
+  const { t } = useTranslation(params, 'sign-up');
   const { isLoggedIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
@@ -62,7 +65,7 @@ const SignUpComp= () => {
             password: '',
             passwordRepeat: '',
           },
-          validationSchema: SignupSchema,
+          validationSchema: SignupSchema(t),
           onSubmit: async (values, action) => {
             const { passwordRepeat, ...valuesWithoutPasswordRepeat } = values;
 
@@ -81,15 +84,15 @@ const SignUpComp= () => {
     <Container>
     <TogleBtn/>
 
-  <h2 className={styles.head}>Create new account</h2>
+  <h2 className={styles.head}>{t("title")}</h2>
 
 
           <form className={styles.imputForm} onSubmit={formik.handleSubmit}>
-            <label className={styles.fieldLabel} htmlFor="email">Email</label>
+            <label className={styles.fieldLabel} htmlFor="email">{t("email")}</label>
             <input className={!formik.touched.email || !formik.errors.email ? styles.field : styles.fieldErr} 
             id="email" 
             name="email" 
-            placeholder="Please enter your email address" 
+            placeholder={t("plholdEmail")} 
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}
@@ -100,7 +103,7 @@ const SignUpComp= () => {
         )}
              
             <label className={styles.fieldLabel} htmlFor="password">
-              Password
+            {t("password")}
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image  className={styles.icon} src={showIcon} alt="show_icon"  />
@@ -113,7 +116,7 @@ const SignUpComp= () => {
               id="password"
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="Enter your password"
+              placeholder={t("plholdPassword")} 
               title="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -133,7 +136,7 @@ const SignUpComp= () => {
      
 
             <label className={styles.fieldLabel} htmlFor="passwordRepeat">
-                Confirm password
+                {t("confirm")}
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image className={styles.icon} src={showIcon} alt="show_icon" />
@@ -146,7 +149,7 @@ const SignUpComp= () => {
               id="passwordRepeat"
               type={showPassword ? 'text' : 'password'}
               name="passwordRepeat"
-              placeholder="Confirm your password"
+              placeholder={t("plholdPassword")}
               title="passwordRepeat"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -169,12 +172,12 @@ const SignUpComp= () => {
                       alt="Icon"
                   />
               
-                      <p className={styles.checkboxTxt}>I agree to the <a className={styles.tearms} href="">Terms & Conditions</a> and <a className={styles.tearms} href="">Privacy Policy</a></p> 
+                      <p className={styles.checkboxTxt}>{t("terms")}<a className={styles.tearms} href="">{t("terms2")}</a> {t("terms4")} <a className={styles.tearms} href="">{t("terms3")}</a></p> 
                   </div>
         
                   <div className={styles.bottomBox}>
-        <button className={styles.signupBtn} type='submit' disabled={!isAccept}>SIGN UP</button>
-        <div className={styles.signInTxt}>or Sign in with</div>
+        <button className={styles.signupBtn} type='submit' disabled={!isAccept}>{t("signUp")}</button>
+        <div className={styles.signInTxt}>{t("signIn")}</div>
 
         <div className={styles.socialBox}>
           <a className={styles.socialIcon}>
@@ -194,9 +197,9 @@ const SignUpComp= () => {
 
         </div>
 
-        <p className={styles.bottomTxt}>Already have an account? 
+        <p className={styles.bottomTxt}>{t("linkSignIn")} 
             <Link className={styles.socialTxt} href="/sign-in">
-              Sign in!
+            {t("signIn")} 
             </Link>
         </p>
         </div>
