@@ -23,8 +23,6 @@ import { useTranslation } from '@/i18n/client';
 import { TFunction } from 'i18next';
 
 
-
-
 const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   email: Yup.string()
     .email('Please enter a valid email address.')
@@ -68,7 +66,6 @@ const SignUpComp= ({params}) => {
           validationSchema: SignupSchema(t),
           onSubmit: async (values, action) => {
             const { passwordRepeat, ...valuesWithoutPasswordRepeat } = values;
-
             dispatch(register(valuesWithoutPasswordRepeat));
             console.log(valuesWithoutPasswordRepeat);
             action.resetForm();
@@ -85,7 +82,6 @@ const SignUpComp= ({params}) => {
     <TogleBtn/>
 
   <h2 className={styles.head}>{t("title")}</h2>
-
 
           <form className={styles.imputForm} onSubmit={formik.handleSubmit}>
             <label className={styles.fieldLabel} htmlFor="email">{t("email")}</label>
@@ -133,8 +129,6 @@ const SignUpComp= ({params}) => {
           <span className={styles.errMes}>{formik.errors.password}</span>
             )}
 
-     
-
             <label className={styles.fieldLabel} htmlFor="passwordRepeat">
                 {t("confirm")}
               <div onClick={() => setShowPassword(!showPassword)}>
@@ -160,12 +154,8 @@ const SignUpComp= ({params}) => {
                         <span className={styles.errMes}>{formik.errors.passwordRepeat}</span>
                           )}
 
-
-
-
                   <div className={styles.checkbox}>
-              
-                      
+                  
                   <Image
                       onClick={() => setIsAccept(!isAccept)}
                       src={isAccept ? checkTrue : checkFalse}
@@ -206,9 +196,6 @@ const SignUpComp= ({params}) => {
 
           </form>
 
-      
-
-    
     </Container>
     </>
   )
