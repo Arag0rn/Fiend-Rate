@@ -10,8 +10,11 @@
   "errorPassword": "Password must be 8-30 characters and a combination of numbers, letters and special symbols",
   "confirm": "Confirm your password",
   "errorConfirm": "Passwords do not match. Please re-enter your password",
-  "terms": "I agree to the Terms & Conditions and Privacy Policy",
+  "terms": "I agree to the ",
+  "terms2": "Terms & Conditions",
+  "terms3": "Privacy Policy",
+  "terms4": "and",
   "continue": "Continue",
   "textOrSign": "or Sign in with",
-  "linkSignIn": "Already have an account? Sign in!"
+  "linkSignIn": "Already have an account?"
 }
