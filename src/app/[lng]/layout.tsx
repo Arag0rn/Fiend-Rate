@@ -6,7 +6,7 @@ import localFont from 'next/font/local';
 import { ReactNode } from "react";
 import { Provider } from "../components/Providers";
 
-export async function generateStaticParams({lng}) {
+export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
 
