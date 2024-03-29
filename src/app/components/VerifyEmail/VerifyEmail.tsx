@@ -7,9 +7,9 @@ import { io } from 'socket.io-client';
 import { useTranslation } from '@/i18n/client';
 
 
-const server = 'http://localhost:3000'
-// const server2 = 'http://whispering-falls-70384-f5d92e367b77.herokuapp.com:3002'  
-const socket = io(server, {transports: ['websocket']});
+// const server = 'http://localhost:3000'
+const server2 = 'http://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
+const socket = io(server2, {transports: ['websocket']});
 
 
 socket.connect();
@@ -25,7 +25,9 @@ const VerifyEmail = ({params}) => {
         setVerifiedUsers((userData));
       });
 
-
+      return () => {
+        socket.off('user_verified');
+      };
     }
   }, []);
 
