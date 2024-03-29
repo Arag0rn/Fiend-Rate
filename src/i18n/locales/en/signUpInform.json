@@ -1,0 +1,17 @@
+{
+  "title": "We need to know about you a little bit more",
+  "signUp": "Sign up",
+  "signIn": "Sign In",
+  "userName": "Username",
+  "plholdUserName": "Please enter your username",
+  "birthDay": "Birthday",
+  "plholdBirthDay": "DD.MM.YYYY",
+  "errorBirthDayFormat": "Please enter your birthdate in 'DD.MM.YYYY' format",
+  "errorBirthDay": "Birthdate must be written in 'DD.MM.YYYY' format",
+  "gender": "Gender",
+  "male": "male",
+  "female": "female",
+  "other": "other",
+  "account": "Create account",
+  "congratuate": "Congratulations! Your FriendRate account has been created successfully, do it!"
+}

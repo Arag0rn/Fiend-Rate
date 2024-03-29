@@ -15,10 +15,12 @@ import { useEffect, useState } from "react";
 import Loader from '../components/Loader';
 import BlockButton from "../components/HelloPage/BlockButton";
 import Block from "../components/SignIn/Block";
+import { useTranslation } from '../../i18n/client';
 
-const HelloPage = () => {
+const HelloPage = ({ params }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation(params, 'hello-page');
 
   useEffect(() => {
     setTimeout(() => setLoading(true), 1000)
@@ -35,18 +37,18 @@ const HelloPage = () => {
           <LogoImage></LogoImage>
           </BlockLogo>
           <BlockTitle>
-          <Title>Discover interesting people <br /> to talk with</Title>
+          <Title>{t('title')} <br /> {t('titleWith')}</Title>
           <Description>
-            You need to Sing up or Sign in your account
+            {t('description')}
             <br />
-            to use all features
+            {t('descriptionWith')}
           </Description>
           </BlockTitle>
           <BlockButton>
-          <Button onClick={() => router.push('/signup')}>Sign Up</Button>
-          <ButtonIn onClick={() => router.push('/sign-in')}>Sign In</ButtonIn>
+          <Button onClick={() => router.push('/signup')}>{t('signUp')}</Button>
+          <ButtonIn onClick={() => router.push('/sign-in')}>{t('signIn')}</ButtonIn>
           </BlockButton>
-          <Link className={styles['none-registration']} href='/'>Try without registration</Link>
+          <Link className={styles['none-registration']} href='/'>{t('regist')}</Link>
         </Block>
       </Container>
     </Block>
