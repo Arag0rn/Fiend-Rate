@@ -8,7 +8,7 @@ import { useTranslation } from '@/i18n/client';
 
 
 // const server = 'http://localhost:3000'
-const server2 = 'http://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
+const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 const socket = io(server2, {transports: ['websocket']});
 
 
