@@ -58,8 +58,6 @@ const EditProfile = () => {
 
     const {UserData} = User;
     const [isModalOpen, setIsModalOpen] = React.useState(false);
- 
-    
     const [date, setDate] = useState(UserData.birthday);
     const [open, setOpen] = useState(false);
     const [openGen, setOpenGen] = useState(false);
@@ -111,10 +109,7 @@ const EditProfile = () => {
         
       };
 
-
       const handleOpenModal = () => {
-        console.log("Modal open btn");
-        
         setIsModalOpen(true);
       };
     
