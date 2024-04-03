@@ -10,6 +10,25 @@
     line-height: 1; 
 }
 
+.fieldLabel{
+  margin-top: 8px;
+  margin-left: 8px;
+  color: $main-beige;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.7; 
+}
+
+.genderLangBox{
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+}
+
+.genderLangBox > :nth-child(3n) {
+  margin-top: 16px;
+}
+
 .inputForm{
 
     display: flex;
@@ -24,72 +43,12 @@
 
 
   .fieldLabelM32{
-    margin-top: 32px;
+    margin-top: 18px;
     margin-left: 8px;
     color: $main-beige;
     font-size: 14px;
     font-weight: 500;
     line-height: 1.7; 
-  }
-
-  .fieldLabel{
-    position: relative;
-    margin-top: 22px;
-    margin-left: 8px;
-    color: $main-beige;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.7; 
-  }
-
-
-
-
-  .customSelect{
-    @include inputField;
-    cursor:pointer;
-    
-  
-  }
-
-  .customSelectOpen{
-    @include inputField;
-    cursor:pointer;
-    height: 80px;
-  }
-
-  .options{
-    background: rgba(80, 78, 66, 0.1);
-  }
-
-  .options2{
-    background: rgba(80, 78, 66, 0.1);
-  
-  }
-
-
-  .selected {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    line-height: 3;
-    border-radius: .25em;
-   
-  }
-  
-  .selected::after {
-    content: '';
-    position: absolute;
-    z-index: 10;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 20px;
-    width: 20px;
-    height: 12px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="12" viewBox="0 0 20 12" fill="none"><path d="M18 2.03406L10.1374 10" stroke="%23FCFBF5" stroke-width="3" stroke-linecap="round"/><path d="M2 2L9.8626 9.96596" stroke="%23FCFBF5" stroke-width="3" stroke-linecap="round"/></svg>') no-repeat;
-    pointer-events: none;
-    transition: .25s all ease;
   }
 
   .icon{

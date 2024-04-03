@@ -41,8 +41,6 @@ const Information = ({params}) => {
   const userData = useSelector(selectUser);
   const isNotError = useSelector(selectIsLoggedIn)
   const router = useRouter();
-  console.log(userData);
-  
   
   const [date, setDate] = useState('');
   const [gender, setGender] = useState('');
