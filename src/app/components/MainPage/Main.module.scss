@@ -34,16 +34,35 @@
     width: 100%;
 }
 
+.inputContainer{
+    display: flex;
+    gap: 10px;
+}
+
+.valueInput{
+    @include inputField;
+    width: 40px;
+    padding: 4px 11px;
+}
+
+.buttonOK{
+    @include mainBtn;
+    padding: 4px 11px;
+    font-size: 14px;
+    
+}
 .mainBtnBox{
     display: flex;
     width: 100%;
     gap: 8px;
+    margin-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
 }
 
 .button1to1{
     @include mainBtn;
+    padding: 8px 11px;
     
 }
 

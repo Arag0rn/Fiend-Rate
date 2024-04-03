@@ -32,42 +32,6 @@
     line-height: 1.7; 
   }
 
-  .fieldLabel{
-    position: relative;
-    margin-top: 22px;
-    margin-left: 8px;
-    color: $main-beige;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1.7; 
-  }
-
-
-
-
-  .customSelect{
-    @include inputField;
-    cursor:pointer;
-    
-  
-  }
-
-  .customSelectOpen{
-    @include inputField;
-    cursor:pointer;
-    height: 80px;
-  }
-
-  .options{
-    background: rgba(80, 78, 66, 0.1);
-  }
-
-  .options2{
-    background: rgba(80, 78, 66, 0.1);
-  
-  }
-
-
   .selected {
     position: relative;
     display: flex;

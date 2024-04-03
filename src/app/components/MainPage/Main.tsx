@@ -4,36 +4,51 @@ import Navbar from '../NavBar/Navbar';
 import MainImg from '../../images/Main/mainimg.png'
 import Logo from '../../images/Main/Logo.svg'
 import styles from "./Main.module.scss"; 
-import SelectStyles from "../EditProfile/edit.module.scss"; 
 import Image from 'next/image';
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './MuiThemeProvider';
+import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
+import { LangSelector } from '../Selectors/LangSelector/LangSelector';
 
 export const Main = ({params}) => {
 
     const [value, setValue] = useState<number[]>([18, 55]);
-    const [gender, setGender] = useState('Male');
-    const [language, setLanguage] = useState("UKR");
-    const [open, setOpen] = useState(false);
-    const [openGen, setOpenGen] = useState(false);
+    const [selectedLanguage, setSelectedLanguage] = useState("UKR");
+    const [selectedGender, setSelectedGender] = useState("Male");
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
       };
 
-      const handleSelectGenderChange = (selectedGender) => {
-        setGender(selectedGender);
-        setOpenGen(true);
-        
-      };
+      const handleLanguageChange = (newLanguage: string) => {
+        setSelectedLanguage(newLanguage as string);
+    };
 
-      const handleSelectChange = (selectedLanguage) => {
-        setLanguage(selectedLanguage);
-        setOpen(true);
-        
-      };
+    const handleGenderChange = (newGender: string) => {
+      setSelectedGender(newGender as string);
+  };
+
+  const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    let newValue = event.target.value.trim(); 
+  
+    if (newValue === "") {
+      newValue = "1"; 
+    }
+  
+    let parsedValue = parseInt(newValue, 10);
+  
+    if (isNaN(parsedValue) || parsedValue < 1) {
+      parsedValue = 1; 
+    } else if (parsedValue > 99) {
+      parsedValue = 99; 
+    }
+  
+    const updatedValue = [...value];
+    updatedValue[index] = parsedValue;
+    setValue(updatedValue);
+  };
 
   return (
     <>
@@ -56,45 +71,11 @@ export const Main = ({params}) => {
     <div className={styles.mainTxt}>SELECT THE PARAMETERS OF WHO WE WILL SEARCH FOR</div>
 
     <div className={styles.customSelectContainer}>
-        <label className={SelectStyles.fieldLabel} htmlFor="gender">
-            Gender
-        </label>
-            <div className={openGen ? SelectStyles.customSelectOpen : SelectStyles.customSelect} onClick={() => setOpenGen(!openGen)}>
-            {!openGen ? (
-                <span className={SelectStyles.options}>{gender}</span>
-            ) : (
-                <div className={SelectStyles.options2}>
-                <div className={SelectStyles.options2} onClick={() => handleSelectGenderChange('Male')}>
-                    Male
-                </div>
-                <div className={SelectStyles.options2} onClick={() => handleSelectGenderChange('Female')}>
-                    Female
-                </div>
-                <div className={SelectStyles.options2} onClick={() => handleSelectGenderChange('Other')}>
-                    Other
-                </div>
-                </div>
-            )}
-            </div>
-            
-            <label className={SelectStyles.fieldLabel} htmlFor="language">
-            Language
-            </label>
-            <div className={open ? SelectStyles.customSelectOpen : SelectStyles.customSelect} onClick={() => setOpen(!open)}>
-            {!open ? (
-                <span className={SelectStyles.options}>{language}</span>
-            ) : (
-                <div className={SelectStyles.options2}>
-                <div className={SelectStyles.options2} onClick={() => handleSelectChange('ENG')}>
-                    ENG
-                </div>
-                <div className={SelectStyles.options2} onClick={() => handleSelectChange('UKR')}>
-                    UKR
-                </div>
-                </div>
-            )}
-            </div>
+      <GenderSelector onSelectGender={handleGenderChange}/>
+      <LangSelector onSelectLanguage={handleLanguageChange}/>   
     </div>
+
+    <div className={styles.mainTxt}>Age</div>
 
     <ThemeProvider theme={theme}>
     <Box sx={{ 
@@ -107,15 +88,23 @@ export const Main = ({params}) => {
       },
       width: 300,
       color: 'primary.main',
-      marginTop: '55px'
+      marginTop: '25px'
     }}>
       <Slider
         value={value} 
         onChange={handleChange}
         valueLabelDisplay="on"
+        min={14} 
+        max={99}
       />
     </Box>
     </ThemeProvider>
+    <div className={styles.inputContainer}>
+      <input className={styles.valueInput} type="text" value={value[0]} onChange={(e) => handleInputChange(0, e)} />
+      <input className={styles.valueInput} type="text" value={value[1]} onChange={(e) => handleInputChange(1, e)} />
+      <button className={styles.buttonOK}>OK</button>
+    </div>
+
     <div className={styles.mainBtnBox}>
       <button className={styles.button1to1}>1 TO 1</button>
       <button className={styles.buttonGroup}>GROUP</button>
