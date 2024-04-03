@@ -75,7 +75,8 @@ export const Main = ({params}) => {
       <LangSelector onSelectLanguage={handleLanguageChange}/>   
     </div>
 
-    <div className={styles.mainTxt}>Age</div>
+   <div className={styles.sliderContainer}>
+    <div className={styles.ageTxt}>Age</div>
 
     <ThemeProvider theme={theme}>
     <Box sx={{ 
@@ -99,6 +100,7 @@ export const Main = ({params}) => {
       />
     </Box>
     </ThemeProvider>
+    </div>
     <div className={styles.inputContainer}>
       <input className={styles.valueInput} type="text" value={value[0]} onChange={(e) => handleInputChange(0, e)} />
       <input className={styles.valueInput} type="text" value={value[1]} onChange={(e) => handleInputChange(1, e)} />

@@ -10,6 +10,8 @@ import hideIcon from "../../images/SignUp/hide_icon.svg";
 import Navbar from '../NavBar/Navbar';
 import User from './user.json';
 import BasicModal from './DeleteModal';
+import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
+import { LangSelector } from '../Selectors/LangSelector/LangSelector';
 
 
 
@@ -51,8 +53,6 @@ const SignupSchema = Yup.object().shape({
     .required('Please enter a few words about you')
 
 });
-
-
 
 const EditProfile = () => {
 
@@ -174,50 +174,10 @@ const EditProfile = () => {
 {formik.touched.birthday && formik.errors.birthday && (
           <span className={styles.errMes}>{formik.errors.birthday}</span>
         )}
-
-        <label className={styles.fieldLabel} htmlFor="gender">
-            Gender
-        </label>
-        <div className={styles.customSelectContainer}>
-            <div className={openGen ? styles.customSelectOpen : styles.customSelect} onClick={() => setOpenGen(!openGen)}>
-            {!openGen ? (
-                <span className={styles.options}>{gender}</span>
-            ) : (
-                <div className={styles.options2}>
-                <div className={styles.options2} onClick={() => handleSelectGenderChange('Male')}>
-                    Male
-                </div>
-                <div className={styles.options2} onClick={() => handleSelectGenderChange('Female')}>
-                    Female
-                </div>
-                <div className={styles.options2} onClick={() => handleSelectGenderChange('Other')}>
-                    Other
-                </div>
-                </div>
-            )}
-            </div>
-        </div>
-
-        <label className={styles.fieldLabel} htmlFor="language">
-            Language
-        </label>
-        <div className={styles.customSelectContainer}>
-            <div className={open ? styles.customSelectOpen : styles.customSelect} onClick={() => setOpen(!open)}>
-            {!open ? (
-                <span className={styles.options}>{language}</span>
-            ) : (
-                <div className={styles.options2}>
-                <div className={styles.options2} onClick={() => handleSelectChange('ENG')}>
-                    ENG
-                </div>
-                <div className={styles.options2} onClick={() => handleSelectChange('UKR')}>
-                    UKR
-                </div>
-                </div>
-            )}
-            </div>
-        </div>
-
+      <div className={styles.genderLangBox}>
+      <GenderSelector onSelectGender={handleSelectGenderChange}/>
+      <LangSelector onSelectLanguage={handleSelectChange}/>
+      </div>
         <label className={styles.fieldLabel} htmlFor="password">
               Password
               <div onClick={() => setShowPassword(!showPassword)}>

@@ -7,7 +7,6 @@ export const GenderSelector = ({ onSelectGender }) => {
     const [openGen, setOpenGen] = useState(false);
     const [gender, setGender] = useState('Male');
 
-
     const handleSelectGenderChange = (newGender) => {
         setGender(newGender);
         setOpenGen(true);
