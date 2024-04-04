@@ -17,9 +17,9 @@ import { refreshUser, updateUserData} from "../../REDUX/Auth/operations"
 import { useDispatch, useSelector } from 'react-redux';
 import {selectIsLoggedIn, selectUser} from '../../REDUX/Auth/selector'
 import { Dispatch } from '@/app/REDUX/store';
-import { useRouter } from "next/navigation";
 import { useTranslation } from '@/i18n/client';
 import { TFunction } from 'i18next';
+import CongratsModal from './ConfratsModal/CongratsModal';
 
 const createAccountSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
@@ -40,10 +40,10 @@ const Information = ({params}) => {
   const dispatch: Dispatch = useDispatch();
   const userData = useSelector(selectUser);
   const isNotError = useSelector(selectIsLoggedIn)
-  const router = useRouter();
   
   const [date, setDate] = useState('');
   const [gender, setGender] = useState('');
+  const [openCongrads, setOpenCongrads] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -66,7 +66,7 @@ const Information = ({params}) => {
       dispatch(updateUserData(combinedData));
       actions.resetForm();
       if (isNotError) {
-        router.push('/profile');
+        setOpenCongrads(true)
       }
     
     },
@@ -154,7 +154,7 @@ const Information = ({params}) => {
           {t("account")}
         </button>
       </form>
-
+      <CongratsModal onOpen={openCongrads}/>
     </Container>
   );
 };
