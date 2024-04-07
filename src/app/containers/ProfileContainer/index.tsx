@@ -21,11 +21,8 @@ import { useSelector } from 'react-redux';
 import { selectIsLoggedIn, selectUser } from '@/app/REDUX/Auth/selector';
 
 const ProfileContainer = () => {
-
   const userData = useSelector(selectUser);
 
-  console.log(userData);
-  
   return (
     <Block className='profile'>
       <Container>
@@ -37,7 +34,7 @@ const ProfileContainer = () => {
               <Image
                 width={24}
                 height={24}
-                src={logOut}
+                src={userData?.avatar as string}
                 alt={'picture log out'}
               />
             </Link>
@@ -66,7 +63,7 @@ const ProfileContainer = () => {
             </Block>
 
             <Block className='profile__user-name'>
-              <UserName>Antonio777</UserName>
+              <UserName>{userData?.username}</UserName>
               <Block className={styles['profile__block-rate']}>
                 <Image width={17} height={16} src={star} alt={'Star'} />
                 <Block className={styles['profile__number']}>4.0</Block>
@@ -83,7 +80,7 @@ const ProfileContainer = () => {
 
             <List>
               <ListItem>Gender</ListItem>
-              <Block className={styles['profile__inform-value']}>Male</Block>
+              <Block className={styles['profile__inform-value']}>{userData?.gender}</Block>
             </List>
 
             <List>

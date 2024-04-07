@@ -1,9 +1,8 @@
-import Restore from "@/app/components/SignIn/Restore";
 import SignInContainer from "@/app/containers/SignInContainer";
 
-const Page = () => {
+const Page = ({ params: { lng } }) => {
   return (
-    <SignInContainer />
+    <SignInContainer lng={lng} />
   )
 }
 

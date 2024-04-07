@@ -200,6 +200,8 @@
     line-height: 24px;
 }
 
+
+
 .field-restore{
   width: 100%;
     @include inputField;
@@ -469,7 +471,7 @@
 }
 
 .forgetPassword {
-  display: block;
+  display: inline-block;
   padding-top: 7px;
   padding-left: 8px;
   color: #fff;

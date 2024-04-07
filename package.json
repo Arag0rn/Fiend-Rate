@@ -16,6 +16,7 @@
     "accept-language": "^3.0.18",
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
+    "classnames": "^2.5.1",
     "dotenv": "^16.4.5",
     "formik": "^2.4.5",
     "i18next": "^23.10.1",
