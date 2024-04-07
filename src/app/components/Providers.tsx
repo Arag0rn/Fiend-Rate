@@ -12,7 +12,6 @@ export const Provider = ({children} : { children : React.ReactNode}) => {
             <PersistGate loading={null} persistor={persistor}>
                 <RefreshUser />
                 {children}
-    
             </PersistGate>
         </ReduxProvider>
     );

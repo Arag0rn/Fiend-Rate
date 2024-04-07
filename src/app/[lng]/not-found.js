@@ -14,21 +14,25 @@ export default function NotFound({ params }) {
 
   return (
     <>
-  <Container>
-        <div className={styles.imgBlock}>
-            <Image
-                src={NotFoundImg}
-                width={349}
-                height={253}
-                quality={100}
-                priority={true}
-                alt='Not found - Illustration of a missing page'
-            />
-            <p className={styles.notFoundPageTxt}>{t("title")}</p>
+    <Container>
+      <div className={styles.imgBlock}>
+        <Image
+          src={NotFoundImg}
+          width={349}
+          height={253}
+          quality={100}
+          priority={true}
+          alt='Not found - Illustration of a missing page'
+        />
+        <p className={styles.notFoundPageTxt}>
+          {t("title")}
+        </p>
       </div>
-      <button onClick={() => router.push(`/${params}`)} className={styles.notFoundBtn}>{t('home')}</button>
+      <button onClick={() => router.push(`/${params}`)} className={styles.notFoundBtn}>
+        {t('home')}
+      </button>
     </Container>
-    </>
+  </>
 
     
   )

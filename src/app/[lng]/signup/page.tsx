@@ -1,11 +1,11 @@
 import SignUpComp from "../../components/SignUp/SignUpComp";
 
 
-export default function SignUp() {
+export default function SignUp({params: { lng }}) {
     return (
  
         <>
-        <SignUpComp/>
+        <SignUpComp params={lng}/>
         </>
     )
   }

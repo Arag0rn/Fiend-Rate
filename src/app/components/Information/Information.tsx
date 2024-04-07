@@ -17,10 +17,11 @@ import { refreshUser, updateUserData} from "../../REDUX/Auth/operations"
 import { useDispatch, useSelector } from 'react-redux';
 import {selectIsLoggedIn, selectUser} from '../../REDUX/Auth/selector'
 import { Dispatch } from '@/app/REDUX/store';
-import { useRouter } from "next/navigation";
+import { useTranslation } from '@/i18n/client';
+import { TFunction } from 'i18next';
+import CongratsModal from './ConfratsModal/CongratsModal';
 
-
-const createAccountSchema = Yup.object().shape({
+const createAccountSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
   .min(3, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
   .max(25, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
@@ -34,17 +35,15 @@ const createAccountSchema = Yup.object().shape({
   ),
 });
 
-const Information = () => {
-  
+const Information = ({params}) => {
+  const { t } = useTranslation(params, 'signUpInform');
   const dispatch: Dispatch = useDispatch();
   const userData = useSelector(selectUser);
   const isNotError = useSelector(selectIsLoggedIn)
-  const router = useRouter();
-  console.log(userData);
-  
   
   const [date, setDate] = useState('');
   const [gender, setGender] = useState('');
+  const [openCongrads, setOpenCongrads] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -52,7 +51,7 @@ const Information = () => {
       birthday: '',
       gender: '',
     },
-    validationSchema: createAccountSchema,
+    validationSchema: createAccountSchema(t),
     onSubmit: async (values, actions) => {
       const { birthday } = values;
       const combinedData = {
@@ -67,7 +66,7 @@ const Information = () => {
       dispatch(updateUserData(combinedData));
       actions.resetForm();
       if (isNotError) {
-        router.push('/profile');
+        setOpenCongrads(true)
       }
     
     },
@@ -94,16 +93,16 @@ const Information = () => {
   return (
     <Container>
       <TogleBtn />
-      <h2 className={styles.infoHead}>We need to know about you a little bit more</h2>
+      <h2 className={styles.infoHead}>{t("title")}</h2>
 
       <form className={styles.imputForm} onSubmit={formik.handleSubmit}>
         <label className={styles.fieldLabel} htmlFor="username">
-          Username
+        {t("userName")}
         </label>
         <input className={!formik.touched.username || !formik.errors.username ? styles.field : styles.fieldErr}
           id="username"
           name="username"
-          placeholder="Please enter your username"
+          placeholder={t("plholdUserName")}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.username}
@@ -113,7 +112,7 @@ const Information = () => {
         )}
 
         <label className={styles.fieldLabel} htmlFor="birthday">
-          Birthday
+        {t("birthDay")}
         </label>
         <input className={!formik.touched.birthday || !formik.errors.birthday  ? styles.field : styles.fieldErr}
           type="text"
@@ -122,7 +121,7 @@ const Information = () => {
           value={date}
           onChange={handleInputChange}
           maxLength={10}
-          placeholder="DD.MM.YYYY"
+          placeholder={t("plholdBirthDay")}
           onBlur={formik.handleBlur}
         />
         {formik.touched.birthday && formik.errors.birthday && (
@@ -130,20 +129,20 @@ const Information = () => {
         )}
 
         <ul className={styles.genderBox}>
-          <p className={styles.boxTxt}>Gender</p>
+          <p className={styles.boxTxt}>{t("gender")}</p>
           <li className={styles.genderItem} onClick={() => handleOptionClick('male')}>
             <Image src={gender === 'male' ? malePressed : male} alt="male" />
-            <p className={styles.genderTxt}>male</p>
+            <p className={styles.genderTxt}>{t("male")}</p>
           </li>
 
           <li className={styles.genderItem} onClick={() => handleOptionClick('female')}>
             <Image src={gender === 'female' ? femalePressed : female} alt="female" />
-            <p className={styles.genderTxt}>female</p>
+            <p className={styles.genderTxt}>{t("female")}</p>
           </li>
 
           <li className={styles.genderItem} onClick={() => handleOptionClick('other')}>
             <Image src={gender === 'other' ? otherPressed : other} alt="other" />
-            <p className={styles.genderTxt}>other</p>
+            <p className={styles.genderTxt}>{t("other")}</p>
           </li>
         </ul>
 
@@ -152,10 +151,10 @@ const Information = () => {
           type="submit"
           disabled={!formik.isValid || !formik.dirty || !gender}
         >
-          CREATE ACCOUNT
+          {t("account")}
         </button>
       </form>
-
+      <CongratsModal onOpen={openCongrads}/>
     </Container>
   );
 };
