@@ -9,9 +9,11 @@ import BlockInput from '../BlockInput';
 import ButtonSubmit, { TypeButton } from '../ButtonSubmit';
 import styles from '../../../containers/SignInContainer/styles.module.scss';
 import Image from 'next/image';
+import { useTranslation } from '@/i18n/client';
 
-const NewPassword = () => {
+const NewPassword = ({ lng }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation(lng, 'new-password');
 
   return (
     <>
@@ -26,33 +28,33 @@ const NewPassword = () => {
       <Form className={styles['imputForm-new-password']}>
           <BlockInput>
             <Label className={styles.fieldLabel} htmlFor="password">
-              Password
+              {t('password')}
             </Label>
             <Block className={styles["block-password"]}>
               <Field className={styles.field}
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 name="password"
-                placeholder="Enter your password"
+                placeholder={t("plholdPassword")}
                 title="password"
               ></Field>
             </Block>
             <Block className={styles['confirm-rule']}>
-              Password must be 8-30 characters and a combination of numbers, letters and special symbols
+              {t('error')}
             </Block>
             <ErrorMessage className={styles.errMes} component="span" name="password" />
           </BlockInput>
 
           <BlockInput>
             <Label className={styles.fieldLabel} htmlFor="confirm-password">
-              Confirm password
+              {t('confirm')}
             </Label>
             <Block className={styles["block-password"]}>
               <Field className={styles.field}
                 id="confirm-password"
                 type={showPassword ? 'text' : 'password'}
                 name="confirm-password"
-                placeholder="Enter your password"
+                placeholder={t("plholdConfirm")}
                 title="confirm-password"
               ></Field>
 
@@ -75,7 +77,7 @@ const NewPassword = () => {
               type={TypeButton.SUBMIT}
               disabled={true}
             >
-              COMPLETE
+              {t('complete')}
             </ButtonSubmit>
           </Block>
       </Form>

@@ -1,8 +1,8 @@
 import SignInContainer from '@/app/containers/SignInContainer';
 
-const Page = () => {
+const Page = ({ params: { lng } }) => {
   return (
-    <SignInContainer />
+    <SignInContainer lng={lng} />
   )
 }
 

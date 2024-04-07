@@ -4,19 +4,23 @@ import ButtonSubmit, { TypeButton } from '../ButtonSubmit';
 import Block from '../Block';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import styles from '../../../containers/SignInContainer/styles.module.scss';
+import { UseTranslationResponse } from 'react-i18next';
 
 type Props = {
   setModalIcon: (value: boolean) => void,
+  useTranslation: (lng: string, ns: string, obj?: any) => UseTranslationResponse<string, undefined>,
+  lng: any,
   router: AppRouterInstance,
 }
 
-const CheckEmail: FC<Props> = ({ setModalIcon, router }) => {
+const CheckEmail: FC<Props> = ({ setModalIcon, router, useTranslation, lng }) => {
+  const { t } = useTranslation(lng, 'check-email');
 
   return (
     <Block className={styles.check} onClick={() => setModalIcon(false)}>
       <Block className={styles['check__content']}>
         <Block className={styles['check__desc']}>
-          Please check up your email and reset <br /> your password by link
+          {t('title')}
         </Block>
         <ButtonSubmit
           className={styles.signupBtn}
@@ -24,7 +28,7 @@ const CheckEmail: FC<Props> = ({ setModalIcon, router }) => {
           disabled={false}
           onClick={() => router.push('/sign-in/restore/new-password')}
         >
-          OK
+          {t('button')}
         </ButtonSubmit>
       </Block>
     </Block>

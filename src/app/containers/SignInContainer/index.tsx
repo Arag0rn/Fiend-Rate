@@ -1,7 +1,6 @@
 "use client"
 import styles from "./styles.module.scss";
 import { useEffect, useState } from 'react';
-import * as Yup from 'yup';
 import Image from 'next/image';
 import facebook from "../../images/SignUp/FB.svg";
 import Google from "../../images/SignUp/Google.svg";
@@ -21,37 +20,27 @@ import { useRouter, usePathname } from "next/navigation";
 import Container from "@/app/components/Container";
 import SignInContent from "@/app/components/SignIn/SignInContent";
 import NewPassword from "@/app/components/SignIn/NewPassword";
-
-export const SignupSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Invalid email address')
-    .matches(
-      /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
-      'Enter a valid email. For example user@gmail.com'
-    )
-    .required('Required'),
-  password: Yup.string()
-    .matches(/[a-zA-Z]/, 'Try to reset your password first',)
-    .required('Incorrect username or password',),
-
-  passwordRepeat: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords must match')
-    .required('Required'),
-});
+import { useTranslation } from '../../../i18n/client';
+import RestoreTitle from "@/app/components/SignIn/RestoreTitle";
+import RestoreSubTitle from "@/app/components/SignIn/RestoreSubTitle";
+import NewPasswordTitle from "@/app/components/SignIn/NewPasswordTitle";
+import NewPasswordSubTitle from "@/app/components/SignIn/NewPasswordSubTitle";
 
 export type FormValue = {
   email: string,
   password: string,
 }
 
-const SignInContainer = () => {
+const SignInContainer = ({ lng }) => {
   const [activeButton, setActiveButton] = useState<string>('SIGN IN');
   const [showPassword, setShowPassword] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const [modalIcon, setModalIcon] = useState(false);
+  const { t } = useTranslation(lng, 'sign-in');
 
   useEffect(() => {
     setTimeout(() =>
@@ -82,7 +71,7 @@ const SignInContainer = () => {
                 : styles.secondaryButton}`}
                 onClick={() => handleButtonClick('SIGN UP')}
               >
-                SIGN UP
+                {t('signUp')}
               </ButtonToggle>
 
               <ButtonToggle
@@ -91,68 +80,66 @@ const SignInContainer = () => {
                 : styles.secondaryButton2}`}
                 onClick={() => handleButtonClick('SIGN IN')}
               >
-                SIGN IN
+                {t('signIn')}
               </ButtonToggle>
             </BlockToggle>
 
-            {pathname === '/sign-in' && (
-              <TitleSignIn className={styles.head}>Welcome back!</TitleSignIn>
+            {pathname === `/${lng}/sign-in` && (
+              <TitleSignIn className={styles.head}>{t('title')}</TitleSignIn>
             )}
 
-            {pathname === '/sign-in/restore' && (
-              <TitleSignIn className={styles['head-restore']}>
-                Restore Password
-              </TitleSignIn>
+            {pathname === `/${lng}/sign-in/restore` && (
+              <RestoreTitle styles={styles} lng={lng} />
             )}
 
-            {pathname === '/sign-in/restore/new-password' && (
-              <TitleSignIn className={styles.head}>
-                Set new password
-              </TitleSignIn>
+            {pathname === `/${lng}/sign-in/restore/new-password` && (
+              <NewPasswordTitle lng={lng} styles={styles}/>
             )}
 
-            {pathname === '/sign-in' && (
+            {pathname === `/${lng}/sign-in` && (
               <Block className={styles.description}>
                 <Description>
-                  Please, enter your email or username and <br /> password
+                {t('subTitle')}
                 </Description>
               </Block>
             )}
 
-            {pathname === '/sign-in/restore' && (
-              <Block className={styles['description-restore']}>
-                Please, enter your email to reset <br /> your password
-              </Block>
+            {pathname === `/${lng}/sign-in/restore` && (
+              <RestoreSubTitle styles={styles} lng={lng} />
             )}
 
-            {pathname === '/sign-in/restore/new-password' && (
-              <Block className={styles['description-new-password']}>
-                  Please, set a strong password
-              </Block>
+            {pathname === `/${lng}/sign-in/restore/new-password` && (
+              <NewPasswordSubTitle lng={lng} styles={styles} />
             )}
           </BlockContent>
 
-          {pathname === '/sign-in' && (
+          {pathname === `/${lng}/sign-in` && (
             <SignInContent
               showPassword={showPassword}
               setRedirect={setRedirect}
               setShowPassword={setShowPassword}
+              lng={lng}
+              useTranslation={useTranslation}
+              setIsError={setIsError}
+              isError={isError}
             />
           )}
 
-          {pathname === '/sign-in/restore' &&
+          {pathname === `/${lng}/sign-in/restore` &&
             <Restore
               modalIcon={modalIcon}
               setModalIcon={setModalIcon}
+              lng={lng}
+              useTranslation={useTranslation}
             />
           }
-          {pathname === '/sign-in/restore/new-password' && <NewPassword />}
+          {pathname === `/${lng}/sign-in/restore/new-password` && <NewPassword lng={lng} />}
 
-          {pathname !== '/sign-in/restore/new-password' && (
+          {pathname !== `/${lng}/sign-in/restore/new-password` && (
             <>
             <Block className={styles.signInTxt}>
               <Block className={styles["line"]}></Block>
-              <Block>or Sign in with</Block>
+              <Block>{t('textSignIn')}</Block>
               <Block className={styles["line"]}></Block>
             </Block>
             <Block className={styles.flex}>
@@ -176,11 +163,11 @@ const SignInContainer = () => {
               <LinkSignUp
                 className={styles.bottomTxt}
               >
-                Don’t have an account? <Link
+                {t('linkAccount')} <Link
                   href='/signup'
                   className={styles.socialTxt}
                 >
-                  Sign up!
+                 {t('linkSignUp')}
                 </Link>
               </LinkSignUp>
             </Block>

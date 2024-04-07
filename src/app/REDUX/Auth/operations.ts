@@ -2,7 +2,6 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthState } from './slice';
 
-
 // axios.defaults.baseURL = 'http://localhost:3000';
 
 axios.defaults.baseURL = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com/';
@@ -60,7 +59,7 @@ export const logIn = createAsyncThunk(
       const res = await axios.post('api/user/login', credentials);
       setAuthHeader(res.data.token);
       const resUser = await axios.get('/api/user/current');
-      
+
       return { user: resUser.data, token: res.data.token };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
