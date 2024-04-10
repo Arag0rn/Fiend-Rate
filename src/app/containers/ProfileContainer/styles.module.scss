@@ -23,7 +23,8 @@
 
     &-image {
       width: 88px;
-      height: 87.998px;
+      height: 88px;
+      border-radius: 50%;
       position: relative;
     }
 
@@ -58,6 +59,7 @@
 
   &__upload {
     background-color: rgba($color: #31333880, $alpha: 0);
+    cursor: pointer;
   }
 
   &__opacity {
