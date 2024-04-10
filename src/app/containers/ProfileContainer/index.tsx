@@ -8,9 +8,7 @@ import UserName from '@/app/components/ProfilePage/UserName';
 import Block from '@/app/components/SignIn/Block';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import logOut from '../../images/profile/log-out.svg';
-import image from '../../images/profile/image-user.svg';
 import changeImage from '../../images/profile/change-photo.svg';
 import star from '../../images/profile/star-rate.svg';
 import styles from './styles.module.scss';
@@ -19,9 +17,26 @@ import AboutDescription from '@/app/components/ProfilePage/AboutDescription';
 import Label from '@/app/components/SignIn/Label';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn, selectUser } from '@/app/REDUX/Auth/selector';
+import { useTranslation } from '../../../i18n/client';
 
-const ProfileContainer = () => {
+const calculateAge = (birthDate: string) => {
+  const currentDate = new Date();
+  const birthDateUser = new Date(birthDate);
+  let age = currentDate.getFullYear() - birthDateUser.getFullYear();
+  const monthDiff = currentDate.getMonth() - birthDateUser.getMonth();
+
+  if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDateUser.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
+const ProfileContainer = ({ lng }) => {
   const userData = useSelector(selectUser);
+  const birthDateUser = calculateAge(userData?.birthday?.split('.').reverse().join('.') as string);
+  const url = `https:${userData?.avatarURL as string}`;
+  const gender = userData?.gender as string;
 
   return (
     <Block className='profile'>
@@ -34,7 +49,7 @@ const ProfileContainer = () => {
               <Image
                 width={24}
                 height={24}
-                src={userData?.avatar as string}
+                src={logOut}
                 alt={'picture log out'}
               />
             </Link>
@@ -42,7 +57,7 @@ const ProfileContainer = () => {
 
           <Block className={styles['profile__block-edit']}>
             <Block className={styles['profile__block-image']}>
-              <Image src={image} alt={'User Image'} />
+              <Image className={styles['profile__block-image']} src={url} width='88' height='88' alt={'User Image'} priority={true} />
               <Label className={styles['profile__upload']} htmlFor='file'>
                 <Block className={styles['profile__image-change']}>
                     <input
@@ -68,19 +83,21 @@ const ProfileContainer = () => {
                 <Image width={17} height={16} src={star} alt={'Star'} />
                 <Block className={styles['profile__number']}>4.0</Block>
               </Block>
-              <Link className={styles['profile__edit-profile']} href='/'>Edit</Link>
+              <Link className={styles['profile__edit-profile']} href={`/${lng}/profile-edit`}>Edit</Link>
             </Block>
           </Block>
 
           <Block className={styles['profile__inform']}>
             <List>
               <ListItem>Age</ListItem>
-              <Block className={styles['profile__inform-value']}>29 y.o</Block>
+              <Block className={styles['profile__inform-value']}>{birthDateUser} y.o</Block>
             </List>
 
             <List>
               <ListItem>Gender</ListItem>
-              <Block className={styles['profile__inform-value']}>{userData?.gender}</Block>
+              <Block className={styles['profile__inform-value']}>
+                {gender?.charAt(0).toUpperCase() + gender?.slice(1)}
+              </Block>
             </List>
 
             <List>

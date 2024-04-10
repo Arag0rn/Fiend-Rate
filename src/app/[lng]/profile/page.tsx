@@ -1,8 +1,8 @@
 import ProfileContainer from '../../containers/ProfileContainer';
 
-const Page = () => {
+const Page = ({ params: { lng } }) => {
   return (
-    <ProfileContainer />
+    <ProfileContainer lng={lng} />
   )
 }
 
