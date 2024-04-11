@@ -22,7 +22,6 @@ import { selectUser } from '@/app/REDUX/Auth/selector';
 import { PrivatRote } from '@/app/components/PrivateRote';
 import { Dispatch } from '@/app/REDUX/store';
 import { logOut } from '@/app/REDUX/Auth/operations';
-import { useTranslation } from '../../../i18n/client';
 
 
 const calculateAge = (birthDate: string) => {
@@ -61,7 +60,7 @@ const ProfileContainer = ({ lng }) => {
 
           <Block className={styles['profile__block-edit']}>
             <Block className={styles['profile__block-image']}>
-              <Image className={styles['profile__block-image']} src={url} width='88' height='88' alt={'User Image'} priority={true} />
+              <Image className={styles['profile__block-image']} src={image} width='88' height='88' alt={'User Image'} priority={true} />
               <Label className={styles['profile__upload']} htmlFor='file'>
                 <Block className={styles['profile__image-change']}>
                     <input
@@ -94,13 +93,13 @@ const ProfileContainer = ({ lng }) => {
           <Block className={styles['profile__inform']}>
             <List>
               <ListItem>Age</ListItem>
-              <Block className={styles['profile__inform-value']}>{birthDateUser} y.o</Block>
+              <Block className={styles['profile__inform-value']}> y.o</Block>
             </List>
 
             <List>
               <ListItem>Gender</ListItem>
               <Block className={styles['profile__inform-value']}>
-                {gender?.charAt(0).toUpperCase() + gender?.slice(1)}
+              {userData?.gender}
               </Block>
             </List>
 
