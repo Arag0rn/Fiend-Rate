@@ -1,4 +1,4 @@
-import { Main } from "../../components/MainPage/Main";
+import  Main  from "../../components/MainPage/Main";
 
 
 

@@ -20,6 +20,7 @@ import { Dispatch } from '@/app/REDUX/store';
 import { useTranslation } from '@/i18n/client';
 import { TFunction } from 'i18next';
 import CongratsModal from './ConfratsModal/CongratsModal';
+import { PrivatRote } from '../PrivateRote';
 
 const createAccountSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
@@ -62,7 +63,6 @@ const Information = ({params}) => {
         gender: values?.gender || '',
         email: userData?.email || '', 
       };
-      console.log(combinedData);
       dispatch(updateUserData(combinedData));
       actions.resetForm();
       if (isNotError) {
@@ -130,18 +130,18 @@ const Information = ({params}) => {
 
         <ul className={styles.genderBox}>
           <p className={styles.boxTxt}>{t("gender")}</p>
-          <li className={styles.genderItem} onClick={() => handleOptionClick('male')}>
-            <Image src={gender === 'male' ? malePressed : male} alt="male" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('Male')}>
+            <Image src={gender === 'Male' ? malePressed : male} alt="male" />
             <p className={styles.genderTxt}>{t("male")}</p>
           </li>
 
-          <li className={styles.genderItem} onClick={() => handleOptionClick('female')}>
-            <Image src={gender === 'female' ? femalePressed : female} alt="female" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('Female')}>
+            <Image src={gender === 'Female' ? femalePressed : female} alt="female" />
             <p className={styles.genderTxt}>{t("female")}</p>
           </li>
 
-          <li className={styles.genderItem} onClick={() => handleOptionClick('other')}>
-            <Image src={gender === 'other' ? otherPressed : other} alt="other" />
+          <li className={styles.genderItem} onClick={() => handleOptionClick('Other')}>
+            <Image src={gender === 'Other' ? otherPressed : other} alt="other" />
             <p className={styles.genderTxt}>{t("other")}</p>
           </li>
         </ul>
@@ -159,4 +159,4 @@ const Information = ({params}) => {
   );
 };
 
-export default Information;
+export default PrivatRote(Information);

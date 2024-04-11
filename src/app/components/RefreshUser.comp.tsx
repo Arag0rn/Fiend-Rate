@@ -1,3 +1,4 @@
+// Hаташа дивись тут 
 import React, { useEffect } from 'react'
 import { refreshUser } from '../REDUX/Auth/operations';
 import { Dispatch } from '../REDUX/store';
@@ -10,7 +11,5 @@ export const RefreshUser = () => {
     useEffect(() => {
       dispatch(refreshUser());
     }, [dispatch]);
-  return (
-    <></>
-  )
+  return null;
 }

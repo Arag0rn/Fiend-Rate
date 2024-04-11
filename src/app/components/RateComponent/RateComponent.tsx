@@ -6,8 +6,9 @@ import rateData from './rate.json';
 import DefaltFoto from '../../images/Top/defaultFoto.png'
 import Star from '../../images/Top/star.svg'
 import Navbar from '../NavBar/Navbar';
+import { PrivatRote } from '../PrivateRote';
 
-export const RateComponent = () => {
+const RateComponent = () => {
 
     const { topUsers } = rateData;
 
@@ -61,3 +62,5 @@ export const RateComponent = () => {
     </>
   );
 }
+
+export default PrivatRote(RateComponent);

@@ -8,16 +8,22 @@ import UserName from '@/app/components/ProfilePage/UserName';
 import Block from '@/app/components/SignIn/Block';
 import Image from 'next/image';
 import Link from 'next/link';
-import logOut from '../../images/profile/log-out.svg';
+import React from 'react';
+import logOutImg from '../../images/profile/log-out.svg';
+import image from '../../images/profile/image-user.svg';
 import changeImage from '../../images/profile/change-photo.svg';
 import star from '../../images/profile/star-rate.svg';
 import styles from './styles.module.scss';
 import TitleAbout from '@/app/components/ProfilePage/TitleAbout';
 import AboutDescription from '@/app/components/ProfilePage/AboutDescription';
 import Label from '@/app/components/SignIn/Label';
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn, selectUser } from '@/app/REDUX/Auth/selector';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '@/app/REDUX/Auth/selector';
+import { PrivatRote } from '@/app/components/PrivateRote';
+import { Dispatch } from '@/app/REDUX/store';
+import { logOut } from '@/app/REDUX/Auth/operations';
 import { useTranslation } from '../../../i18n/client';
+
 
 const calculateAge = (birthDate: string) => {
   const currentDate = new Date();
@@ -34,9 +40,7 @@ const calculateAge = (birthDate: string) => {
 
 const ProfileContainer = ({ lng }) => {
   const userData = useSelector(selectUser);
-  const birthDateUser = calculateAge(userData?.birthday?.split('.').reverse().join('.') as string);
-  const url = `https:${userData?.avatarURL as string}`;
-  const gender = userData?.gender as string;
+  const dispatch: Dispatch = useDispatch();
 
   return (
     <Block className='profile'>
@@ -45,14 +49,14 @@ const ProfileContainer = ({ lng }) => {
 
           <Block className={styles['profile__block-title']}>
             <Title>Profile</Title>
-            <Link href='/'>
-              <Image
+            <div onClick={() => dispatch(logOut())}>
+              <Image 
                 width={24}
                 height={24}
-                src={logOut}
+                src={logOutImg}
                 alt={'picture log out'}
               />
-            </Link>
+              </div>
           </Block>
 
           <Block className={styles['profile__block-edit']}>
@@ -83,7 +87,7 @@ const ProfileContainer = ({ lng }) => {
                 <Image width={17} height={16} src={star} alt={'Star'} />
                 <Block className={styles['profile__number']}>4.0</Block>
               </Block>
-              <Link className={styles['profile__edit-profile']} href={`/${lng}/profile-edit`}>Edit</Link>
+              <Link className={styles['profile__edit-profile']} href='/profile-edit'>Edit</Link>
             </Block>
           </Block>
 
@@ -102,17 +106,14 @@ const ProfileContainer = ({ lng }) => {
 
             <List>
               <ListItem>Language</ListItem>
-              <Block className={styles['profile__inform-value']}>UKR</Block>
+              <Block className={styles['profile__inform-value']}>{userData?.language}</Block>
             </List>
           </Block>
 
           <Block className={styles['profile__about']}>
             <TitleAbout>About</TitleAbout>
             <AboutDescription>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              In reiciendis harum unde facilis necessitatibus?
-              uasi ipsum, cupiditate, incidunt expedita ex in earum voluptatem
-              quaerat quibusdam repellat, numquam quos vel asperiores!
+            {userData?.about}
             </AboutDescription>
           </Block>
 
@@ -127,5 +128,4 @@ const ProfileContainer = ({ lng }) => {
     </Block>
   )
 }
-
-export default ProfileContainer;
+export default PrivatRote(ProfileContainer);

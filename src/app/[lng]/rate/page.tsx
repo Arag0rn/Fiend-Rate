@@ -1,8 +1,10 @@
-import { RateComponent } from "../../components/RateComponent/RateComponent";
+import RateComponent from "@/app/components/RateComponent/RateComponent";
 
 
 
-export default function RatePage () {
+
+
+export default function RatePage ({params: { lng }}) {
     return (
  
         <>
