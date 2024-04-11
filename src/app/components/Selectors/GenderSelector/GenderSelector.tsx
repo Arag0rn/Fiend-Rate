@@ -2,10 +2,10 @@
 import { useState } from "react";
 import styles from './GenderSelector.module.scss';
 
-export const GenderSelector = ({ onSelectGender }) => {
+export const GenderSelector = ({ onSelectGender, userGender }) => {
 
     const [openGen, setOpenGen] = useState(false);
-    const [gender, setGender] = useState('Male');
+    const [gender, setGender] = useState(userGender || 'Male');
 
     const handleSelectGenderChange = (newGender) => {
         setGender(newGender);

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { logIn, refreshUser, register, updateUserData } from './operations';
+import { logIn, logOut, refreshUser, register, updateUserData } from './operations';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -14,6 +14,8 @@ export interface AuthState {
     password: string | '';
     avatar?: string | '';
     verify?:boolean ;
+    about?: string | '';
+    language?: string | '';
   } | null;
 }
 
@@ -54,6 +56,13 @@ const initialState: InitState = {
       builder.addCase(updateUserData.fulfilled, (state, action) => {
         state.user = { ...state.user, ...action.payload };
         state.token = action.payload.token;
+        state.isRefreshing = false;
+        state.isError = false;
+      });
+      builder.addCase(logOut.fulfilled, (state, action) => {
+        state.user = { username: '', birthday:'', gender:'', email:'', password:'', avatar:'',about:'', language:'' };
+        state.token = null;
+        state.isLoggedIn = false;
         state.isRefreshing = false;
         state.isError = false;
       });

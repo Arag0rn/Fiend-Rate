@@ -33,7 +33,11 @@ interface UpdatedData {
   email: string;
   avatar?: string;
   verify?:boolean;
+  password?: string | '';
+  about?: string | '';
+  language?: string | '';
 };
+
 
 
 export const register = createAsyncThunk(
@@ -95,6 +99,18 @@ export const updateUserData = createAsyncThunk(
       const res = await axios.patch('/api/user/update', userData);
 
       return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const logOut = createAsyncThunk(
+  '/auth/signout',
+  async (_, thunkAPI) => {
+    try {
+      await axios.post('/api/user/logout');
+      clearAuthHeader();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

@@ -1,5 +1,5 @@
 "use client"
-
+// Hаташа дивись тут 
 import { Provider as ReduxProvider } from 'react-redux';
 import {persistor, store} from '../REDUX/store';
 import { PersistGate } from 'redux-persist/integration/react'

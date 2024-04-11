@@ -2,8 +2,8 @@
 import { useState } from "react";
 import styles from './LangSelector.module.scss';
 
-export const  LangSelector = ({ onSelectLanguage }) => {
-    const [language, setLanguage] = useState("UKR");
+export const  LangSelector = ({ onSelectLanguage, userLanguage }) => {
+    const [language, setLanguage] = useState(userLanguage || "UKR");
     const [open, setOpen] = useState(false);
 
     const handleSelectChange = (newLanguage) => {

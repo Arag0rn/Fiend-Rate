@@ -12,6 +12,12 @@ import User from './user.json';
 import BasicModal from './DeleteModal';
 import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
 import { LangSelector } from '../Selectors/LangSelector/LangSelector';
+import { PrivatRote } from '../PrivateRote';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from '@/app/REDUX/store';
+import { updateUserData } from '@/app/REDUX/Auth/operations';
+import { useAuth } from '@/app/REDUX/Hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -37,7 +43,6 @@ const SignupSchema = Yup.object().shape({
   .max(50, 'Email should not exceed 50 characters')
   .required('Required'),
   password: Yup.string()
-  .required('Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
   .min(8, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
   .max(30, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
   .matches(
@@ -45,8 +50,7 @@ const SignupSchema = Yup.object().shape({
     'Password must be 8-30 characters and a combination of numbers, letters and special symbols.'
   ),
   passwordRepeat: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords do not match. Please re-enter your password.')
-    .required('Required'),
+    .oneOf([Yup.ref('password')], 'Passwords do not match. Please re-enter your password.'),
   about: Yup.string()
     .min(10, 'This field must contain at least 10 characters')
     .max(255, 'This field must contain less than 255 characters')
@@ -61,29 +65,35 @@ const EditProfile = () => {
     const [date, setDate] = useState(UserData.birthday);
     const [open, setOpen] = useState(false);
     const [openGen, setOpenGen] = useState(false);
-    const [language, setLanguage] = useState("UKR");
-    const [gender, setGender] = useState(UserData.gender);
     const [showPassword, setShowPassword] = useState(false);
+    const dispatch: Dispatch = useDispatch();
+    const { user } = useAuth();
+    const [gender, setGender] = useState(user?.gender);
+    const [language, setLanguage] = useState(user?.language);
+    console.log(user);
+    const router = useRouter();
+    
 
     const formik = useFormik({
       initialValues: {
-        username: UserData.username || '',
-        email: UserData.email || '',
-        birthday: date || '',
-        gender: gender || '',
+        username: user?.username || '',
+        email: user?.email || '',
+        birthday: user?.birthday || '',
+        gender: user?.gender || '',
         password: '',
         passwordRepeat: '',
-        about: UserData.about || ''
+        about: user?.about || ''
       },
         validationSchema: SignupSchema,
         onSubmit: async (values, action) => {
           const updatedValues = {
             ...values,
             gender: gender, 
+            language: language
           };
-    
-          console.log(updatedValues);
+          dispatch(updateUserData(updatedValues));
           action.resetForm();
+          router.push('/profile')
           
         }
       })
@@ -175,8 +185,8 @@ const EditProfile = () => {
           <span className={styles.errMes}>{formik.errors.birthday}</span>
         )}
       <div className={styles.genderLangBox}>
-      <GenderSelector onSelectGender={handleSelectGenderChange}/>
-      <LangSelector onSelectLanguage={handleSelectChange}/>
+      <GenderSelector onSelectGender={handleSelectGenderChange} userGender={gender}/>
+      <LangSelector onSelectLanguage={handleSelectChange} userLanguage={language}/>
       </div>
         <label className={styles.fieldLabel} htmlFor="password">
               Password
@@ -263,9 +273,9 @@ const EditProfile = () => {
 
 
     </Container> 
-  <Navbar style={{ position: 'static', transform: "none", marginTop:' 23px'}} /> 
+  <Navbar style={{ position: 'fixed'}} /> 
   </>
   )
 }
 
-export default EditProfile
+export default PrivatRote(EditProfile);

@@ -11,8 +11,9 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './MuiThemeProvider';
 import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
 import { LangSelector } from '../Selectors/LangSelector/LangSelector';
+import { PrivatRote } from '../PrivateRote';
 
-export const Main = ({params}) => {
+const Main = ({params}) => {
 
     const [value, setValue] = useState<number[]>([18, 55]);
     const [selectedLanguage, setSelectedLanguage] = useState("UKR");
@@ -71,8 +72,8 @@ export const Main = ({params}) => {
     <div className={styles.mainTxt}>SELECT THE PARAMETERS OF WHO WE WILL SEARCH FOR</div>
 
     <div className={styles.customSelectContainer}>
-      <GenderSelector onSelectGender={handleGenderChange}/>
-      <LangSelector onSelectLanguage={handleLanguageChange}/>   
+      <GenderSelector onSelectGender={handleGenderChange} userGender={undefined}/>
+      <LangSelector onSelectLanguage={handleLanguageChange} userLanguage={undefined}/>   
     </div>
 
    <div className={styles.sliderContainer}>
@@ -116,3 +117,5 @@ export const Main = ({params}) => {
     </>
   )
 }
+
+export default PrivatRote(Main);
