@@ -12,7 +12,7 @@ export interface AuthState {
     gender?: string | '';
     email: string | '';
     password: string | '';
-    avatar?: string | '';
+    avatarURL?: string | '';
     verify?:boolean ;
     about?: string | '';
     language?: string | '';

@@ -22,10 +22,26 @@ import { selectUser } from '@/app/REDUX/Auth/selector';
 import { PrivatRote } from '@/app/components/PrivateRote';
 import { Dispatch } from '@/app/REDUX/store';
 import { logOut } from '@/app/REDUX/Auth/operations';
+import { useTranslation } from '../../../i18n/client';
 
-const ProfileContainer = () => {
+
+const calculateAge = (birthDate: string) => {
+  const currentDate = new Date();
+  const birthDateUser = new Date(birthDate);
+  let age = currentDate.getFullYear() - birthDateUser.getFullYear();
+  const monthDiff = currentDate.getMonth() - birthDateUser.getMonth();
+
+  if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDateUser.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
+const ProfileContainer = ({ lng }) => {
   const userData = useSelector(selectUser);
   const dispatch: Dispatch = useDispatch();
+
   return (
     <Block className='profile'>
       <Container>
@@ -45,7 +61,7 @@ const ProfileContainer = () => {
 
           <Block className={styles['profile__block-edit']}>
             <Block className={styles['profile__block-image']}>
-              <Image src={image} alt={'User Image'} />
+              <Image className={styles['profile__block-image']} src={url} width='88' height='88' alt={'User Image'} priority={true} />
               <Label className={styles['profile__upload']} htmlFor='file'>
                 <Block className={styles['profile__image-change']}>
                     <input
@@ -78,12 +94,14 @@ const ProfileContainer = () => {
           <Block className={styles['profile__inform']}>
             <List>
               <ListItem>Age</ListItem>
-              <Block className={styles['profile__inform-value']}>29 y.o</Block>
+              <Block className={styles['profile__inform-value']}>{birthDateUser} y.o</Block>
             </List>
 
             <List>
               <ListItem>Gender</ListItem>
-              <Block className={styles['profile__inform-value']}>{userData?.gender}</Block>
+              <Block className={styles['profile__inform-value']}>
+                {gender?.charAt(0).toUpperCase() + gender?.slice(1)}
+              </Block>
             </List>
 
             <List>
