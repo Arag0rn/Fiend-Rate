@@ -24,18 +24,18 @@ import { Dispatch } from '@/app/REDUX/store';
 import { logOut } from '@/app/REDUX/Auth/operations';
 
 
-const calculateAge = (birthDate: string) => {
-  const currentDate = new Date();
-  const birthDateUser = new Date(birthDate);
-  let age = currentDate.getFullYear() - birthDateUser.getFullYear();
-  const monthDiff = currentDate.getMonth() - birthDateUser.getMonth();
+// const calculateAge = (birthDate: string) => {
+//   const currentDate = new Date();
+//   const birthDateUser = new Date(birthDate);
+//   let age = currentDate.getFullYear() - birthDateUser.getFullYear();
+//   const monthDiff = currentDate.getMonth() - birthDateUser.getMonth();
 
-  if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDateUser.getDate())) {
-    age--;
-  }
+//   if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDateUser.getDate())) {
+//     age--;
+//   }
 
-  return age;
-}
+//   return age;
+// }
 
 const ProfileContainer = ({ lng }) => {
   const userData = useSelector(selectUser);
