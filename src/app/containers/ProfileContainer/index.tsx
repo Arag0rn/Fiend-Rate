@@ -19,7 +19,7 @@ import AboutDescription from '@/app/components/ProfilePage/AboutDescription';
 import Label from '@/app/components/SignIn/Label';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '@/app/REDUX/Auth/selector';
-import { PrivatRote } from '@/app/components/PrivateRote';
+import { PrivateRoute } from '@/app/components/PrivateRote';
 import { Dispatch } from '@/app/REDUX/store';
 import { logOut } from '@/app/REDUX/Auth/operations';
 
@@ -127,4 +127,4 @@ const ProfileContainer = ({ lng }) => {
     </Block>
   )
 }
-export default PrivatRote(ProfileContainer);
+export default PrivateRoute(ProfileContainer);

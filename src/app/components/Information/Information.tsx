@@ -20,7 +20,7 @@ import { Dispatch } from '@/app/REDUX/store';
 import { useTranslation } from '@/i18n/client';
 import { TFunction } from 'i18next';
 import CongratsModal from './ConfratsModal/CongratsModal';
-import { PrivatRote } from '../PrivateRote';
+import { PrivateRoute } from '../PrivateRote';
 
 const createAccountSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
@@ -127,8 +127,9 @@ const Information = ({params}) => {
         {formik.touched.birthday && formik.errors.birthday && (
           <span className={styles.errMes}>{formik.errors.birthday}</span>
         )}
-
-        <ul className={styles.genderBox}>
+     
+        <ul className={styles.genderBox} >
+       
           <p className={styles.boxTxt}>{t("gender")}</p>
           <li className={styles.genderItem} onClick={() => handleOptionClick('Male')}>
             <Image src={gender === 'Male' ? malePressed : male} alt="male" />
@@ -159,4 +160,4 @@ const Information = ({params}) => {
   );
 };
 
-export default PrivatRote(Information);
+export default PrivateRoute(Information);
