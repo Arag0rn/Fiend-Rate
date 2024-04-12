@@ -60,7 +60,7 @@ const initialState: InitState = {
         state.isError = false;
       });
       builder.addCase(logOut.fulfilled, (state, action) => {
-        state.user = { username: '', birthday:'', gender:'', email:'', password:'', avatar:'',about:'', language:'' };
+        state.user = { username: '', birthday:'', gender:'', email:'', password:'', avatarURL:'',about:'', language:'' };
         state.token = null;
         state.isLoggedIn = false;
         state.isRefreshing = false;
