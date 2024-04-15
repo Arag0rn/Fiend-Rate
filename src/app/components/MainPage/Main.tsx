@@ -11,7 +11,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './MuiThemeProvider';
 import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
 import { LangSelector } from '../Selectors/LangSelector/LangSelector';
-import {  PrivateRoute } from '../PrivateRote';
 
 const Main = ({params}) => {
 
@@ -118,4 +117,4 @@ const Main = ({params}) => {
   )
 }
 
-export default PrivateRoute(Main);
+export default Main;

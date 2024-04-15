@@ -12,7 +12,6 @@ import User from './user.json';
 import BasicModal from './DeleteModal';
 import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
 import { LangSelector } from '../Selectors/LangSelector/LangSelector';
-import { PrivateRoute } from '../PrivateRote';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from '@/app/REDUX/store';
 import { updateUserData } from '@/app/REDUX/Auth/operations';
@@ -278,4 +277,4 @@ const EditProfile = () => {
   )
 }
 
-export default PrivateRoute(EditProfile);
+export default EditProfile;

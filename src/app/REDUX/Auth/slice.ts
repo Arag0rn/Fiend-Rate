@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { logIn, logOut, refreshUser, register, updateUserData } from './operations';
 
 export interface AuthState {
-  isLoading: boolean;
   isLoggedIn: boolean;
   isRefreshing: boolean;
   isError: boolean;
@@ -28,7 +27,6 @@ const initialState: InitState = {
   isLoggedIn: false,
   isRefreshing: false,
   isError: false,
-  isLoading: true,
 };
 
   const authSlice = createSlice({
@@ -41,14 +39,13 @@ const initialState: InitState = {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
-        state.isLoading = false;
+        state.isRefreshing = false;
         console.log(action.payload);
       });
         builder.addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
-        state.isLoading = false;
       })
       builder.addCase(logIn.fulfilled, (state, action) => {
         state.user = action.payload.user;
@@ -56,14 +53,12 @@ const initialState: InitState = {
         state.isLoggedIn = true;
         state.isRefreshing = false;
         state.isError = false;
-        state.isLoading = false;
       });
       builder.addCase(updateUserData.fulfilled, (state, action) => {
         state.user = { ...state.user, ...action.payload };
         state.token = action.payload.token;
         state.isRefreshing = false;
         state.isError = false;
-        state.isLoading = false;
       });
       builder.addCase(logOut.fulfilled, (state, action) => {
         state.user = { username: '', birthday:'', gender:'', email:'', password:'', avatarURL:'',about:'', language:'' };
@@ -71,7 +66,6 @@ const initialState: InitState = {
         state.isLoggedIn = false;
         state.isRefreshing = false;
         state.isError = false;
-        state.isLoading = false;
       });
       //rejected
       builder.addCase(refreshUser.rejected, (state, action) => {
@@ -80,6 +74,7 @@ const initialState: InitState = {
       });
       builder.addCase(register.rejected, (state) => {
         state.isRefreshing = false;
+        state.isError = true;
       });
       //pending
       builder.addCase(refreshUser.pending, state => {
@@ -87,7 +82,7 @@ const initialState: InitState = {
         state.isError = false;
     });
       builder.addCase(register.pending, (state) => {
-        state.isRefreshing = false;
+        state.isRefreshing = true;
       });
     },
   });
