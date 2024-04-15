@@ -1,4 +1,5 @@
-// Hаташа дивись тут 
+"use client"
+
 import React, { useEffect, useState } from 'react'
 import { refreshUser } from '../REDUX/Auth/operations';
 import { Dispatch } from '../REDUX/store';

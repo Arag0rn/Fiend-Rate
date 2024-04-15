@@ -20,7 +20,6 @@ import { Dispatch } from '@/app/REDUX/store';
 import { useTranslation } from '@/i18n/client';
 import { TFunction } from 'i18next';
 import CongratsModal from './ConfratsModal/CongratsModal';
-import { PrivateRoute } from '../PrivateRote';
 
 const createAccountSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
@@ -160,4 +159,4 @@ const Information = ({params}) => {
   );
 };
 
-export default PrivateRoute(Information);
+export default Information;
