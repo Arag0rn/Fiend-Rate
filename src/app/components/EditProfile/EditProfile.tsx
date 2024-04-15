@@ -60,15 +60,14 @@ const SignupSchema = Yup.object().shape({
 
 const EditProfile = () => {
 
-    const {UserData} = User;
     const [isModalOpen, setIsModalOpen] = React.useState(false);
-    const [date, setDate] = useState(UserData.birthday);
     const [open, setOpen] = useState(false);
     const [openGen, setOpenGen] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const dispatch: Dispatch = useDispatch();
     const { user } = useAuth();
     const [gender, setGender] = useState(user?.gender);
+    const [date, setDate] = useState(user?.birthday);
     const [language, setLanguage] = useState(user?.language);
     console.log(user);
     const router = useRouter();
