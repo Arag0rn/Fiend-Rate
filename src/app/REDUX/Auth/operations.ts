@@ -122,3 +122,15 @@ export const logOut = createAsyncThunk(
     }
   }
 );
+
+export const deleteUser = createAsyncThunk(
+  'auth/delete',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.delete(`/api/user/delete`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);

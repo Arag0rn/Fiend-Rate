@@ -8,6 +8,10 @@ import checkTrue from "../../images/SignUp/checkTrue.svg";
 
 import Modal from '@mui/material/Modal';
 import Navbar from '../NavBar/Navbar';
+import { Dispatch } from '@/app/REDUX/store';
+import { useDispatch } from 'react-redux';
+import { deleteUser } from '@/app/REDUX/Auth/operations';
+
 
 const style = {
   position: 'absolute',
@@ -27,6 +31,7 @@ export default function BasicModal({ openModal, handleCloseModal, modalTitle, mo
     const [dontwant, setIsDontwant] = React.useState(false);
     const [another, setIsAnother] = React.useState(false);
     const [problems, setIsProblems] = React.useState(false);
+    const dispatch:Dispatch = useDispatch();
 
   return (
     <div>
@@ -75,6 +80,7 @@ export default function BasicModal({ openModal, handleCloseModal, modalTitle, mo
                 className={styles.deleteBtn}
                 disabled={!dontwant && !another && !problems} 
                 type='button'
+                onClick={()=>{dispatch(deleteUser())}}
                 >
                 DELETE MY ACCOUNT
                 </button>

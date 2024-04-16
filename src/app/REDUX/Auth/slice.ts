@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn, logOut, refreshUser, register, updateUserData } from './operations';
+import { deleteUser, logIn, logOut, refreshUser, register, updateUserData } from './operations';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -67,6 +67,13 @@ const initialState: InitState = {
         state.isRefreshing = false;
         state.isError = false;
       });
+      builder.addCase(deleteUser.fulfilled, (state, {payload}) => {
+        state.user = null;
+        state.token = null;
+        state.isLoggedIn = false;
+        state.isRefreshing = false;
+        state.isError = false;
+      })
       //rejected
       builder.addCase(refreshUser.rejected, (state, action) => {
         state.isRefreshing = false;
