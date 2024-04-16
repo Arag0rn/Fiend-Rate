@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { logIn, logOut, refreshUser, register, updateUserData } from './operations';
 
 export interface AuthState {
@@ -39,6 +39,7 @@ const initialState: InitState = {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
         console.log(action.payload);
       });
         builder.addCase(refreshUser.fulfilled, (state, action) => {
@@ -73,6 +74,7 @@ const initialState: InitState = {
       });
       builder.addCase(register.rejected, (state) => {
         state.isRefreshing = false;
+        state.isError = true;
       });
       //pending
       builder.addCase(refreshUser.pending, state => {
@@ -80,7 +82,7 @@ const initialState: InitState = {
         state.isError = false;
     });
       builder.addCase(register.pending, (state) => {
-        state.isRefreshing = false;
+        state.isRefreshing = true;
       });
     },
   });

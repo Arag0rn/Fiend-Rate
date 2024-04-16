@@ -1,15 +1,34 @@
-// Hаташа дивись тут 
-import React, { useEffect } from 'react'
+"use client"
+
+import React, { useEffect, useState } from 'react'
 import { refreshUser } from '../REDUX/Auth/operations';
 import { Dispatch } from '../REDUX/store';
 import { useDispatch } from 'react-redux';
+import { ProtectedRoute } from './Protected';
 
-export const RefreshUser = () => {
+
+export const RefreshUser = ({children}) => {
 
     const dispatch: Dispatch = useDispatch();
+    const [refreshing, setRefreshing] = useState(true);
 
     useEffect(() => {
-      dispatch(refreshUser());
+      const fetchData = async () => {
+        await dispatch(refreshUser());
+        setRefreshing(false);
+      };
+      fetchData();
     }, [dispatch]);
-  return null;
-}
+  
+    if (refreshing) {
+      return null; 
+    }
+
+    return (
+      <ProtectedRoute>
+        {children}
+      </ProtectedRoute>
+    );
+
+
+  }

@@ -11,7 +11,6 @@ import userAvatar from '../../images/notification/user-avatar.png';
 import iconSpeacer from '../../images/notification/icon-speaker.svg';
 import iconGroup from '../../images/notification/icon-group.svg';
 import Link from 'next/link';
-import { PrivatRote } from '@/app/components/PrivateRote';
 
 const NotificationContainer = () => {
   return (
@@ -180,4 +179,4 @@ const NotificationContainer = () => {
   )
 }
 
-export default PrivatRote(NotificationContainer);
+export default NotificationContainer;
