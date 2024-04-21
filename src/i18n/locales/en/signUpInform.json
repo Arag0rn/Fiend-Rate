@@ -4,6 +4,7 @@
   "signIn": "Sign In",
   "userName": "Username",
   "plholdUserName": "Please enter your username",
+  "errorUserName":"Username must be 3-25 characters",
   "birthDay": "Birthday",
   "plholdBirthDay": "DD.MM.YYYY",
   "errorBirthDayFormat": "Please enter your birthdate in 'DD.MM.YYYY' format",

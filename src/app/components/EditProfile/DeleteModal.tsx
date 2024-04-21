@@ -5,12 +5,12 @@ import styles from "./DeleteModal.module.scss";
 import Image from 'next/image';
 import checkFalse from "../../images/SignUp/checkFalse.svg";
 import checkTrue from "../../images/SignUp/checkTrue.svg";
-
 import Modal from '@mui/material/Modal';
 import Navbar from '../NavBar/Navbar';
 import { Dispatch } from '@/app/REDUX/store';
 import { useDispatch } from 'react-redux';
 import { deleteUser } from '@/app/REDUX/Auth/operations';
+import { useTranslation } from '@/i18n/client';
 
 
 const style = {
@@ -27,7 +27,8 @@ const style = {
   p: "16px",
 };
 
-export default function BasicModal({ openModal, handleCloseModal, modalTitle, modalContent }) {
+export default function BasicModal({ openModal, handleCloseModal, modalTitle, modalContent, params }) {
+    const { t } = useTranslation(params, 'popUp-delete');
     const [dontwant, setIsDontwant] = React.useState(false);
     const [another, setIsAnother] = React.useState(false);
     const [problems, setIsProblems] = React.useState(false);
@@ -42,7 +43,7 @@ export default function BasicModal({ openModal, handleCloseModal, modalTitle, mo
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-            <div className={styles.modalHead}>Delete YOUR account</div>
+            <div className={styles.modalHead}>{t("title")}</div>
             <div className={styles.BoxWithCheckBox}>
                 
             <div className={styles.checkbox}>       
@@ -52,7 +53,7 @@ export default function BasicModal({ openModal, handleCloseModal, modalTitle, mo
                   alt="Icon"
               />
           
-                  <p className={styles.checkboxTxt}>I don`t want to use this service</p> 
+                  <p className={styles.checkboxTxt}>{t("service")}</p> 
               </div>
               
               <div className={styles.checkbox}>    
@@ -62,7 +63,7 @@ export default function BasicModal({ openModal, handleCloseModal, modalTitle, mo
                   alt="Icon"
               />
           
-                  <p className={styles.checkboxTxt}>I have another account</p> 
+                  <p className={styles.checkboxTxt}>{t("account")}</p> 
               </div>
               
               <div className={styles.checkbox}>      
@@ -72,17 +73,17 @@ export default function BasicModal({ openModal, handleCloseModal, modalTitle, mo
                   alt="Icon"
               />
           
-                  <p className={styles.checkboxTxt}>This service has some problems</p> 
+                  <p className={styles.checkboxTxt}>{t("problem")}</p> 
               </div>
             </div>
-            <div className={styles.warningMes}>*All the data will be deleted permanetly from our service including<br></br> your profile, information, photo</div>
+            <div className={styles.warningMes}>{t("description")}<br></br> {t("description2")}</div>
             <button 
                 className={styles.deleteBtn}
                 disabled={!dontwant && !another && !problems} 
                 type='button'
                 onClick={()=>{dispatch(deleteUser())}}
                 >
-                DELETE MY ACCOUNT
+                {t("delete")}
                 </button>
             <Navbar/>
         </Box>

@@ -8,7 +8,6 @@ import Image from 'next/image';
 import showIcon from "../../images/SignUp/show_icon.svg";
 import hideIcon from "../../images/SignUp/hide_icon.svg";
 import Navbar from '../NavBar/Navbar';
-import User from './user.json';
 import BasicModal from './DeleteModal';
 import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
 import { LangSelector } from '../Selectors/LangSelector/LangSelector';
@@ -17,17 +16,19 @@ import { Dispatch } from '@/app/REDUX/store';
 import { updateUserData } from '@/app/REDUX/Auth/operations';
 import { useAuth } from '@/app/REDUX/Hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/i18n/client';
+import { TFunction } from 'i18next';
 
 
 
-const SignupSchema = Yup.object().shape({
+const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
   .min(3, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
-  .max(25, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
-  .matches(/^[a-zA-Z0-9]+$/, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
-  .required('Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.'),
+  .max(25, () => t("nameError"))
+  .matches(/^[a-zA-Z0-9]+$/, () => t("nameError"))
+  .required(() => t("nameError")),
   birthday: Yup.string()
-  .required('Please enter your birthdate')
+  .required(() => t("birthDateError"))
   .matches(
     /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(192[5-9]|19[3-9]\d|20[0-1]\d|202[0-3])$/,
     `Invalid date format: "Birthdate must be written in 'DD.MM.YYYY' format.`
@@ -35,7 +36,7 @@ const SignupSchema = Yup.object().shape({
   email: Yup.string()
   .email('Please enter a valid email address.')
   .matches(
-    /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     'Please enter a valid email address.'
   )
   .min(5, 'Email should be at least 5 characters')
@@ -51,14 +52,14 @@ const SignupSchema = Yup.object().shape({
   passwordRepeat: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords do not match. Please re-enter your password.'),
   about: Yup.string()
-    .min(10, 'This field must contain at least 10 characters')
-    .max(255, 'This field must contain less than 255 characters')
+    .min(10, () => t("errorAtLeast"))
+    .max(255, () => t("errorLess"))
     .required('Please enter a few words about you')
 
 });
 
-const EditProfile = () => {
-
+const EditProfile = ({params}) => {
+    const { t } = useTranslation(params, 'edit');
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [open, setOpen] = useState(false);
     const [openGen, setOpenGen] = useState(false);
@@ -82,7 +83,7 @@ const EditProfile = () => {
         passwordRepeat: '',
         about: user?.about || ''
       },
-        validationSchema: SignupSchema,
+        validationSchema: SignupSchema(t),
         onSubmit: async (values, action) => {
           const updatedValues = {
             ...values,
@@ -98,11 +99,16 @@ const EditProfile = () => {
 
       const handleInputChange = (event) => {
         const input = event.target.value.replace(/\D/g, '');
-        const formattedDate = input
+        let formattedDate = input
           .replace(/^(\d{2})(\d{2})(\d{0,4})/, '$1.$2.$3')
           .replace(/^(\d{2}\.\d{2})(\d{4})/, '$1.$2');
+
+        if (event.nativeEvent.inputType === "deleteContentBackward" && formattedDate.slice(-1) === '.') {
+          formattedDate = formattedDate.slice(0, -1);
+        }
+      
         setDate(formattedDate);
-        formik.handleChange(event); 
+        formik.handleChange(event);
       };
 
       const handleSelectChange = (selectedLanguage) => {
@@ -128,11 +134,11 @@ const EditProfile = () => {
   return (
     <>
     <Container style={{ paddingBottom: "30px", overflowY: 'auto' }}>
-    <h2 className={styles.editHeaad}>Edit</h2>
+    <h2 className={styles.editHeaad}>{t("title")}</h2>
 
     <form className={styles.inputForm} onSubmit={formik.handleSubmit}>
         <label className={styles.fieldLabelM32} htmlFor="username">
-            Username
+        {t("name")}
         </label>
         <input
             className={styles.field}
@@ -149,7 +155,7 @@ const EditProfile = () => {
         )}
 
         <label className={styles.fieldLabelM32} htmlFor="email">
-            Email
+        {t("email")}
         </label>
         <input
             className={!formik.touched.email || !formik.errors.email ? styles.field : styles.fieldErr}
@@ -166,7 +172,7 @@ const EditProfile = () => {
         )}
 
         <label className={styles.fieldLabelM32} htmlFor="birthday">
-            Birthday
+        {t("birthDay")}
         </label>
         <input
             className={!formik.touched.birthday || !formik.errors.birthday ? styles.field : styles.fieldErr}
@@ -183,11 +189,11 @@ const EditProfile = () => {
           <span className={styles.errMes}>{formik.errors.birthday}</span>
         )}
       <div className={styles.genderLangBox}>
-      <GenderSelector onSelectGender={handleSelectGenderChange} userGender={gender}/>
-      <LangSelector onSelectLanguage={handleSelectChange} userLanguage={language}/>
+      <GenderSelector onSelectGender={handleSelectGenderChange} userGender={gender} params={params} t={t}/>
+      <LangSelector onSelectLanguage={handleSelectChange} userLanguage={language} params={params}/>
       </div>
         <label className={styles.fieldLabel} htmlFor="password">
-              Password
+        {t("password")}
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image  className={styles.icon} src={showIcon} alt="show_icon"  />
@@ -200,7 +206,7 @@ const EditProfile = () => {
               id="password"
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="Enter your password"
+              placeholder={t("confirmPl")}
               title="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -214,7 +220,7 @@ const EditProfile = () => {
             )}
 
             <label className={styles.fieldLabel} htmlFor="passwordRepeat">
-                Confirm password
+            {t("confirm")}
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image className={styles.icon} src={showIcon} alt="show_icon" />
@@ -227,7 +233,7 @@ const EditProfile = () => {
               id="passwordRepeat"
               type={showPassword ? 'text' : 'password'}
               name="passwordRepeat"
-              placeholder="Confirm your password"
+              placeholder={t("confirmPl")}
               title="passwordRepeat"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -240,12 +246,13 @@ const EditProfile = () => {
                           )}
 
             <label className={styles.fieldLabelM32} htmlFor="about">
-            About
+            {t("about")}
             </label>
             <textarea
                 className={!formik.touched.about || !formik.errors.about ? styles.field : styles.fieldErr}
                 id="about"
                 name="about"
+                placeholder= {t("enterAbout")}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.about}
@@ -257,12 +264,13 @@ const EditProfile = () => {
         )}
 
 
-            <button type='submit' className={styles.saveBtn}>SAVE</button>
+            <button type='submit' className={styles.saveBtn}>{t("save")}</button>
 
-            <div className={styles.deleteBtn} onClick={handleOpenModal}>Delete my account</div>
+            <div className={styles.deleteBtn} onClick={handleOpenModal}>{t("delete")}</div>
             <BasicModal
                 openModal={isModalOpen}
                 handleCloseModal={handleCloseModal}
+                params={params}
                 modalTitle="Text in a modal"
                 modalContent="Duis mollis, est non commodo luctus, nisi erat porttitor ligula."
               />

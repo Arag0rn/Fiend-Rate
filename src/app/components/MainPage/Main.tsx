@@ -11,12 +11,15 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './MuiThemeProvider';
 import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
 import { LangSelector } from '../Selectors/LangSelector/LangSelector';
+import { useTranslation } from '@/i18n/client';
 
 const Main = ({params}) => {
 
     const [value, setValue] = useState<number[]>([18, 55]);
-    const [selectedLanguage, setSelectedLanguage] = useState("UKR");
-    const [selectedGender, setSelectedGender] = useState("Male");
+   
+    const { t } = useTranslation(params, 'main-page');
+    const [selectedLanguage, setSelectedLanguage] = useState(t("ukr"));
+    const [selectedGender, setSelectedGender] = useState(t("maile"));
 
     const handleChange = (event: Event, newValue: number | number[]) => {
         setValue(newValue as number[]);
@@ -68,15 +71,15 @@ const Main = ({params}) => {
           priority={true}
           alt='Main page image'
         />
-    <div className={styles.mainTxt}>SELECT THE PARAMETERS OF WHO WE WILL SEARCH FOR</div>
+    <div className={styles.mainTxt}>{t("title")}</div>
 
     <div className={styles.customSelectContainer}>
-      <GenderSelector onSelectGender={handleGenderChange} userGender={undefined}/>
-      <LangSelector onSelectLanguage={handleLanguageChange} userLanguage={undefined}/>   
+      <GenderSelector onSelectGender={handleGenderChange} userGender={undefined} params={params} t={t}/>
+      <LangSelector onSelectLanguage={handleLanguageChange} userLanguage={undefined} params={params}/>   
     </div>
 
    <div className={styles.sliderContainer}>
-    <div className={styles.ageTxt}>Age</div>
+    <div className={styles.ageTxt}>{t("age")}</div>
 
     <ThemeProvider theme={theme}>
     <Box sx={{ 
@@ -108,8 +111,8 @@ const Main = ({params}) => {
     </div>
 
     <div className={styles.mainBtnBox}>
-      <button className={styles.button1to1}>1 TO 1</button>
-      <button className={styles.buttonGroup}>GROUP</button>
+      <button className={styles.button1to1}>{t("1to1")}</button>
+      <button className={styles.buttonGroup}>{t("group")}</button>
     </div>
     <Navbar/>
     </div>
