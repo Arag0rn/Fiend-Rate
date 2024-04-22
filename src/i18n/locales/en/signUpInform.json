@@ -14,5 +14,6 @@
   "female": "Female",
   "other": "Other",
   "account": "Create account",
-  "congratuate": "Congratulations! Your FriendRate account has been created successfully, do it!"
+  "congratuate": "Congratulations!",
+  "congratuate2": "Your FriendRate account has been created successfully, do it!"
 }

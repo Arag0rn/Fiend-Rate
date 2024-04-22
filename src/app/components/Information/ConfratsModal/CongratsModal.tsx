@@ -26,7 +26,7 @@ const style = {
   };
   
 
-export default function CongratsModal({onOpen}) {
+export default function CongratsModal({onOpen, t }) {
     console.log(onOpen)
     const router = useRouter();
     const [open, setOpen] = useState(onOpen);
@@ -55,14 +55,14 @@ export default function CongratsModal({onOpen}) {
       >
         <Box sx={style}>
            <div className={styles.congratsBlock}>
-            <h3 className={styles.congratsHead}>Congratulations! </h3>
+            <h3 className={styles.congratsHead}>{t("congratuate")} </h3>
             <Image
                     className={styles.congratsImg}
                     src={PaperAirplane}
                     alt="PaperAirplane"
                 />
            </div>
-            <p className={styles.congratsTxt}>Your FriendRate account has been created successfully, do it!</p>
+            <p className={styles.congratsTxt}>{t("congratuate2")}</p>
             <button className={styles.congratsBtn} onClick={handleClose}>ОК</button>
         </Box>
       </Modal>

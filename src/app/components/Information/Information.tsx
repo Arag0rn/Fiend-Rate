@@ -154,7 +154,7 @@ const Information = ({params}) => {
           {t("account")}
         </button>
       </form>
-      <CongratsModal onOpen={openCongrads}/>
+      <CongratsModal onOpen={openCongrads} t={t}/>
     </Container>
   );
 };
