@@ -1,11 +1,13 @@
 "use client"
 import { useState } from "react";
+import { useTranslation } from '@/i18n/client';
 import styles from './GenderSelector.module.scss';
 
-export const GenderSelector = ({ onSelectGender, userGender }) => {
 
+export const GenderSelector = ({ onSelectGender, userGender, params, t }) => {
     const [openGen, setOpenGen] = useState(false);
-    const [gender, setGender] = useState(userGender || 'Male');
+    const [gender, setGender] = useState(userGender || t("maile"));
+    
 
     const handleSelectGenderChange = (newGender) => {
         setGender(newGender);
@@ -16,21 +18,21 @@ export const GenderSelector = ({ onSelectGender, userGender }) => {
   return (
     <> 
     <label className={styles.fieldLabel} htmlFor="gender">
-    Gender
+    {t("gender")}
 </label>
     <div className={openGen ? styles.customSelectOpen : styles.customSelect} onClick={() => setOpenGen(!openGen)}>
     {!openGen ? (
         <span className={styles.options}>{gender}</span>
     ) : (
         <div className={styles.options2}>
-        <div className={styles.options2} onClick={() => handleSelectGenderChange('Male')}>
-            Male
+        <div className={styles.options2} onClick={() => handleSelectGenderChange(() => t("maile"))}>
+        {t("maile")}
         </div>
-        <div className={styles.options2} onClick={() => handleSelectGenderChange('Female')}>
-            Female
+        <div className={styles.options2} onClick={() => handleSelectGenderChange(() => t("female"))}>
+        {t("female")}
         </div>
-        <div className={styles.options2} onClick={() => handleSelectGenderChange('Other')}>
-            Other
+        <div className={styles.options2} onClick={() => handleSelectGenderChange(() => t("other"))}>
+        {t("other")}
         </div>
         </div>
     )}

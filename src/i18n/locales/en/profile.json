@@ -5,5 +5,7 @@
   "gender": "Gender",
   "lng": "Language",
   "about": "About",
-  "privacy": "Privacy Policy / Terms and Conditions / Feedback"
+  "privacy": "Privacy Policy",
+  "terms": "Terms and Conditions",
+  "feedback": "Feedback"
 }

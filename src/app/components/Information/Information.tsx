@@ -23,15 +23,15 @@ import CongratsModal from './ConfratsModal/CongratsModal';
 
 const createAccountSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
-  .min(3, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
-  .max(25, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
-  .matches(/^[a-zA-Z0-9]+$/, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
-  .required('Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.'),
+  .min(3, () => t("errorUserName"))
+  .max(25, () => t("errorUserName"))
+  .matches(/^[a-zA-Z0-9]+$/, () => t("errorUserName"))
+  .required(() => t("errorUserName")),
   birthday: Yup.string()
-  .required('Please enter your birthdate')
+  .required(() => t("errorBirthDayFormat"))
   .matches(
     /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(192[5-9]|19[3-9]\d|20[0-1]\d|202[0-3])$/,
-    `Invalid date format: "Birthdate must be written in 'DD.MM.YYYY' format.`
+    () => t("errorBirthDay")
   ),
 });
 

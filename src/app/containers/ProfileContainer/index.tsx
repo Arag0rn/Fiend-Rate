@@ -21,22 +21,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '@/app/REDUX/Auth/selector';
 import { Dispatch } from '@/app/REDUX/store';
 import { logOut } from '@/app/REDUX/Auth/operations';
+import { useTranslation } from '@/i18n/client';
 
 
-// const calculateAge = (birthDate: string) => {
-//   const currentDate = new Date();
-//   const birthDateUser = new Date(birthDate);
-//   let age = currentDate.getFullYear() - birthDateUser.getFullYear();
-//   const monthDiff = currentDate.getMonth() - birthDateUser.getMonth();
+const calculateAge = (birthDate: string | undefined) => {
+  if (!birthDate) return 0;
+  const currentDate = new Date();
+  const birthDateUser = new Date(birthDate);
+  let age = currentDate.getFullYear() - birthDateUser.getFullYear();
+  const monthDiff = currentDate.getMonth() - birthDateUser.getMonth();
 
-//   if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDateUser.getDate())) {
-//     age--;
-//   }
+  if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDateUser.getDate())) {
+    age--;
+  }
 
-//   return age;
-// }
+  return age;
+}
 
 const ProfileContainer = ({ lng }) => {
+  const { t } = useTranslation(lng, 'profile');
   const userData = useSelector(selectUser);
   const dispatch: Dispatch = useDispatch();
   console.log(userData);
@@ -48,7 +51,7 @@ const ProfileContainer = ({ lng }) => {
         <Block className={styles['profile__content']}>
 
           <Block className={styles['profile__block-title']}>
-            <Title>Profile</Title>
+            <Title>{t("title")}</Title>
             <div onClick={() => dispatch(logOut())}>
               <Image 
                 width={24}
@@ -87,40 +90,40 @@ const ProfileContainer = ({ lng }) => {
                 <Image width={17} height={16} src={star} alt={'Star'} />
                 <Block className={styles['profile__number']}>4.0</Block>
               </Block>
-              <Link className={styles['profile__edit-profile']} href='/profile-edit'>Edit</Link>
+              <Link className={styles['profile__edit-profile']} href='/profile-edit'>{t("edit")}</Link>
             </Block>
           </Block>
 
           <Block className={styles['profile__inform']}>
             <List>
-              <ListItem>Age</ListItem>
-              <Block className={styles['profile__inform-value']}> y.o</Block>
+              <ListItem>{t("age")}</ListItem>
+              <Block className={styles['profile__inform-value']}>{calculateAge(userData?.birthday)}</Block>
             </List>
 
             <List>
-              <ListItem>Gender</ListItem>
+              <ListItem>{t("gender")}</ListItem>
               <Block className={styles['profile__inform-value']}>
               {userData?.gender}
               </Block>
             </List>
 
             <List>
-              <ListItem>Language</ListItem>
+              <ListItem>{t("lng")}</ListItem>
               <Block className={styles['profile__inform-value']}>{userData?.language}</Block>
             </List>
           </Block>
 
           <Block className={styles['profile__about']}>
-            <TitleAbout>About</TitleAbout>
+            <TitleAbout>{t("about")}</TitleAbout>
             <AboutDescription>
             {userData?.about}
             </AboutDescription>
           </Block>
 
           <Block className={styles['profile__feedback']}>
-            <Link className={styles['profile__link']} href='/'>Privacy Policy</Link>
-            <Link className={styles['profile__link']} href='/'>Terms & Conditions</Link>
-            <Link className={styles['profile__link']} href='/'>Feedback</Link>
+            <Link className={styles['profile__link']} href='/'>{t("privacy")}</Link>
+            <Link className={styles['profile__link']} href='/'>{t("terms")}</Link>
+            <Link className={styles['profile__link']} href='/'>{t("feedback")}</Link>
           </Block>
           <Navbar style={{ paddingLeft: 10, paddingRight: 10 }} />
         </Block>
