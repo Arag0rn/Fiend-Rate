@@ -31,7 +31,7 @@ const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
       'Please enter a valid email address.'
     )
     .min(5, 'Email should be at least 5 characters')
-    .max(50, 'Email should not exceed 50 characters')
+    .max(60, 'Email should not exceed 60 characters')
     .required('Required'),
   password: Yup.string()
     .required(() => t("errorPassword"))
