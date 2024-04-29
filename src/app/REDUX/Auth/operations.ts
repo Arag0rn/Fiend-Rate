@@ -2,9 +2,9 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthState } from './slice';
 
-// axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'http://localhost:3000';
 
-axios.defaults.baseURL = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com/';
+// axios.defaults.baseURL = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com/';
 
 
 const setAuthHeader = (token: string) => {
@@ -43,11 +43,9 @@ interface UpdatedData {
 export const register = createAsyncThunk(
   'auth/register',
   async (newUser: RegisterData, thunkAPI) => {
-    console.log(newUser);
     try {
       const res = await axios.post('api/user/register', newUser);
       setAuthHeader(res.data.token);
-      console.log(res)
       return res.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -76,7 +74,6 @@ export const refreshUser = createAsyncThunk(
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as { auth: AuthState };
     const persistedToken = state.auth.token;
-    console.log(persistedToken);
     
     if (persistedToken === null) {
       return thunkAPI.rejectWithValue('Unable to fetch user');
@@ -103,7 +100,6 @@ export const updateUserData = createAsyncThunk(
   async (userData: UpdatedData, thunkAPI) => {
     try {
       const res = await axios.patch('/api/user/update', userData);
-
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

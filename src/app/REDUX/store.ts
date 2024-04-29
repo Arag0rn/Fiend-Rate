@@ -12,6 +12,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from "./webStorage";
+import { peerReducer } from "./Peer/slice";
+import { activeUsersReducer } from "./Users/slice";
 
 
 
@@ -26,6 +28,8 @@ export const store = configureStore({
 
   reducer: {
     auth: persistReducer<AuthState, Action>(authPersistConfig, authReducer),
+    peers: peerReducer,
+    users: activeUsersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
