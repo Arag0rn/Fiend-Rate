@@ -58,8 +58,9 @@ const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
 
 });
 
-const EditProfile = ({params}) => {
-    const { t } = useTranslation(params, 'edit');
+const EditProfile = () => {
+
+    const {UserData} = User;
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [open, setOpen] = useState(false);
     const [openGen, setOpenGen] = useState(false);
@@ -71,7 +72,6 @@ const EditProfile = ({params}) => {
     const [language, setLanguage] = useState(user?.language);
     console.log(user);
     const router = useRouter();
-    
 
     const formik = useFormik({
       initialValues: {
@@ -138,7 +138,11 @@ const EditProfile = ({params}) => {
 
     <form className={styles.inputForm} onSubmit={formik.handleSubmit}>
         <label className={styles.fieldLabelM32} htmlFor="username">
+<<<<<<< Updated upstream
         {t("name")}
+=======
+          {t("name")}
+>>>>>>> Stashed changes
         </label>
         <input
             className={styles.field}
@@ -155,7 +159,11 @@ const EditProfile = ({params}) => {
         )}
 
         <label className={styles.fieldLabelM32} htmlFor="email">
+<<<<<<< Updated upstream
         {t("email")}
+=======
+          {t("email")}
+>>>>>>> Stashed changes
         </label>
         <input
             className={!formik.touched.email || !formik.errors.email ? styles.field : styles.fieldErr}
@@ -172,7 +180,11 @@ const EditProfile = ({params}) => {
         )}
 
         <label className={styles.fieldLabelM32} htmlFor="birthday">
+<<<<<<< Updated upstream
         {t("birthDay")}
+=======
+          {t("birthDay")}
+>>>>>>> Stashed changes
         </label>
         <input
             className={!formik.touched.birthday || !formik.errors.birthday ? styles.field : styles.fieldErr}
@@ -193,7 +205,11 @@ const EditProfile = ({params}) => {
       <LangSelector onSelectLanguage={handleSelectChange} userLanguage={language} params={params}/>
       </div>
         <label className={styles.fieldLabel} htmlFor="password">
+<<<<<<< Updated upstream
         {t("password")}
+=======
+          {t("password")}
+>>>>>>> Stashed changes
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image  className={styles.icon} src={showIcon} alt="show_icon"  />
@@ -206,7 +222,11 @@ const EditProfile = ({params}) => {
               id="password"
               type={showPassword ? 'text' : 'password'}
               name="password"
+<<<<<<< Updated upstream
               placeholder={t("confirmPl")}
+=======
+              placeholder={t("placeHolder")}
+>>>>>>> Stashed changes
               title="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -220,7 +240,11 @@ const EditProfile = ({params}) => {
             )}
 
             <label className={styles.fieldLabel} htmlFor="passwordRepeat">
+<<<<<<< Updated upstream
             {t("confirm")}
+=======
+              {t("confirm")}
+>>>>>>> Stashed changes
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image className={styles.icon} src={showIcon} alt="show_icon" />
@@ -233,7 +257,11 @@ const EditProfile = ({params}) => {
               id="passwordRepeat"
               type={showPassword ? 'text' : 'password'}
               name="passwordRepeat"
+<<<<<<< Updated upstream
               placeholder={t("confirmPl")}
+=======
+              placeholder={t("placeHolderConfirm")}
+>>>>>>> Stashed changes
               title="passwordRepeat"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

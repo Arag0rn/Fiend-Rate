@@ -1,10 +1,10 @@
 import EditProfile from "../../components/EditProfile/EditProfile";
 
-export default function EditPrifilePAge ({params: { lng }}) {
+export default function EditPrifilePAge () {
     return (
  
         <>
-        <EditProfile params={lng}/>
+          <EditProfile />
         </>
     )
   }

@@ -16,5 +16,9 @@
   "errorAtLeast": "This field must contain at least 10 characters",
   "errorLess": "This field must contain less than 255 characters",
   "save": "Save",
-  "delete": "Delete my account"
+  "delete": "Delete my account",
+  "placeHolder": "Enter your password",
+  "placeHolderConfirm": "Confirm your password",
+  "error": "Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.",
+  "errorBirthDay": "Please enter your birthdate"
 }
