@@ -16,5 +16,14 @@
   "errorAtLeast": "This field must contain at least 10 characters",
   "errorLess": "This field must contain less than 255 characters",
   "save": "Save",
-  "delete": "Delete my account"
+  "delete": "Delete my account",
+
+  "invalidDateError": "Invalid date format: Birthdate must be written in 'DD.MM.YYYY' format.",
+  "emailError": "Please enter a valid email address.",
+  "emailMinError": "Email should be at least 5 characters",
+  "emailMaxError": "Email should not exceed 50 characters",
+  "required": "Required",
+  "passwordError": "Password must be 8-30 characters and a combination of numbers, letters and special symbols.",
+  "passwordRepeatError": "Passwords do not match. Please re-enter your password.",
+  "aboutError": "Please enter a few words about you"
 }

@@ -37,15 +37,15 @@ const Main = ({params}) => {
     let newValue = event.target.value.trim(); 
   
     if (newValue === "") {
-      newValue = "1"; 
+      newValue = ""; 
     }
   
     let parsedValue = parseInt(newValue, 10);
   
     if (isNaN(parsedValue) || parsedValue < 1) {
-      parsedValue = 1; 
+      parsedValue = 0; 
     } else if (parsedValue > 99) {
-      parsedValue = 99; 
+      parsedValue = 0; 
     }
   
     const updatedValue = [...value];
