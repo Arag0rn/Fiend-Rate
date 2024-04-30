@@ -1,6 +1,5 @@
 {
-<<<<<<< Updated upstream
-  "title": "Select the parameters or who we will search for",
+  "title": "Choose criteria for finding your future interlocutor",
   "gender": "Gender",
   "maile": "Maile",
   "female": "Female",
@@ -8,11 +7,6 @@
   "lng": "Language",
   "ukr": "UKR",
   "en": "ENG",
-=======
-  "title": "Choose criteria for finding your future interlocutor",
-  "gender": "Gender: Maile/Female/Other",
-  "lng": "Language: UKR/ENG",
->>>>>>> Stashed changes
   "age": "Age",
   "group": "GROUP",
   "1to1": "1 TO 1"

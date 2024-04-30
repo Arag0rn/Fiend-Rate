@@ -23,7 +23,7 @@ import { TFunction } from 'i18next';
 
 const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
-  .min(3, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
+  .min(3, () => t("nameError"))
   .max(25, () => t("nameError"))
   .matches(/^[a-zA-Z0-9]+$/, () => t("nameError"))
   .required(() => t("nameError")),
@@ -31,36 +31,35 @@ const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   .required(() => t("birthDateError"))
   .matches(
     /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(192[5-9]|19[3-9]\d|20[0-1]\d|202[0-3])$/,
-    `Invalid date format: "Birthdate must be written in 'DD.MM.YYYY' format.`
+    () => t('invalidDateError')
   ),
   email: Yup.string()
-  .email('Please enter a valid email address.')
+  .email(()=> t('emailError'))
   .matches(
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-    'Please enter a valid email address.'
+    () => t('emailError')
   )
-  .min(5, 'Email should be at least 5 characters')
-  .max(50, 'Email should not exceed 50 characters')
-  .required('Required'),
+  .min(5, () => t('emailMinError'))
+  .max(50, () => t('emailMaxError'))
+  .required(() => t('required')),
   password: Yup.string()
-  .min(8, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
-  .max(30, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
+  .min(8, () => t('passwordError'))
+  .max(30, () => t('passwordError'))
   .matches(
     /^(?=.*[a-z])(?=.*\d)(?=.*[_@+.\-*$£€&!?:;,~^#(){}[\]|\/\\'"])/,
-    'Password must be 8-30 characters and a combination of numbers, letters and special symbols.'
+    () => t('passwordError')
   ),
   passwordRepeat: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords do not match. Please re-enter your password.'),
+    .oneOf([Yup.ref('password')], () => t('passwordRepeatError')),
   about: Yup.string()
     .min(10, () => t("errorAtLeast"))
     .max(255, () => t("errorLess"))
-    .required('Please enter a few words about you')
+    .required(() => t('aboutError'))
 
 });
 
-const EditProfile = () => {
-
-    const {UserData} = User;
+const EditProfile = ({params}) => {
+    const { t } = useTranslation(params, 'edit');
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const [open, setOpen] = useState(false);
     const [openGen, setOpenGen] = useState(false);
@@ -72,6 +71,7 @@ const EditProfile = () => {
     const [language, setLanguage] = useState(user?.language);
     console.log(user);
     const router = useRouter();
+    
 
     const formik = useFormik({
       initialValues: {
@@ -138,11 +138,7 @@ const EditProfile = () => {
 
     <form className={styles.inputForm} onSubmit={formik.handleSubmit}>
         <label className={styles.fieldLabelM32} htmlFor="username">
-<<<<<<< Updated upstream
         {t("name")}
-=======
-          {t("name")}
->>>>>>> Stashed changes
         </label>
         <input
             className={styles.field}
@@ -159,11 +155,7 @@ const EditProfile = () => {
         )}
 
         <label className={styles.fieldLabelM32} htmlFor="email">
-<<<<<<< Updated upstream
         {t("email")}
-=======
-          {t("email")}
->>>>>>> Stashed changes
         </label>
         <input
             className={!formik.touched.email || !formik.errors.email ? styles.field : styles.fieldErr}
@@ -180,11 +172,7 @@ const EditProfile = () => {
         )}
 
         <label className={styles.fieldLabelM32} htmlFor="birthday">
-<<<<<<< Updated upstream
         {t("birthDay")}
-=======
-          {t("birthDay")}
->>>>>>> Stashed changes
         </label>
         <input
             className={!formik.touched.birthday || !formik.errors.birthday ? styles.field : styles.fieldErr}
@@ -205,11 +193,7 @@ const EditProfile = () => {
       <LangSelector onSelectLanguage={handleSelectChange} userLanguage={language} params={params}/>
       </div>
         <label className={styles.fieldLabel} htmlFor="password">
-<<<<<<< Updated upstream
         {t("password")}
-=======
-          {t("password")}
->>>>>>> Stashed changes
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image  className={styles.icon} src={showIcon} alt="show_icon"  />
@@ -222,11 +206,7 @@ const EditProfile = () => {
               id="password"
               type={showPassword ? 'text' : 'password'}
               name="password"
-<<<<<<< Updated upstream
               placeholder={t("confirmPl")}
-=======
-              placeholder={t("placeHolder")}
->>>>>>> Stashed changes
               title="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -240,11 +220,7 @@ const EditProfile = () => {
             )}
 
             <label className={styles.fieldLabel} htmlFor="passwordRepeat">
-<<<<<<< Updated upstream
             {t("confirm")}
-=======
-              {t("confirm")}
->>>>>>> Stashed changes
               <div onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? (
                   <Image className={styles.icon} src={showIcon} alt="show_icon" />
@@ -257,11 +233,7 @@ const EditProfile = () => {
               id="passwordRepeat"
               type={showPassword ? 'text' : 'password'}
               name="passwordRepeat"
-<<<<<<< Updated upstream
               placeholder={t("confirmPl")}
-=======
-              placeholder={t("placeHolderConfirm")}
->>>>>>> Stashed changes
               title="passwordRepeat"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
