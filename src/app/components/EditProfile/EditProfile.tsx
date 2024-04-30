@@ -189,7 +189,7 @@ const EditProfile = ({params}) => {
           <span className={styles.errMes}>{formik.errors.birthday}</span>
         )}
       <div className={styles.genderLangBox}>
-      <GenderSelector onSelectGender={handleSelectGenderChange} userGender={gender} params={params} t={t}/>
+      <GenderSelector onSelectGender={handleSelectGenderChange} userGender={gender} params={params} />
       <LangSelector onSelectLanguage={handleSelectChange} userLanguage={language} params={params}/>
       </div>
         <label className={styles.fieldLabel} htmlFor="password">
