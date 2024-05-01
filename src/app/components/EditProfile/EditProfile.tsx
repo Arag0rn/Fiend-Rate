@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styles from "./edit.module.scss"; 
 import Container from '../Container';
 import { useFormik } from 'formik';
