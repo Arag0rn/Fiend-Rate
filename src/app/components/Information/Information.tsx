@@ -21,29 +21,31 @@ import { useTranslation } from '@/i18n/client';
 import { TFunction } from 'i18next';
 import CongratsModal from './ConfratsModal/CongratsModal';
 
-const createAccountSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
-  username: Yup.string()
-  .min(3, () => t("errorUserName"))
-  .max(25, () => t("errorUserName"))
-  .matches(/^[a-zA-Z0-9]+$/, () => t("errorUserName"))
-  .required(() => t("errorUserName")),
-  birthday: Yup.string()
-  .required(() => t("errorBirthDayFormat"))
-  .matches(
-    /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(192[5-9]|19[3-9]\d|20[0-1]\d|202[0-3])$/,
-    () => t("errorBirthDay")
-  ),
-});
-
 const Information = ({params}) => {
   const { t } = useTranslation(params, 'signUpInform');
   const dispatch: Dispatch = useDispatch();
   const userData = useSelector(selectUser);
   const isNotError = useSelector(selectIsLoggedIn)
-  
   const [date, setDate] = useState('');
   const [gender, setGender] = useState('');
   const [openCongrads, setOpenCongrads] = useState(false);
+
+  const createAccountSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
+    username: Yup.string()
+    .min(3, () => t("errorSymbols"))
+    .max(25, () => t("errorSymbols"))
+    .matches(/^[a-zA-Z0-9_\.\-]+$/, () => t("errorSymbols"))
+    .required(() => t("plholdUserName"))
+    .test(`${t('errorUserName')}`, `${t('errorUserName')}`, (value) => {
+      return userData?.username !== value;
+    }),
+    birthday: Yup.string()
+    .required(() => t("errorBirthDayFormat"))
+    .matches(
+      /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(192[5-9]|19[3-9]\d|20[0-1]\d|202[0-3])$/,
+      () => t("errorBirthDay")
+    ),
+  });
 
   const formik = useFormik({
     initialValues: {
