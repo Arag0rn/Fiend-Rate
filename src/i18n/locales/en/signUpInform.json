@@ -9,7 +9,7 @@
   "errorBirthDayFormat": "Please enter your birthdate in 'DD.MM.YYYY' format",
   "errorBirthDay": "Birthdate must be written in 'DD.MM.YYYY' format",
   "errorUserName": "This username is already used",
-  "errorSymbols": "Username must be 3-25 characters",
+  "errorSymbols": "Username must be 3-25 characters and combination of latin letters, numbers and special symbols.",
   "gender": "Gender",
   "male": "Male",
   "female": "Female",
