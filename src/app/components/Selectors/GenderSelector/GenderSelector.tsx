@@ -4,9 +4,10 @@ import { useTranslation } from '@/i18n/client';
 import styles from './GenderSelector.module.scss';
 
 
-export const GenderSelector = ({ onSelectGender, userGender, params, t }) => {
+export const GenderSelector = ({ onSelectGender, userGender, params }) => {
+    const { t } = useTranslation(params, 'main-page')
     const [openGen, setOpenGen] = useState(false);
-    const [gender, setGender] = useState(userGender || t("maile"));
+    const [gender, setGender] = useState(userGender || t("male"));
     
 
     const handleSelectGenderChange = (newGender) => {
@@ -25,8 +26,8 @@ export const GenderSelector = ({ onSelectGender, userGender, params, t }) => {
         <span className={styles.options}>{gender}</span>
     ) : (
         <div className={styles.options2}>
-        <div className={styles.options2} onClick={() => handleSelectGenderChange(() => t("maile"))}>
-        {t("maile")}
+        <div className={styles.options2} onClick={() => handleSelectGenderChange(() => t("male"))}>
+        {t("male")}
         </div>
         <div className={styles.options2} onClick={() => handleSelectGenderChange(() => t("female"))}>
         {t("female")}

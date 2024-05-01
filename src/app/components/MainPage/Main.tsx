@@ -74,7 +74,7 @@ const Main = ({params}) => {
     <div className={styles.mainTxt}>{t("title")}</div>
 
     <div className={styles.customSelectContainer}>
-      <GenderSelector onSelectGender={handleGenderChange} userGender={undefined} params={params} t={t}/>
+      <GenderSelector onSelectGender={handleGenderChange} userGender={undefined} params={params} />
       <LangSelector onSelectLanguage={handleLanguageChange} userLanguage={undefined} params={params}/>   
     </div>
 
