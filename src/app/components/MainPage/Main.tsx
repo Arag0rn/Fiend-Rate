@@ -19,11 +19,20 @@ const Main = ({params}) => {
    
     const { t } = useTranslation(params, 'main-page');
     const [selectedLanguage, setSelectedLanguage] = useState(t("ukr"));
-    const [selectedGender, setSelectedGender] = useState(t("maile"));
+    const [selectedGender, setSelectedGender] = useState(t("male"));
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number[]);
-      };
+    const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+      const minDistance = 6;
+      if (!Array.isArray(newValue)) {
+        return;
+      }
+  
+      if (activeThumb === 0) {
+        setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+      } else {
+        setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+      }
+    };
 
       const handleLanguageChange = (newLanguage: string) => {
         setSelectedLanguage(newLanguage as string);
@@ -98,8 +107,9 @@ const Main = ({params}) => {
         value={value} 
         onChange={handleChange}
         valueLabelDisplay="on"
-        min={14} 
-        max={99}
+        min={14}
+        max={55}
+        disableSwap
       />
     </Box>
     </ThemeProvider>
