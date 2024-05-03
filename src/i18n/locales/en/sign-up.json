@@ -6,6 +6,8 @@
   "password": "Password",
   "plholdEmail": "Please enter your email address",
   "plholdPassword": "Please enter your password",
+  "errorValidEmail": "Please enter a valid email address.",
+
   "errorEmail": "This email address is already used. Please choose a different email address",
   "errorPassword": "Password must be 8-30 characters and a combination of numbers, letters and special symbols",
   "confirm": "Confirm your password",

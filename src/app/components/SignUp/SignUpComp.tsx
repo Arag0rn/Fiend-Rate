@@ -22,17 +22,13 @@ import { useAuth } from '../../REDUX/Hooks/useAuth'
 import { useTranslation } from '@/i18n/client';
 import { TFunction } from 'i18next';
 
-
 const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   email: Yup.string()
-    .email('Please enter a valid email address.')
+    .email(() => t("errorValidEmail"))
     .matches(
       /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
-      'Please enter a valid email address.'
-    )
-    .min(5, 'Email should be at least 5 characters')
-    .max(50, 'Email should not exceed 50 characters')
-    .required('Required'),
+      () => t("errorValidEmail")
+    ).required(() => t("plholdEmail")),
   password: Yup.string()
     .required(() => t("errorPassword"))
     .min(8, () => t("errorPassword"))
@@ -42,10 +38,9 @@ const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
       () => t("errorPassword")
     ),
   passwordRepeat: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords do not match. Please re-enter your password.')
+    .oneOf([Yup.ref('password')], () => t("errorConfirm"))
     .required('Required'),
 });
- 
 
 const SignUpComp= ({params}) => {
   const router = useRouter();
@@ -54,8 +49,9 @@ const SignUpComp= ({params}) => {
   const { isLoggedIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isAccept, setIsAccept] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isError, setIsError] = useState(false);
   const { user } = useAuth();
-  
   const formik = useFormik({
           initialValues:{
             email: '',
@@ -64,10 +60,16 @@ const SignUpComp= ({params}) => {
           },
           validationSchema: SignupSchema(t),
           onSubmit: async (values, action) => {
+            setIsError(false);
             const { passwordRepeat, ...valuesWithoutPasswordRepeat } = values;
-            dispatch(register(valuesWithoutPasswordRepeat));
-            action.resetForm();
-            
+            dispatch(register(valuesWithoutPasswordRepeat)).unwrap().then(res => {
+              if (res.data.token) {
+                action.resetForm();
+              }
+            }).catch(() => {
+              setIsError(true);
+              setErrorMessage(t('errorEmail'));
+            });
           }
         })
 
@@ -83,19 +85,22 @@ const SignUpComp= ({params}) => {
 
           <form className={styles.imputForm} onSubmit={formik.handleSubmit}>
             <label className={styles.fieldLabel} htmlFor="email">{t("email")}</label>
-            <input className={!formik.touched.email || !formik.errors.email ? styles.field : styles.fieldErr} 
+            <input className={ (!formik.touched.email || !formik.errors.email) && !isError ? styles.field : styles.fieldErr}
             id="email" 
             name="email" 
             placeholder={t("plholdEmail")} 
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            onClick={() => setIsError(false)}
             value={formik.values.email}
             />
 
             {formik.touched.email && formik.errors.email && (
-          <span className={styles.errMes}>{formik.errors.email}</span>
-        )}
-             
+              <span className={styles.errMes}>
+                {formik.errors.email}
+              </span>
+            )}
+            {isError === true && <span className={styles.errMes}>{errorMessage}</span>}
             <label className={styles.fieldLabel} htmlFor="password">
             {t("password")}
               <div onClick={() => setShowPassword(!showPassword)}>
@@ -118,10 +123,6 @@ const SignUpComp= ({params}) => {
             >
               
             </input>
-
-            { !formik.touched.password && !formik.errors.password && (<span className={styles.passText}>Password must be 8-30 characters and a combination of numbers, letters, and special symbols.
-            </span>
-              )}
 
           {formik.touched.password && formik.errors.password && (
           <span className={styles.errMes}>{formik.errors.password}</span>

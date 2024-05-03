@@ -27,7 +27,7 @@ import { useTranslation } from '@/i18n/client';
 const calculateAge = (birthDate: string | undefined) => {
   if (!birthDate) return 0;
   const currentDate = new Date();
-  const birthDateUser = new Date(birthDate);
+  const birthDateUser = new Date(birthDate.split('.').reverse().join('.'));
   let age = currentDate.getFullYear() - birthDateUser.getFullYear();
   const monthDiff = currentDate.getMonth() - birthDateUser.getMonth();
 
@@ -42,7 +42,7 @@ const ProfileContainer = ({ lng }) => {
   const { t } = useTranslation(lng, 'profile');
   const userData = useSelector(selectUser);
   const dispatch: Dispatch = useDispatch();
-  
+
   return (
     <Block className='profile'>
       <Container>

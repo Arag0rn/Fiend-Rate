@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styles from "./edit.module.scss"; 
 import Container from '../Container';
 import { useFormik } from 'formik';
@@ -23,7 +23,7 @@ import { TFunction } from 'i18next';
 
 const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
-  .min(3, 'Username must be 3-25 characters and combination of latin letters, numbers, and special symbols.')
+  .min(3, () => t("nameError"))
   .max(25, () => t("nameError"))
   .matches(/^[a-zA-Z0-9]+$/, () => t("nameError"))
   .required(() => t("nameError")),
@@ -31,30 +31,30 @@ const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   .required(() => t("birthDateError"))
   .matches(
     /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(192[5-9]|19[3-9]\d|20[0-1]\d|202[0-3])$/,
-    `Invalid date format: "Birthdate must be written in 'DD.MM.YYYY' format.`
+    () => t('invalidDateError')
   ),
   email: Yup.string()
-  .email('Please enter a valid email address.')
+  .email(()=> t('emailError'))
   .matches(
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-    'Please enter a valid email address.'
+    () => t('emailError')
   )
-  .min(5, 'Email should be at least 5 characters')
-  .max(50, 'Email should not exceed 50 characters')
-  .required('Required'),
+  .min(5, () => t('emailMinError'))
+  .max(50, () => t('emailMaxError'))
+  .required(() => t('required')),
   password: Yup.string()
-  .min(8, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
-  .max(30, 'Password must be 8-30 characters and a combination of numbers, letters and special symbols.')
+  .min(8, () => t('passwordError'))
+  .max(30, () => t('passwordError'))
   .matches(
     /^(?=.*[a-z])(?=.*\d)(?=.*[_@+.\-*$£€&!?:;,~^#(){}[\]|\/\\'"])/,
-    'Password must be 8-30 characters and a combination of numbers, letters and special symbols.'
+    () => t('passwordError')
   ),
   passwordRepeat: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords do not match. Please re-enter your password.'),
+    .oneOf([Yup.ref('password')], () => t('passwordRepeatError')),
   about: Yup.string()
     .min(10, () => t("errorAtLeast"))
     .max(255, () => t("errorLess"))
-    .required('Please enter a few words about you')
+    .required(() => t('aboutError'))
 
 });
 
@@ -188,7 +188,7 @@ const EditProfile = ({params}) => {
           <span className={styles.errMes}>{formik.errors.birthday}</span>
         )}
       <div className={styles.genderLangBox}>
-      <GenderSelector onSelectGender={handleSelectGenderChange} userGender={gender} params={params} t={t}/>
+      <GenderSelector onSelectGender={handleSelectGenderChange} userGender={gender} params={params} />
       <LangSelector onSelectLanguage={handleSelectChange} userLanguage={language} params={params}/>
       </div>
         <label className={styles.fieldLabel} htmlFor="password">

@@ -4,7 +4,7 @@ export default function EditPrifilePAge ({params: { lng }}) {
     return (
  
         <>
-        <EditProfile params={lng}/>
+          <EditProfile params={lng}/>
         </>
     )
   }

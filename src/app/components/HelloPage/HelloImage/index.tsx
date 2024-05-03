@@ -9,7 +9,7 @@ const HelloImage = () => {
         src={image}
         quality={100}
         priority={true}
-        alt='Happy palce'
+        alt='Image'
         style={{ objectFit: 'contain', objectPosition: 'center', width: '100%', height: '100%' }}
       />
     </div>

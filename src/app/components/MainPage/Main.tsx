@@ -31,9 +31,19 @@ const Main = ({params}) => {
       router.push("/hub")
     }
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number[]);
-      };
+
+    const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+      const minDistance = 6;
+      if (!Array.isArray(newValue)) {
+        return;
+      }
+  
+      if (activeThumb === 0) {
+        setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+      } else {
+        setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+      }
+    };
 
       const handleLanguageChange = (newLanguage: string) => {
         setSelectedLanguage(newLanguage as string);
@@ -47,15 +57,15 @@ const Main = ({params}) => {
     let newValue = event.target.value.trim(); 
   
     if (newValue === "") {
-      newValue = "1"; 
+      newValue = ""; 
     }
   
     let parsedValue = parseInt(newValue, 10);
   
     if (isNaN(parsedValue) || parsedValue < 1) {
-      parsedValue = 1; 
+      parsedValue = 0; 
     } else if (parsedValue > 99) {
-      parsedValue = 99; 
+      parsedValue = 0; 
     }
   
     const updatedValue = [...value];
@@ -84,7 +94,7 @@ const Main = ({params}) => {
     <div className={styles.mainTxt}>{t("title")}</div>
 
     <div className={styles.customSelectContainer}>
-      <GenderSelector onSelectGender={handleGenderChange} userGender={undefined} params={params} t={t}/>
+      <GenderSelector onSelectGender={handleGenderChange} userGender={undefined} params={params} />
       <LangSelector onSelectLanguage={handleLanguageChange} userLanguage={undefined} params={params}/>   
     </div>
 
@@ -108,8 +118,9 @@ const Main = ({params}) => {
         value={value} 
         onChange={handleChange}
         valueLabelDisplay="on"
-        min={14} 
-        max={99}
+        min={14}
+        max={55}
+        disableSwap
       />
     </Box>
     </ThemeProvider>
