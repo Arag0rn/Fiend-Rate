@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Navbar from '../NavBar/Navbar';
 import MainImg from '../../images/Main/mainimg.png'
 import Logo from '../../images/Main/Logo.svg'
@@ -12,14 +12,25 @@ import theme from './MuiThemeProvider';
 import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
 import { LangSelector } from '../Selectors/LangSelector/LangSelector';
 import { useTranslation } from '@/i18n/client';
+import { useRouter } from "next/navigation";
+import { useAuth } from '@/app/REDUX/Hooks/useAuth';
+import { RoomContext } from '../Context/RomContext';
 
 const Main = ({params}) => {
 
     const [value, setValue] = useState<number[]>([18, 55]);
-   
     const { t } = useTranslation(params, 'main-page');
     const [selectedLanguage, setSelectedLanguage] = useState(t("ukr"));
-    const [selectedGender, setSelectedGender] = useState(t("male"));
+    const [selectedGender, setSelectedGender] = useState(t("maile"));
+    const { ws } = useContext(RoomContext)
+    const { user } = useAuth();
+    const router = useRouter()
+
+    const joinHub = ()=> {
+    
+      router.push("/hub")
+    }
+
 
     const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
       const minDistance = 6;
@@ -121,7 +132,7 @@ const Main = ({params}) => {
     </div>
 
     <div className={styles.mainBtnBox}>
-      <button className={styles.button1to1}>{t("1to1")}</button>
+      <button className={styles.button1to1} onClick={joinHub}>{t("1to1")}</button>
       <button className={styles.buttonGroup}>{t("group")}</button>
     </div>
     <Navbar/>

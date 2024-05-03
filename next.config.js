@@ -5,9 +5,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '**',
-      },
+      }
     ],
   },
-}
+  reactStrictMode: false,
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

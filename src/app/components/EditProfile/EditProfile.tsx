@@ -69,7 +69,6 @@ const EditProfile = ({params}) => {
     const [gender, setGender] = useState(user?.gender);
     const [date, setDate] = useState(user?.birthday);
     const [language, setLanguage] = useState(user?.language);
-    console.log(user);
     const router = useRouter();
     
 

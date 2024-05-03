@@ -52,10 +52,6 @@ const SignUpComp= ({params}) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const { user } = useAuth();
-  console.log(user, isError, errorMessage);
-
-  
-
   const formik = useFormik({
           initialValues:{
             email: '',

@@ -27,7 +27,6 @@ const style = {
   
 
 export default function CongratsModal({onOpen, t }) {
-    console.log(onOpen)
     const router = useRouter();
     const [open, setOpen] = useState(onOpen);
     

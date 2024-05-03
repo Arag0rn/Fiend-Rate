@@ -16,6 +16,7 @@ export interface AuthState {
     verify?:boolean ;
     about?: string | '';
     language?: string | '';
+    _id?: string | '';
   } | null;
 }
 
@@ -40,7 +41,6 @@ const initialState: InitState = {
         state.token = action.payload.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
-        console.log(action.payload);
       });
         builder.addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload;

@@ -12,6 +12,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from "./webStorage";
+import { activeUsersReducer } from "./Users/slice";
 
 
 
@@ -26,6 +27,7 @@ export const store = configureStore({
 
   reducer: {
     auth: persistReducer<AuthState, Action>(authPersistConfig, authReducer),
+    users: activeUsersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
