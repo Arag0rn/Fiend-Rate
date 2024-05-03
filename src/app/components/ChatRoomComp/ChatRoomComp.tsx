@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { RoomContext } from '../Context/RomContext';
 import { Video } from './Video';
-
+import styles from './ChatRoomComp.module.scss';
 
 export const ChatRoomComp = () => {
     const [timeElapsed, setTimeElapsed] = useState(0);
@@ -13,9 +13,9 @@ export const ChatRoomComp = () => {
 
     useEffect(() => {
         me?.on("open", () => {
-            ws.emit("join-room", { roomId: id, peerId: me._lastServerId });
+            ws.emit("join-room", { roomId: id, peerId: me._id });
         });
-    }, []);
+    }, [id, me, ws]);
 
     useEffect(() => {
         let intervalId;
@@ -40,10 +40,14 @@ export const ChatRoomComp = () => {
     return (
         <>
             <h1>ChatRoom</h1>
+            <div className={styles.videogrid}>
             {stream && <Video stream={stream}/>}
+            {/* <Video key={"me"} stream={stream} /> */}
             {Object.values(peers).map((peer: any) => (
                     <Video key={peer.id} stream={peer.stream} />
                 ))}
+            
+            </div>
             {stream && <p>Time Elapsed: {formatTime(timeElapsed)}</p>}
         </>
     );

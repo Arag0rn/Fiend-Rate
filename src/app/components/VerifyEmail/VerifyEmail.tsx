@@ -31,9 +31,6 @@ const VerifyEmail = ({params}) => {
     }
   }, []);
 
-  console.log(verifiedUsers);
-  
-
   if (verifiedUsers) {
     router.push('/information');
   }

@@ -42,9 +42,7 @@ const ProfileContainer = ({ lng }) => {
   const { t } = useTranslation(lng, 'profile');
   const userData = useSelector(selectUser);
   const dispatch: Dispatch = useDispatch();
-  console.log(userData);
   
-
   return (
     <Block className='profile'>
       <Container>

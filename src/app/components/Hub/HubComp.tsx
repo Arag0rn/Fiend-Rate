@@ -8,11 +8,12 @@ import { getAllActive } from '@/app/REDUX/Users/operations';
 import { Dispatch } from '@/app/REDUX/store';
 import { useRouter } from 'next/navigation';
 
+
 export const HubComp = () => {
     const { ws, me } = useContext(RoomContext);
 
     console.log(me);
-    
+
     const { user } = useAuth();
     const  active  = useSelector(activeUsers)
     const router = useRouter();
@@ -30,25 +31,29 @@ export const HubComp = () => {
     return () => {
         ws.off("users-list", handleUsersList);
     };
-}, [user?._id, ws]);
+}, [user?._id]);
 
 
 useEffect(() => {
   if (activeUsersID.length > 0) {
     dispatch(getAllActive({ users: activeUsersID }));
   }
-}, [activeUsersID, activeUsersID.length, dispatch]);
+}, [activeUsersID]);
 
-
-    ws.emit("create-room", {peerId: me._lastServerId });
+const connectToRoom = () =>{
+  ws.emit("create-room", {peerId: me._id });
+}
+    
 
     return (
       <div>
         <h1>Hub</h1>
         {active.users.map(user => (
       <h2 key={user._id}>{user.username}</h2>
-    ))}
+    ))}  
+    <button onClick={connectToRoom}>Click ME</button>
       </div>
+    
     );
 }
 
