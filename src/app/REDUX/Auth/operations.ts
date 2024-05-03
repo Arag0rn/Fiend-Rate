@@ -2,9 +2,9 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthState } from './slice';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+// axios.defaults.baseURL = 'http://localhost:3000';
 
-// axios.defaults.baseURL = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com/';
+axios.defaults.baseURL = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com/';
 
 
 const setAuthHeader = (token: string) => {

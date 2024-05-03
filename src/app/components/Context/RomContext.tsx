@@ -11,7 +11,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 
 // const server = 'http://localhost:3000'
-const server2 = 'http://localhost:3000'
+const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
 
@@ -99,7 +99,7 @@ export const RoomProvider = ({children}) => {
                   dispatch(addPeerAction(call.peer, userVideoStream));
               });
           });
-  }, [enterRoom, handleUserList, me, stream]);
+  }, [me, stream]);
     
    return (
    <RoomContext.Provider value={{ws, me, stream, peers}}>{children}</RoomContext.Provider>)
