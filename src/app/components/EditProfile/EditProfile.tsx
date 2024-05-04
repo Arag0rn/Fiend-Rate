@@ -11,15 +11,14 @@ import Navbar from '../NavBar/Navbar';
 import BasicModal from './DeleteModal';
 import { GenderSelector } from '../Selectors/GenderSelector/GenderSelector';
 import { LangSelector } from '../Selectors/LangSelector/LangSelector';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Dispatch } from '@/app/REDUX/store';
 import { updateUserData } from '@/app/REDUX/Auth/operations';
 import { useAuth } from '@/app/REDUX/Hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from '@/i18n/client';
 import { TFunction } from 'i18next';
-
-
+import { parseISO } from 'date-fns';
 
 const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   username: Yup.string()
@@ -32,7 +31,11 @@ const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
   .matches(
     /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(192[5-9]|19[3-9]\d|20[0-1]\d|202[0-3])$/,
     () => t('invalidDateError')
-  ),
+  ).test(`${t('invalidDateError')}`, `${t('invalidDateError')}`, (value) => {
+    const reverse = value.split('.').reverse().join('-');
+
+    return parseISO(reverse) instanceof Date && !isNaN(+(parseISO(reverse)));
+  }),
   email: Yup.string()
   .email(()=> t('emailError'))
   .matches(
@@ -58,6 +61,8 @@ const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
 
 });
 
+
+
 const EditProfile = ({params}) => {
     const { t } = useTranslation(params, 'edit');
     const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -70,7 +75,6 @@ const EditProfile = ({params}) => {
     const [date, setDate] = useState(user?.birthday);
     const [language, setLanguage] = useState(user?.language);
     const router = useRouter();
-    
 
     const formik = useFormik({
       initialValues: {
@@ -98,6 +102,7 @@ const EditProfile = ({params}) => {
 
       const handleInputChange = (event) => {
         const input = event.target.value.replace(/\D/g, '');
+
         let formattedDate = input
           .replace(/^(\d{2})(\d{2})(\d{0,4})/, '$1.$2.$3')
           .replace(/^(\d{2}\.\d{2})(\d{4})/, '$1.$2');
@@ -105,7 +110,7 @@ const EditProfile = ({params}) => {
         if (event.nativeEvent.inputType === "deleteContentBackward" && formattedDate.slice(-1) === '.') {
           formattedDate = formattedDate.slice(0, -1);
         }
-      
+
         setDate(formattedDate);
         formik.handleChange(event);
       };
@@ -178,7 +183,6 @@ const EditProfile = ({params}) => {
             id="birthday"
             name="birthday"
             type="text"
-            maxLength={10}
             value={date}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
