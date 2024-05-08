@@ -26,10 +26,11 @@ const Main = ({params}) => {
     const { user } = useAuth();
     const router = useRouter()
 
-    const joinHub = ()=> {
-    
-      router.push("/hub")
-    }
+    const joinHub = () => {
+      const info = { selectedLanguage, selectedGender, value };
+      localStorage.setItem('info', JSON.stringify(info));
+      router.push(`/hub`);
+  };
 
 
     const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {

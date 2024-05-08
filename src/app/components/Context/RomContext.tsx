@@ -10,12 +10,12 @@ import Peer from "peerjs";
 import { v4 as uuidV4 } from 'uuid';
 
 
-// const server = 'http://localhost:3000'
-const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
+const server = 'http://localhost:3000'
+// const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
 
-const ws = socketIOClient(server2);
+const ws = socketIOClient(server);
 
 export const RoomProvider = ({children}) => {
     const router = useRouter();
@@ -33,12 +33,11 @@ export const RoomProvider = ({children}) => {
         console.log(users);
         
         users.map((peerId) => {
-          console.log(stream);
-          console.log(me);
+
             const call = stream && me?.call(peerId, stream);
-            console.log("call", call);
+
             call?.on("stream", (userVideoStream: MediaStream) => {
-                console.log({ addPeerAction });
+    
                 dispatch(addPeerAction(peerId, userVideoStream));
             });
         });
@@ -60,7 +59,6 @@ export const RoomProvider = ({children}) => {
             navigator.mediaDevices
               .getUserMedia({ video: true})
               .then((stream)=>{
-                console.log(stream);
                 setStream(stream);
               })
           } catch (error) {
@@ -74,16 +72,14 @@ export const RoomProvider = ({children}) => {
       if (!stream) return;
       if (!me) return;
           
-      ws.on("room-created", enterRoom);
-      ws.on("get-user", handleUserList);
-      ws.on("user-disconnected", removePeer);
+          ws.on("room-created", enterRoom);
+          ws.on("get-user", handleUserList);
+          ws.on("user-disconnected", removePeer);
  
       
           ws.on("user-joined", ({ peerId }: { roomId: string; peerId: string }) => {
               const call = me.call(peerId, stream);
-              console.log(me);
-              console.log(`user-joined ${peerId}`);
-              console.log(call);
+
               if (call) { 
                   call.on("stream", (userVideoStream: MediaStream) => {
                       dispatch(addPeerAction(peerId, userVideoStream));
