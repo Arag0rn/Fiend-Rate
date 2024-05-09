@@ -27,7 +27,10 @@ const initialState: InitState = {
     users: [],
     isRefreshing: false,
     isError: false,
-  };
+    filter: function (arg0: (user: any) => boolean): unknown {
+        throw new Error('Function not implemented.');
+    }
+};
 
 const activeUsersSlice = createSlice({
     name: 'users',
