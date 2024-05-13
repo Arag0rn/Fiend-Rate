@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getAllActive } from './operations';
 
 export interface UserData {
+    age(age: any): unknown;
     _id: string;
     email: string;
     avatarURL: string;
@@ -14,6 +15,7 @@ export interface UserData {
 }
 
 export interface UsersState {
+    filter(arg0: (user: any) => boolean): unknown;
     users: UserData[],
     isRefreshing: boolean;
     isError: boolean;
@@ -25,7 +27,10 @@ const initialState: InitState = {
     users: [],
     isRefreshing: false,
     isError: false,
-  };
+    filter: function (arg0: (user: any) => boolean): unknown {
+        throw new Error('Function not implemented.');
+    }
+};
 
 const activeUsersSlice = createSlice({
     name: 'users',

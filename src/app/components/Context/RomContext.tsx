@@ -10,7 +10,7 @@ import Peer from "peerjs";
 import { v4 as uuidV4 } from 'uuid';
 
 
-// const server = 'http://localhost:3000'
+const server = 'http://localhost:3000'
 const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
@@ -22,23 +22,23 @@ export const RoomProvider = ({children}) => {
     const [me, setMe] = useState<Peer | null>(null);
     const [peers, dispatch] = useReducer(peersReducer, {});
     const [stream, setStream] = useState<MediaStream>();
+    const [userInRoom, setUserInRoom] = useState<string[]>();
     const { user } = useAuth(); 
   
-    const enterRoom = ({ roomId }: { roomId: string }) => {
-        router.push(`/chatRoom/${roomId}`);
-      }
+    // const enterRoom = ({ roomId }: { roomId: string }) => {
+    //     router.push(`/chatRoom/${roomId}`);
+    //   }
       
       
-      const handleUserList = ({ users }: { users: string[] }) => {
+      const handleUserList = ({ users, names }: { users: string[], names: string[], } ) => {
         console.log(users);
-        
+        setUserInRoom([...names])
         users.map((peerId) => {
-          console.log(stream);
-          console.log(me);
+
             const call = stream && me?.call(peerId, stream);
-            console.log("call", call);
+
             call?.on("stream", (userVideoStream: MediaStream) => {
-                console.log({ addPeerAction });
+    
                 dispatch(addPeerAction(peerId, userVideoStream));
             });
         });
@@ -60,7 +60,6 @@ export const RoomProvider = ({children}) => {
             navigator.mediaDevices
               .getUserMedia({ video: true})
               .then((stream)=>{
-                console.log(stream);
                 setStream(stream);
               })
           } catch (error) {
@@ -74,23 +73,25 @@ export const RoomProvider = ({children}) => {
       if (!stream) return;
       if (!me) return;
           
-      ws.on("room-created", enterRoom);
-      ws.on("get-user", handleUserList);
-      ws.on("user-disconnected", removePeer);
- 
+          // ws.on("room-created", enterRoom);
+          ws.on("get-user", handleUserList);
+          ws.on("user-disconnected", removePeer);
+
       
-          ws.on("user-joined", ({ peerId }: { roomId: string; peerId: string }) => {
+          ws.on("user-joined", ( { roomId, peerId }) => {
+              router.push(`/chatRoom/${roomId}`);
               const call = me.call(peerId, stream);
-              console.log(me);
-              console.log(`user-joined ${peerId}`);
-              console.log(call);
+              
+
               if (call) { 
                   call.on("stream", (userVideoStream: MediaStream) => {
                       dispatch(addPeerAction(peerId, userVideoStream));
                   });
+                
               } else {
                   console.log("Call is undefined");
-              }
+              }  
+             
           });
   
           me.on('call', (call)=>{
@@ -99,8 +100,8 @@ export const RoomProvider = ({children}) => {
                   dispatch(addPeerAction(call.peer, userVideoStream));
               });
           });
-  }, [me, stream]);
+  }, [ router, stream]);
     
    return (
-   <RoomContext.Provider value={{ws, me, stream, peers}}>{children}</RoomContext.Provider>)
+   <RoomContext.Provider value={{ws, me, stream, peers, userInRoom}}>{children}</RoomContext.Provider>)
 }
