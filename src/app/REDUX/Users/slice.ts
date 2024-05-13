@@ -15,7 +15,6 @@ export interface UserData {
 }
 
 export interface UsersState {
-    filter(arg0: (user: any) => boolean): unknown;
     users: UserData[],
     isRefreshing: boolean;
     isError: boolean;
@@ -27,9 +26,6 @@ const initialState: InitState = {
     users: [],
     isRefreshing: false,
     isError: false,
-    filter: function (arg0: (user: any) => boolean): unknown {
-        throw new Error('Function not implemented.');
-    }
 };
 
 const activeUsersSlice = createSlice({
@@ -39,7 +35,7 @@ const activeUsersSlice = createSlice({
     extraReducers: (builder) => {
     //fullfilled
     builder.addCase(getAllActive.fulfilled, (state, action) => {
-        state.users = [...state.users, ...action.payload];
+        state.users =  action.payload;
         state.isRefreshing = false;
         state.isError = false;
     });
