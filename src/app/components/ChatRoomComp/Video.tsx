@@ -7,6 +7,6 @@ export const Video = ({stream}) => {
         if (videoRef.current) videoRef.current.srcObject = stream;
     }, [stream]);
 
-    return <video ref={videoRef} autoPlay/>
+    return <video style={{width: "300px"}} ref={videoRef} autoPlay playsInline/>
 
 }

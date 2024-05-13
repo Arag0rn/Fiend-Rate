@@ -3,13 +3,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { RoomContext } from '../Context/RomContext';
 import { Video } from './Video';
 import styles from './ChatRoomComp.module.scss';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import callEnd from "../../images/call-end.svg"
 
 export const ChatRoomComp = () => {
     const [timeElapsed, setTimeElapsed] = useState(0);
     const url = window.location.href;
     const segments = url.split('/');
     const id = segments[segments.length - 1];
-    const { ws, me, peers, stream } = useContext(RoomContext);
+    const { ws, me, peers, stream, userInRoom } = useContext(RoomContext);
+    const router = useRouter();
 
     useEffect(() => {
         me?.on("open", () => {
@@ -37,6 +41,14 @@ export const ChatRoomComp = () => {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
+    const handleEndCall = () => {
+
+        ws.disconnect()
+
+        router.push("/main");
+    };
+
+
     return (
         <>
             <h1>ChatRoom</h1>
@@ -44,11 +56,18 @@ export const ChatRoomComp = () => {
             {stream && <Video stream={stream}/>}
             {/* <Video key={"me"} stream={stream} /> */}
             {Object.values(peers).map((peer: any) => (
+
                     <Video key={peer.id} stream={peer.stream} />
                 ))}
             
+         
+           <button onClick={handleEndCall}> <Image  className={styles.icon} src={callEnd} alt="show_icon"  /></button>
+            {userInRoom.map((user) => (
+                    <p key={user} className={styles.time}>{user}</p>
+                ))}
+            {/* <p className={styles.time}>{userInRoom}</p> */}
+            {stream && <p className={styles.time}>Time Elapsed: {formatTime(timeElapsed)}</p>}   
             </div>
-            {stream && <p>Time Elapsed: {formatTime(timeElapsed)}</p>}
         </>
     );
-};
+} 

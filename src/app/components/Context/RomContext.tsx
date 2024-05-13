@@ -10,28 +10,29 @@ import Peer from "peerjs";
 import { v4 as uuidV4 } from 'uuid';
 
 
-// const server = 'http://localhost:3000'
+const server = 'http://localhost:3000'
 const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
 
-const ws = socketIOClient(server2);
+const ws = socketIOClient(server);
 
 export const RoomProvider = ({children}) => {
     const router = useRouter();
     const [me, setMe] = useState<Peer | null>(null);
     const [peers, dispatch] = useReducer(peersReducer, {});
     const [stream, setStream] = useState<MediaStream>();
+    const [userInRoom, setUserInRoom] = useState<string[]>();
     const { user } = useAuth(); 
   
-    const enterRoom = ({ roomId }: { roomId: string }) => {
-        router.push(`/chatRoom/${roomId}`);
-      }
+    // const enterRoom = ({ roomId }: { roomId: string }) => {
+    //     router.push(`/chatRoom/${roomId}`);
+    //   }
       
       
-      const handleUserList = ({ users }: { users: string[] }) => {
+      const handleUserList = ({ users, names }: { users: string[], names: string[], } ) => {
         console.log(users);
-        
+        setUserInRoom([...names])
         users.map((peerId) => {
 
             const call = stream && me?.call(peerId, stream);
@@ -75,7 +76,7 @@ export const RoomProvider = ({children}) => {
           // ws.on("room-created", enterRoom);
           ws.on("get-user", handleUserList);
           ws.on("user-disconnected", removePeer);
- 
+
       
           ws.on("user-joined", ( { roomId, peerId }) => {
               const call = me.call(peerId, stream);
@@ -99,5 +100,5 @@ export const RoomProvider = ({children}) => {
   }, [me, stream]);
     
    return (
-   <RoomContext.Provider value={{ws, me, stream, peers}}>{children}</RoomContext.Provider>)
+   <RoomContext.Provider value={{ws, me, stream, peers, userInRoom}}>{children}</RoomContext.Provider>)
 }
