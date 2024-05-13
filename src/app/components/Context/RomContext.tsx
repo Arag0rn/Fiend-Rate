@@ -97,7 +97,7 @@ export const RoomProvider = ({children}) => {
                   dispatch(addPeerAction(call.peer, userVideoStream));
               });
           });
-  }, [me, stream]);
+  }, [handleUserList, me, router, stream]);
     
    return (
    <RoomContext.Provider value={{ws, me, stream, peers, userInRoom}}>{children}</RoomContext.Provider>)
