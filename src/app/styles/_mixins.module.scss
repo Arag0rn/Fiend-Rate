@@ -87,4 +87,35 @@
   }
 }
 
+@mixin stroke {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 244px;
+  height: 244px;
 
+  background-image: url(../images/call-base.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+}
+
+@mixin circle {
+  position: relative;
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  background-color: #4753AB;
+  box-shadow:
+    0 0 14px 0 rgba(71, 83, 171, 1),
+    0 0 14px -2px rgba(255, 255, 255, 1);
+}
+
+@mixin mainBlock {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  background-color: transparent;
+
+  transform: translate(-50%, -80%);
+}
