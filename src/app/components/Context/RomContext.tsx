@@ -27,19 +27,7 @@ export const RoomProvider = ({children}) => {
   
 
       
-      const handleUserList = ({ users, names, roomId }: { users: string[], names: string[], roomId: string } ) => {
-        console.log(users);
-        setUserInRoom([...names])
-        users.map((peerId) => {
-
-            const call = stream && me?.call(peerId, stream);
-
-            call?.on("stream", (userVideoStream: MediaStream) => {
-              router.push(`/chatRoom/${roomId}`);
-                dispatch(addPeerAction(peerId, userVideoStream));
-            });
-        });
-    };
+    router.push(`/chatRoom/${roomId}`);
 
     const removePeer = (peerId: string) => {
       dispatch(removePeerAction(peerId));
