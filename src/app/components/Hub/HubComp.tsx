@@ -9,6 +9,7 @@ import { getAllActive } from '@/app/REDUX/Users/operations';
 import { Dispatch } from '@/app/REDUX/store';
 import { useRouter } from 'next/navigation';
 import { UserData } from '@/app/REDUX/Users/slice';
+import ConnectPage from '../ConnectPage';
 
 
 export const HubComp = () => {
@@ -90,6 +91,7 @@ export const HubComp = () => {
                     <h2 key={user._id}>{user.username || user.email}</h2>
                 ))}
                 <button onClick={connectToRoom}>Click ME</button>
+                <ConnectPage lng={undefined}/>
             </>
         ) : (
             <p>No active users found</p>
