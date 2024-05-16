@@ -6,18 +6,21 @@ import styles from './ChatRoomComp.module.scss';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import callEnd from "../../images/call-end.svg"
+import ConnectPage from '../ConnectPage';
 
 export const ChatRoomComp = () => {
     const [timeElapsed, setTimeElapsed] = useState(0);
+
     const url = window.location.href;
     const segments = url.split('/');
     const id = segments[segments.length - 1];
-    const { ws, me, peers, stream, userInRoom } = useContext(RoomContext);
+    const { ws, me, peers, stream, userInRoom, isConnected } = useContext(RoomContext);
     const router = useRouter();
 
     useEffect(() => {
         me?.on("open", () => {
             ws.emit("join-room", { roomId: id, peerId: me._id });
+
         });
     }, [id, me, ws]);
 
@@ -51,23 +54,26 @@ export const ChatRoomComp = () => {
 
     return (
         <>
-            <h1>ChatRoom</h1>
-            <div className={styles.videogrid}>
-            {stream && <Video stream={stream}/>}
-            {/* <Video key={"me"} stream={stream} /> */}
-            {Object.values(peers).map((peer: any) => (
-
-                    <Video key={peer.id} stream={peer.stream} />
-                ))}
-            
-         
-           <button onClick={handleEndCall}> <Image  className={styles.icon} src={callEnd} alt="show_icon"  /></button>
-            {userInRoom.map((user) => (
-                    <p key={user} className={styles.time}>{user}</p>
-                ))}
-            {/* <p className={styles.time}>{userInRoom}</p> */}
-            {stream && <p className={styles.time}>Time Elapsed: {formatTime(timeElapsed)}</p>}   
-            </div>
+            {!isConnected ? (
+                <ConnectPage lng={undefined} />
+            ) : (
+                <>
+                    <h1>ChatRoom</h1>
+                    <div className={styles.videogrid}>
+                        {stream && <Video stream={stream} />}
+                        {Object.values(peers).map((peer: any) => (
+                            <Video key={peer.id} stream={peer.stream} />
+                        ))}
+                        <button onClick={handleEndCall}>
+                            <Image className={styles.icon} src={callEnd} alt="show_icon" />
+                        </button>
+                        {userInRoom.map((user) => (
+                            <p key={user} className={styles.time}>{user}</p>
+                        ))}
+                        {stream && <p className={styles.time}>Time Elapsed: {formatTime(timeElapsed)}</p>}
+                    </div>
+                </>
+            )}
         </>
     );
-} 
+};

@@ -16,32 +16,38 @@ export const HubComp = () => {
     const { ws, me } = useContext(RoomContext);
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const [selectedGender, setSelectedGender] = useState('');
+    const [activeUser, setActiveUser] = useState([]);
     const [value, setValue] = useState(0);
     const { user } = useAuth();
     const active = useSelector(activeUsers);
     const router = useRouter();
     const dispatch: Dispatch = useDispatch();
     const matchRef = useRef<UserData | null>(null);
-    
-    const handleUsersList = useCallback(({ users }: { users: string[] }) => {
-        console.log("!!!!!!!!!!!!!!!!!", users);
-        dispatch(getAllActive({ users }));
-    }, [dispatch]);
 
-        useEffect(() => {
-      
-            ws.emit('user-join-hub', user?._id);
-        }, [user?._id, ws]);
+    useEffect(()=>{
+        dispatch(getAllActive({ activeUser }));
+    },[activeUser, dispatch])
 
     useEffect(() => {
-      
+        ws.emit('user-join-hub', user?._id);
+        return () => {
+            
+        };
+    }, [user?._id, ws]);
+
+    
+    useEffect(() => {
+        const handleUsersList = ({ users }) => {
+            console.log(users);
+            setActiveUser(users);
+        };
+    
         ws.on('users-list', handleUsersList);
     
         return () => {
             ws.off('users-list', handleUsersList);
         };
-    }, [dispatch, handleUsersList, user?._id, ws]);
-    
+    }, [ws]);
 
 
     const calculateAge = (dateOfBirth) => {
@@ -69,12 +75,6 @@ export const HubComp = () => {
             matchRef.current = match || null;
         }
     }, [active]);
-
-    // console.log('language:', selectedLanguage);
-    // console.log('gender:', selectedGender);
-    console.log('value:', value);
-    // console.log('active:', active);
-    // console.log('match:', matchRef.current);
   
 
     const connectToRoom = () => {

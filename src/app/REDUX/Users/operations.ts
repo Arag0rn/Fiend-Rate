@@ -2,17 +2,21 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 interface GetAllActiveData {
-    users: string[];
+  activeUser: string[];
   }
 
   export const getAllActive = createAsyncThunk(
     'users/getAllActive',
     async (data: GetAllActiveData, thunkAPI) => {
+      console.log(data.activeUser);
+      
       try {
-        const res = await axios.post('/api/user/get-all', data); 
+        const res = await axios.post('/api/user/get-all', { users: data.activeUser }); 
+        console.log(res.data);
         return res.data;
+        
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
       }
     }
-  );
+);

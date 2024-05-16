@@ -17,20 +17,19 @@ import { useAuth } from '@/app/REDUX/Hooks/useAuth';
 import { RoomContext } from '../Context/RomContext';
 
 const Main = ({params}) => {
-
     const [value, setValue] = useState<number[]>([18, 55]);
     const { t } = useTranslation(params, 'main-page');
     const [selectedLanguage, setSelectedLanguage] = useState(t("ukr"));
     const [selectedGender, setSelectedGender] = useState(t("maile"));
-    const { ws } = useContext(RoomContext)
+    const { ws, me } = useContext(RoomContext)
     const { user } = useAuth();
     const router = useRouter()
 
-    const joinHub = () => {
-      const info = { selectedLanguage, selectedGender, value };
-      localStorage.setItem('info', JSON.stringify(info));
-      router.push(`/hub`);
-  };
+  //   const joinHub = () => {
+  //     const info = { selectedLanguage, selectedGender, value };
+  //     localStorage.setItem('info', JSON.stringify(info));
+  //     router.push(`/hub`);
+  // };
 
 
     const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
@@ -73,6 +72,23 @@ const Main = ({params}) => {
     updatedValue[index] = parsedValue;
     setValue(updatedValue);
   };
+
+  
+  const calculateAge = (dateOfBirth) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+};
+
+  const connectToRoom = () => {
+
+    ws.emit('create-room', { peerId: me._id, value, selectedLanguage, selectedGender, userName: user?.username, userLanguage: user?.language, userGender: user?.gender, userAge: calculateAge(user?.birthday)});
+    };
 
   return (
     <>
@@ -133,7 +149,7 @@ const Main = ({params}) => {
     </div>
 
     <div className={styles.mainBtnBox}>
-      <button className={styles.button1to1} onClick={joinHub}>{t("1to1")}</button>
+      <button className={styles.button1to1} onClick={connectToRoom}>{t("1to1")}</button>
       <button className={styles.buttonGroup}>{t("group")}</button>
     </div>
     <Navbar/>
