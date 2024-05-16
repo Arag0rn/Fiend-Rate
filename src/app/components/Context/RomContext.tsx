@@ -8,16 +8,14 @@ import { addPeerAction, removePeerAction } from './PeerAction';
 import { peersReducer } from './peersReducer';
 import Peer from "peerjs";
 import { v4 as uuidV4 } from 'uuid';
-import { activeUsers } from '@/app/REDUX/Users/selectors';
-import { UserData } from '@/app/REDUX/Users/slice';
 
 
-// const server = 'http://localhost:3000'
+const server = 'http://localhost:3000'
 const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
 
-const ws = socketIOClient(server2);
+const ws = socketIOClient(server);
 
 export const RoomProvider = ({children}) => {
     const router = useRouter();
@@ -63,24 +61,22 @@ export const RoomProvider = ({children}) => {
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then((stream) => {
                     setStream(stream);
-                    setIsConnected(true);
+                   
                     ws.on("get-user", handleUserList);
                     ws.on("user-disconnected", removePeer);
                     ws.on("user-joined", function({ roomId, peerId }) {
-                        router.push(`/chatRoom/${roomId}`);
+                    router.push(`/chatRoom/${roomId}`);   
                         const call = peer.call(peerId, stream);
                         if (call) { 
-                          console.log(call);
-                          
                             call.on("stream", (userVideoStream) => {
-                               
+
                                 dispatch(addPeerAction(peerId, userVideoStream));
                             });
                         }
                     });
                     peer.on('call', (call) => {
                         call.answer(stream);
-                        call.on("stream", (userVideoStream) => {
+                        call.on("stream", (userVideoStream) => { 
                             dispatch(addPeerAction(call.peer, userVideoStream));
                         });
                     });
