@@ -67,9 +67,9 @@ export const ChatRoomComp = () => {
                         <button onClick={handleEndCall}>
                             <Image className={styles.icon} src={callEnd} alt="show_icon" />
                         </button>
-                        {/* {userInRoom.map((user) => (
+                        {userInRoom.map((user) => (
                             <p key={user} className={styles.time}>{user}</p>
-                        ))} */}
+                        ))}
                         {stream && <p className={styles.time}>Time Elapsed: {formatTime(timeElapsed)}</p>}
                     </div>
                 </>
