@@ -51,6 +51,7 @@ export const RoomProvider = ({children}) => {
   };
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
     const meId = uuidV4();
     const peer = new Peer(meId);
     setMe(peer);
@@ -66,7 +67,7 @@ export const RoomProvider = ({children}) => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", handleUserList);
     ws.on("user-disconnected", removePeer);
-}, []);
+}}, []);
 
 useEffect(() => {
   if (!stream) return;
