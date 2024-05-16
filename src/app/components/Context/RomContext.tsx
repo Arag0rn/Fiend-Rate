@@ -10,7 +10,7 @@ import Peer from "peerjs";
 import { v4 as uuidV4 } from 'uuid';
 
 
-// const server = 'http://localhost:3000'
+const server = 'http://localhost:3000'
 const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
@@ -64,9 +64,7 @@ export const RoomProvider = ({children}) => {
     } catch (err) {
         console.error({ err });
     }
-    ws.on("room-created", enterRoom);
-    ws.on("get-users", handleUserList);
-    ws.on("user-disconnected", removePeer);
+
 }}, []);
 
 useEffect(() => {
@@ -82,6 +80,10 @@ useEffect(() => {
           });
       }
   );
+
+  ws.on("room-created", enterRoom);
+  ws.on("get-users", handleUserList);
+  ws.on("user-disconnected", removePeer);
 
   me.on("call", (call) => {
       call.answer(stream);
