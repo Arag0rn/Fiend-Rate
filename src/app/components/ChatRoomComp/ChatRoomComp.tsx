@@ -60,7 +60,7 @@ export const ChatRoomComp = () => {
                 <>
                     <h1>ChatRoom</h1>
                     <div className={styles.videogrid}>
-                        {stream && <Video stream={stream} />}
+                       <Video stream={stream} />
                         {Object.values(peers).map((peer: any) => (
                             <Video key={peer.id} stream={peer.stream} />
                         ))}

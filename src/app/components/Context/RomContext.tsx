@@ -34,13 +34,14 @@ export const RoomProvider = ({children}) => {
       
       const handleUserList = ({ users, names, roomId }: { users: string[], names: string[], roomId: string } ) => {
         console.log(users);
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         setUserInRoom([...names])
         users.map((peerId) => {
        
             const call = stream && me?.call(peerId, stream);
             
             call?.on("stream", (userVideoStream: MediaStream) => {
-    
+              console.log({ addPeerAction });
                 dispatch(addPeerAction(peerId, userVideoStream));
             });
         });
@@ -73,16 +74,20 @@ useEffect(() => {
 
   ws.on(
       "user-joined",
-      ({ peerId, roomId }: { roomId: string; peerId: string }) => {
+      ({ peerId, roomId }) => {
           const call = stream && me.call(peerId, stream);
+          console.log(call);
+          console.log(stream);
+          
           call.on("stream", (userVideoStream: MediaStream) => {
               dispatch(addPeerAction(peerId, userVideoStream));
           });
+          setIsConnected(true)
         router.push(`/chatRoom/${roomId}`);
       }
   );
 
-  ws.on("get-users", handleUserList);
+  ws.on("get-user", handleUserList);
   ws.on("user-disconnected", removePeer);
 
   me.on("call", (call) => {
