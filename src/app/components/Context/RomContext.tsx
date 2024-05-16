@@ -74,11 +74,11 @@ useEffect(() => {
   ws.on(
       "user-joined",
       ({ peerId, roomId }: { roomId: string; peerId: string }) => {
-        router.push(`/chatRoom/${roomId}`);
           const call = stream && me.call(peerId, stream);
           call.on("stream", (userVideoStream: MediaStream) => {
               dispatch(addPeerAction(peerId, userVideoStream));
           });
+        router.push(`/chatRoom/${roomId}`);
       }
   );
 
