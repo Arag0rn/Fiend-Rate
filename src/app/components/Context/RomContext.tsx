@@ -27,18 +27,18 @@ export const RoomProvider = ({children}) => {
     const [isConnected, setIsConnected] = useState(false);
 
   
-    const enterRoom = ({ roomId }: { roomId: string }) => {
-        router.push(`/chatRoom/${roomId}`);
-      }
+    // const enterRoom = ({ roomId }: { roomId: string }) => {
+    //     router.push(`/chatRoom/${roomId}`);
+    //   }
       
       
-      const handleUserList = ({ users, names }: { users: string[], names: string[], } ) => {
+      const handleUserList = ({ users, names, roomId }: { users: string[], names: string[], roomId: string } ) => {
         console.log(users);
         setUserInRoom([...names])
         users.map((peerId) => {
-
+       
             const call = stream && me?.call(peerId, stream);
-
+            
             call?.on("stream", (userVideoStream: MediaStream) => {
     
                 dispatch(addPeerAction(peerId, userVideoStream));
@@ -73,7 +73,8 @@ useEffect(() => {
 
   ws.on(
       "user-joined",
-      ({ peerId }: { roomId: string; peerId: string }) => {
+      ({ peerId, roomId }: { roomId: string; peerId: string }) => {
+        router.push(`/chatRoom/${roomId}`);
           const call = stream && me.call(peerId, stream);
           call.on("stream", (userVideoStream: MediaStream) => {
               dispatch(addPeerAction(peerId, userVideoStream));
@@ -81,7 +82,6 @@ useEffect(() => {
       }
   );
 
-  ws.on("room-created", enterRoom);
   ws.on("get-users", handleUserList);
   ws.on("user-disconnected", removePeer);
 
