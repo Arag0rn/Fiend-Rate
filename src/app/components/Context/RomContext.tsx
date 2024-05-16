@@ -10,12 +10,12 @@ import Peer from "peerjs";
 import { v4 as uuidV4 } from 'uuid';
 
 
-// const server = 'http://localhost:3000'
-const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
+const server = 'http://localhost:3000'
+// const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
 
-const ws = socketIOClient(server2);
+const ws = socketIOClient(server);
 
 export const RoomProvider = ({children}) => {
     const router = useRouter();
@@ -69,13 +69,14 @@ export const RoomProvider = ({children}) => {
                         const call = peer.call(peerId, stream);
                         if (call) { 
                             call.on("stream", (userVideoStream) => {
-
+                                
                                 dispatch(addPeerAction(peerId, userVideoStream));
                             });
                         }
                     });
                     peer.on('call', (call) => {
                         call.answer(stream);
+                        setIsConnected(true)
                         call.on("stream", (userVideoStream) => { 
                             dispatch(addPeerAction(call.peer, userVideoStream));
                         });
