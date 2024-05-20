@@ -17,7 +17,7 @@ const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'
 
 export const RoomContext = createContext<any | null>(null);
 
-const ws = socketIOClient(server2);
+const ws = socketIOClient(server);
 
 export const RoomProvider = ({children}) => {
     const router = useRouter();
@@ -25,7 +25,7 @@ export const RoomProvider = ({children}) => {
     const [peers, dispatch] = useReducer(peersReducer, {});
     const [stream, setStream] = useState<MediaStream>();
     const { user } = useAuth(); 
-    const [isConnected, setIsConnected] = useState(false);
+    
     const reduxDispatch = useDispatch();
 
       
@@ -84,7 +84,7 @@ useEffect(() => {
               console.log("111111111111");
               
           });
-          setIsConnected(true)
+      
        
       }
   );
@@ -106,5 +106,5 @@ useEffect(() => {
 }, [stream, me, handleUserList, removePeer]);
     
    return (
-   <RoomContext.Provider value={{ws, me, stream, peers, isConnected}}>{children}</RoomContext.Provider>)
+   <RoomContext.Provider value={{ws, me, stream, peers}}>{children}</RoomContext.Provider>)
 }

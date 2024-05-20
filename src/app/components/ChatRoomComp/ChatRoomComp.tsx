@@ -16,19 +16,26 @@ export const ChatRoomComp = () => {
     const url = window.location.href;
     const segments = url.split('/');
     const id = segments[segments.length - 1];
-    const { ws, me, peers, stream, isConnected } = useContext(RoomContext);
+    const { ws, me, peers, stream } = useContext(RoomContext);
     const router = useRouter();
+    const [isConnected, setIsConnected] = useState(false);
 
 
-    console.log(usersInRoom);
+    console.log(peers);
 
 
     useEffect(() => {
-        me?.on("open", () => {
-            ws.emit("join-room", { roomId: id, peerId: me._id });
-
-        });
-    }, [id, me, ws]);
+        // me?.on("open", () => {
+        //     ws.emit("join-room", { roomId: id, peerId: me._id });
+        
+        // });
+      
+        if (Object.values(peers).length > 1 ) {
+            setIsConnected(true)
+            console.log('true');
+            
+        }
+    }, [peers]);
 
     useEffect(() => {
         let intervalId;
