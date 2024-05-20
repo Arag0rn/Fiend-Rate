@@ -25,12 +25,13 @@ export const RoomProvider = ({children}) => {
     const [peers, dispatch] = useReducer(peersReducer, {});
     const [stream, setStream] = useState<MediaStream>();
     const { user } = useAuth(); 
-    const [isConnected, setIsConnected] = useState(true);
+    const [isConnected, setIsConnected] = useState(false);
     const reduxDispatch = useDispatch();
 
       
     const handleUserList = useCallback(({ users, names, roomId }: { users: string[], names: string[], roomId: string }) => {
         reduxDispatch(setUserNames(names));
+        router.push(`/chatRoom/${roomId}`);
         console.log(names);
         users.forEach((peerId) => {
             if (stream && me) {
@@ -63,6 +64,11 @@ export const RoomProvider = ({children}) => {
 
 }}, []);
 
+useEffect(()=>{
+    ws.on("get-user", handleUserList);
+    ws.on("user-disconnected", removePeer);
+}, [handleUserList])
+
 useEffect(() => {
   if (!stream) return;
   if (!me) return;
@@ -70,38 +76,33 @@ useEffect(() => {
     
   ws.on(
       "user-joined",
-      ({ peerId, roomId, names }) => {
+      ({ peerId}) => {
+        console.log(`${peerId} was connected`);
           const call = stream && me.call(peerId, stream);
-          console.log('====================================');
-          console.log();
-          console.log('====================================');
           call.on("stream", (userVideoStream: MediaStream) => {
               dispatch(addPeerAction(peerId, userVideoStream));
               console.log("111111111111");
               
           });
-        //   setIsConnected(true)
-        router.push(`/chatRoom/${roomId}`);
+          setIsConnected(true)
+       
       }
   );
 
-  ws.on("get-user", handleUserList);
-  ws.on("user-disconnected", removePeer);
 
   me.on("call", (call) => {
       call.answer(stream);
       call.on("stream", (userVideoStream) => {
           dispatch(addPeerAction(call.peer, userVideoStream));
-          setIsConnected(true)
           console.log("22222222222222222");
       });
   });
 
-  return () => {
-    ws.off("user-joined");
-    ws.off("get-user");
-    ws.off("user-disconnected");
-};
+//   return () => {
+//     ws.off("user-joined");
+//     ws.off("get-user");
+//     ws.off("user-disconnected");
+// };
 }, [stream, me, handleUserList, removePeer]);
     
    return (
