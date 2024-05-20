@@ -17,7 +17,7 @@ const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'
 
 export const RoomContext = createContext<any | null>(null);
 
-const ws = socketIOClient(server);
+const ws = socketIOClient(server2);
 
 export const RoomProvider = ({children}) => {
     const router = useRouter();
@@ -30,7 +30,7 @@ export const RoomProvider = ({children}) => {
 
       
     const handleUserList = useCallback(({ users, names, roomId }: { users: string[], names: string[], roomId: string }) => {
-        reduxDispatch(setUserNames(names));
+       
         router.push(`/chatRoom/${roomId}`);
         console.log(names);
         users.forEach((peerId) => {
@@ -41,7 +41,11 @@ export const RoomProvider = ({children}) => {
                 });
             }
         });
-    }, [me, stream, reduxDispatch]);
+
+   
+        reduxDispatch(setUserNames(names));
+
+    }, [reduxDispatch, router, stream, me]);
 
     const removePeer = (peerId: string) => {
       dispatch(removePeerAction(peerId));
@@ -76,12 +80,14 @@ useEffect(() => {
     
   ws.on(
       "user-joined",
-      ({ peerId}) => {
+      ({ peerId, names}) => {
+        reduxDispatch(setUserNames(names)); 
         console.log(`${peerId} was connected`);
           const call = stream && me.call(peerId, stream);
           call.on("stream", (userVideoStream: MediaStream) => {
               dispatch(addPeerAction(peerId, userVideoStream));
               console.log("111111111111");
+              console.log(names);
               
           });
       
