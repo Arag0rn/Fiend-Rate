@@ -18,6 +18,7 @@ export interface UsersState {
     users: UserData[],
     isRefreshing: boolean;
     isError: boolean;
+    userNames: string[];
 }
 
 type InitState = UsersState;  
@@ -26,12 +27,20 @@ const initialState: InitState = {
     users: [],
     isRefreshing: false,
     isError: false,
+    userNames: [], 
 };
 
 const activeUsersSlice = createSlice({
     name: 'users',
     initialState,
-    reducers: {},
+    reducers: {
+        setUserNames: (state, action) => {
+            return {
+                ...state,
+                userNames: action.payload
+            };
+        },
+    },
     extraReducers: (builder) => {
     //fullfilled
     builder.addCase(getAllActive.fulfilled, (state, action) => {
@@ -54,3 +63,4 @@ const activeUsersSlice = createSlice({
 });
 
 export const activeUsersReducer = activeUsersSlice.reducer;
+export const { setUserNames } = activeUsersSlice.actions;

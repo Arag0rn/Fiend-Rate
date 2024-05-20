@@ -8,6 +8,8 @@ import { addPeerAction, removePeerAction } from './PeerAction';
 import { peersReducer } from './peersReducer';
 import Peer from "peerjs";
 import { v4 as uuidV4 } from 'uuid';
+import { setUserNames } from '@/app/REDUX/Users/slice';
+
 
 
 const server = 'http://localhost:3000'
@@ -22,30 +24,23 @@ export const RoomProvider = ({children}) => {
     const [me, setMe] = useState<Peer | null>(null);
     const [peers, dispatch] = useReducer(peersReducer, {});
     const [stream, setStream] = useState<MediaStream>();
-    const [userInRoom, setUserInRoom] = useState<string[]>();
     const { user } = useAuth(); 
-    const [isConnected, setIsConnected] = useState(false);
+    const [isConnected, setIsConnected] = useState(true);
+    const reduxDispatch = useDispatch();
 
-  
-    // const enterRoom = ({ roomId }: { roomId: string }) => {
-    //     router.push(`/chatRoom/${roomId}`);
-    //   }
       
-      
-      const handleUserList = ({ users, names, roomId }: { users: string[], names: string[], roomId: string } ) => {
-        console.log(users);
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        setUserInRoom([...names])
-        users.map((peerId) => {
-       
-            const call = stream && me?.call(peerId, stream);
-            
-            call?.on("stream", (userVideoStream: MediaStream) => {
-              console.log({ addPeerAction });
-                dispatch(addPeerAction(peerId, userVideoStream));
-            });
+    const handleUserList = useCallback(({ users, names, roomId }: { users: string[], names: string[], roomId: string }) => {
+        reduxDispatch(setUserNames(names));
+        console.log(names);
+        users.forEach((peerId) => {
+            if (stream && me) {
+                const call = me.call(peerId, stream);
+                call?.on("stream", (userVideoStream: MediaStream) => {
+                    dispatch(addPeerAction(peerId, userVideoStream));
+                });
+            }
         });
-    };
+    }, [me, stream, reduxDispatch]);
 
     const removePeer = (peerId: string) => {
       dispatch(removePeerAction(peerId));
@@ -71,18 +66,21 @@ export const RoomProvider = ({children}) => {
 useEffect(() => {
   if (!stream) return;
   if (!me) return;
-
+    console.log(me);
+    
   ws.on(
       "user-joined",
-      ({ peerId, roomId }) => {
+      ({ peerId, roomId, names }) => {
           const call = stream && me.call(peerId, stream);
-          console.log(call);
-          console.log(stream);
-          
+          console.log('====================================');
+          console.log();
+          console.log('====================================');
           call.on("stream", (userVideoStream: MediaStream) => {
               dispatch(addPeerAction(peerId, userVideoStream));
+              console.log("111111111111");
+              
           });
-          setIsConnected(true)
+        //   setIsConnected(true)
         router.push(`/chatRoom/${roomId}`);
       }
   );
@@ -95,48 +93,17 @@ useEffect(() => {
       call.on("stream", (userVideoStream) => {
           dispatch(addPeerAction(call.peer, userVideoStream));
           setIsConnected(true)
+          console.log("22222222222222222");
       });
   });
-}, [stream, me]);
 
-//   useEffect(() => {
-//     if (typeof window !== "undefined") {
-//         const meId = uuidV4();
-//         const peer = new Peer(meId);
-//         setMe(peer);
-
-//         peer.on('open', function(id) {
-//             console.log('My peer ID is: ' + id);
-//             navigator.mediaDevices.getUserMedia({ video: true })
-//                 .then((stream) => {
-//                     setStream(stream);
-                   
-//                     ws.on("get-user", handleUserList);
-//                     ws.on("user-disconnected", removePeer);
-//                     ws.on("user-joined", function({ roomId, peerId }) {
-//                     router.push(`/chatRoom/${roomId}`);   
-//                         const call = peer.call(peerId, stream);
-//                         if (call) { 
-//                             call.on("stream", (userVideoStream) => {
-                                
-//                                 dispatch(addPeerAction(peerId, userVideoStream));
-//                             });
-//                         }
-//                     });
-//                     peer.on('call', (call) => {
-//                         call.answer(stream);
-//                         setIsConnected(true)
-//                         call.on("stream", (userVideoStream) => { 
-//                             dispatch(addPeerAction(call.peer, userVideoStream));
-//                         });
-//                     });
-//                 }).catch((error) => {
-//                     console.log("Error accessing media devices.", error);
-//                 });
-//         });
-//     };
-// }, [router, ws, stream, me]);
+  return () => {
+    ws.off("user-joined");
+    ws.off("get-user");
+    ws.off("user-disconnected");
+};
+}, [stream, me, handleUserList, removePeer]);
     
    return (
-   <RoomContext.Provider value={{ws, me, stream, peers, userInRoom, isConnected}}>{children}</RoomContext.Provider>)
+   <RoomContext.Provider value={{ws, me, stream, peers, isConnected}}>{children}</RoomContext.Provider>)
 }

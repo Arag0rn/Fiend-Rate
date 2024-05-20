@@ -7,15 +7,21 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import callEnd from "../../images/call-end.svg"
 import ConnectPage from '../ConnectPage';
+import { useSelector } from 'react-redux';
+import { usersNames } from '@/app/REDUX/Users/selectors';
 
 export const ChatRoomComp = () => {
     const [timeElapsed, setTimeElapsed] = useState(0);
-
+   const usersInRoom = useSelector(usersNames)
     const url = window.location.href;
     const segments = url.split('/');
     const id = segments[segments.length - 1];
-    const { ws, me, peers, stream, userInRoom, isConnected } = useContext(RoomContext);
+    const { ws, me, peers, stream, isConnected } = useContext(RoomContext);
     const router = useRouter();
+
+
+    console.log(usersInRoom);
+
 
     useEffect(() => {
         me?.on("open", () => {
@@ -67,9 +73,13 @@ export const ChatRoomComp = () => {
                         <button onClick={handleEndCall}>
                             <Image className={styles.icon} src={callEnd} alt="show_icon" />
                         </button>
-                        {/* {userInRoom.map((user) => (
-                            <p key={user} className={styles.time}>{user}</p>
-                        ))} */}
+                        {usersInRoom ? (
+                            usersInRoom.map((user) => (
+                                <p key={user} className={styles.time}>{user}</p>
+                            ))
+                        ) : (
+                            <p className={styles.time}>Unregistered User</p>
+                        )}
                         {stream && <p className={styles.time}>Time Elapsed: {formatTime(timeElapsed)}</p>}
                     </div>
                 </>
