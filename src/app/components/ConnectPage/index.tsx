@@ -66,7 +66,7 @@ const ConnectPage = ({ lng }) => {
                   />
                      {isConnected && (
                         <>
-                            <Video stream={stream} />
+                            {/* <Video stream={stream} /> */}
                             {Object.values(peers).map((peer: any) => (
                                  peer.id !== me?.id && <Video key={peer.id} stream={peer.stream} />
                             ))}
