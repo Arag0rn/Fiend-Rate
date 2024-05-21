@@ -26,6 +26,12 @@ interface RegisterData {
   verify?:boolean;
 };
 
+interface NewPassword {
+  password: string,
+  confirmPassword: string,
+  token: string,
+}
+
 interface UpdatedData {
   username?: string;
   birthday?: string;
@@ -130,3 +136,30 @@ export const deleteUser = createAsyncThunk(
     }
   }
 );
+
+export const forgotPassword = createAsyncThunk(
+  'auth/forgot-password',
+  async (email: string, thunkAPI) => {
+    try {
+      const res = await axios.post('/api/user/forgot-password', { email });
+
+      return { email, data: res.data, };
+    }
+    catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+});
+
+export const resetPassword = createAsyncThunk(
+  'auth/restore-password',
+  async (newPassword: NewPassword, thunkAPI) => {
+    const { password, confirmPassword, token } = newPassword;
+    try {
+      const res = await axios.post(`/api/user/reset-password/${token}`, { password, confirmPassword });
+
+      return { password, newPassword, token }
+    }
+    catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+});
