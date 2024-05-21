@@ -95,6 +95,7 @@ const SignInContent: FC<Props> = (
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder={t("email")}
+                autoComplete='off'
               />
               {touched.email && errors.email && (
                 <Block className={styles["reset"]}>{errors.email}</Block>
@@ -116,6 +117,7 @@ const SignInContent: FC<Props> = (
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onClick={() => setIsError(false)}
+                  autoComplete='off'
                 />
                 {isError || (touched.password && errors.password) ?
                   (

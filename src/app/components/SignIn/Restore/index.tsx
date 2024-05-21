@@ -6,10 +6,11 @@ import Block from '../Block';
 import styles from '../../../containers/SignInContainer/styles.module.scss';
 import { useRouter } from 'next/navigation';
 import Label from '../Label';
-import { transform } from 'next/dist/build/swc';
 import CheckEmail from '../CheckEmail';
 import { UseTranslationResponse } from 'react-i18next';
 import * as Yup from 'yup';
+import { useAppDispatch } from '@/app/REDUX/Hooks/hooks';
+import { forgotPassword } from '@/app/REDUX/Auth/operations';
 
 type Props = {
   setModalIcon: (value: boolean) => void,
@@ -19,16 +20,20 @@ type Props = {
 }
 
 const Restore: FC<Props> = ( { modalIcon, setModalIcon, useTranslation, lng } ) => {
-  const [check, setCheck] = useState(true);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const { t } = useTranslation(lng, 'restorePassword');
 
   const SignupSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Invalid email address').required('Required'),
-    password: Yup.string()
-      .matches(/[a-zA-Z]/, 'Try to reset your password first',)
-      .required('Incorrect username or password'),
+      .email(`${t('errorEmail')}`)
+      .matches(
+        /^[-?\w.?%?]+@\w+.{1}\w{2,4}$/,
+        `${t('invalidEmail')}`
+      )
+      .required(`${t('errorEmail')}`),
   });
 
   return (
@@ -36,30 +41,47 @@ const Restore: FC<Props> = ( { modalIcon, setModalIcon, useTranslation, lng } ) 
       <Formik
         initialValues={{
           email: '',
-          password: '',
         }}
         validationSchema={SignupSchema}
-        validate={values => {
-          if (!values.email) {
-            setCheck(false);
-          }
-        }}
         onSubmit={async (values, action) => {
-            setCheck(true);
+          setError(false);
+            const { email } = values;
+            dispatch(forgotPassword(email))
+            .unwrap()
+            .then(res => {
+              if (res.data.status !== '500') {
+                setModalIcon(true);
+                action.resetForm();
+              }
+            }).catch(() => {
+              setError(true);
+              setModalIcon(false);
+              setErrorMessage(t('invalidEmail'));
+            });
         }}
       >
-        <Form>
+        {({ handleSubmit, handleChange, handleBlur, values, errors, touched }) => (
+        <Form onSubmit={handleSubmit}>
           <Block className={styles['content-bottom']}>
             <Label className={styles.fieldLabel} htmlFor="email">
               {t('email')}
             </Label>
             <Field
-              className={styles['field-restore']}
+              className={!error ? styles['field-restore'] : styles['field-restore__error']}
               id="email"
               name="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              onClick={() => setError(false)}
               placeholder={t('email')}
             />
-            <ErrorMessage className={styles.errMes} component="span" name="email" />
+            {errors.email && touched.email && (
+              <ErrorMessage className={styles.errMes} component="span" name="email" />
+            )}
+            {error && (
+               <span className={styles.errMes}>{errorMessage}</span>
+            )}
           </Block>
           <Block className={styles['button-bottom']}>
             {t('description')}
@@ -68,12 +90,12 @@ const Restore: FC<Props> = ( { modalIcon, setModalIcon, useTranslation, lng } ) 
           <ButtonSubmit
             className={styles.signupBtn}
             type={TypeButton.SUBMIT}
-            disabled={false}
-            onClick={() => setModalIcon(true)}
+            disabled={!!errors.email || !values.email}
           >
             {t('btn')}
           </ButtonSubmit>
         </Form>
+        )}
       </Formik>
 
       {modalIcon === true && (
