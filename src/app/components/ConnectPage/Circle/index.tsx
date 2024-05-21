@@ -7,22 +7,20 @@ const Circle = ({
   isConnected,
   search,
   call,
-  pathname,
   lng,
 }: {
   children: ReactElement | ReactElement[],
   isConnected?: boolean,
   search?: boolean,
   call: boolean,
-  pathname: string,
   lng: any,
 }) => {
   return (
     <div className={classNames(styles['circle'], {
       [styles['circle-connected']]: isConnected && !search && !call,
-      [styles['circle-call']]: call && !isConnected && !search && pathname === `/${lng}/connect/authorized`,
+      [styles['circle-call']]: call && !isConnected && !search,
       // [styles['circle-group']]: group && !call && !search && !isConnected,
-      [styles['circle-notAuth']]: call && pathname === `/${lng}/connect/notAuthorized`,
+      [styles['circle-notAuth']]: call ,
     })}>{children}</div>
   )
 }

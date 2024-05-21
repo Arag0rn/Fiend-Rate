@@ -7,6 +7,9 @@ import Circle from '../Circle';
 import Rate from '../Rate';
 import UserName from '../UserName';
 import AvatarImage from '../AvatarImage';
+import { useAuth } from '@/app/REDUX/Hooks/useAuth';
+import { useSelector } from 'react-redux';
+import { usersNames } from '@/app/REDUX/Users/selectors';
 
 const AuthorizedUser = (
   {
@@ -14,25 +17,29 @@ const AuthorizedUser = (
     spinner,
     search,
     call,
-    pathname,
     lng,
   }: {
     isConnected: boolean,
     spinner: boolean,
     search: boolean,
     call: boolean,
-    pathname: string,
     lng: any,
   }) => {
+
+    const { user } = useAuth(); 
+    const usersInRoom = useSelector(usersNames)
+    const opositUser = usersInRoom.filter((u) => u !== user?.username);
+    
+
   return (
     <div className={spinner ? styles.authorized : styles['authorized-call']}>
       <div className={styles["authorized__content"]}>
         <Stroke spinner={spinner}>
-          <Circle pathname={pathname} lng={lng} call={call} isConnected={isConnected}>
+          <Circle  lng={lng} call={call} isConnected={isConnected}>
             <AvatarImage search={search} src={picture} isConnected={isConnected}/>
 
             <Rate>0.0</Rate>
-            <UserName>{!search && 'Antonio777'}</UserName>
+            <UserName>{!search && opositUser}</UserName>
           </Circle>
         </Stroke>
       </div>

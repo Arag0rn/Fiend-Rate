@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Container from '../Container';
 import LoaderConnect from './LoaderConnect/LoaderConnect';
 import styles from './styles.module.scss';
@@ -9,16 +9,19 @@ import microfon from '../../images/microfon-open.svg';
 import callEnd from '../../images/call-end.svg';
 import microfonClose from '../../images/close-microfon.svg';
 import TimerAndButtons from './TimerAndButtons';
-import NotAuthorizedUser from './NotAuthorizedUser';
-import { usePathname } from 'next/navigation';
+import { Video } from '../ChatRoomComp/Video';
+import { RoomContext } from '../Context/RomContext';
+// import NotAuthorizedUser from './NotAuthorizedUser';
+// import { usePathname } from 'next/navigation';
 
 const ConnectPage = ({ lng }) => {
   const [time, setTime] = useState(0);
   const [call, setCall] = useState(false);
-  const [search, setSearch] = useState(true);
+  const [search, setSearch] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [spinner, setSpinner] = useState(true);
-  const pathname = usePathname();
+  const { ws, me, peers, stream } = useContext(RoomContext);
+  console.log('stream');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -27,6 +30,19 @@ const ConnectPage = ({ lng }) => {
 
     return () => clearInterval(interval);
   }, []);
+
+
+  useEffect(() => {
+  
+    if (Object.values(peers).length > 1 ) {
+        setIsConnected(true)
+        setSpinner(false)
+        setCall(true)
+        setSpinner(false)
+    
+        
+    }
+}, [peers]);
 
   const formatTime = (time) => {
     const minutes = Math.floor((time % 3600) / 60);
@@ -40,17 +56,24 @@ const ConnectPage = ({ lng }) => {
         <div className={styles["connect__content"]}>
           <div className={styles["connect__content-block"]}>
             {spinner && <LoaderConnect />}
-            {pathname === `/${lng}/connect/authorized`
-              &&  <AuthorizedUser
+        
+                   <AuthorizedUser
                     search={search}
                     isConnected={isConnected}
                     spinner={spinner}
                     call={call}
-                    pathname={pathname}
                     lng={lng}
                   />
-            }
-            {pathname === `/${lng}/connect/notAuthorized`
+                     {isConnected && (
+                        <>
+                            <Video stream={stream} />
+                            {Object.values(peers).map((peer: any) => (
+                                <Video key={peer.id} stream={peer.stream} />
+                            ))}
+                        </>
+                      )}
+            
+            {/* {pathname === `/${lng}/connect/notAuthorized`
               &&  <NotAuthorizedUser
                     search={search}
                     spinner={spinner}
@@ -59,7 +82,7 @@ const ConnectPage = ({ lng }) => {
                     pathname={pathname}
                     lng={lng}
                   />
-            }
+            } */}
           </div>
           {!spinner
             &&  <TimerAndButtons
@@ -75,9 +98,9 @@ const ConnectPage = ({ lng }) => {
           {spinner && isConnected && <span className={styles["connect__text"]}>Connection</span>}
           {spinner && isConnected && <span className={styles["connect__text"]}>Connected</span>}
 
-            {pathname === `/${lng}/connect/notAuthorized`
+            {/* {pathname === `/${lng}/connect/notAuthorized`
               ? spinner && <Navbar style={{pointerEvents: 'none', opacity: 0.5 }} />
-              : spinner && <Navbar />}
+              : spinner && <Navbar />} */}
         </div>
         {!spinner && <div className={styles["connect__gradient"]}></div>}
         {!spinner && <div className={styles["connect__gradient-right"]}></div>}

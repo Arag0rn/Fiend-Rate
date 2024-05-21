@@ -12,7 +12,6 @@ import { usersNames } from '@/app/REDUX/Users/selectors';
 
 export const ChatRoomComp = () => {
     const [timeElapsed, setTimeElapsed] = useState(0);
-   const usersInRoom = useSelector(usersNames)
     const url = window.location.href;
     const segments = url.split('/');
     const id = segments[segments.length - 1];
@@ -57,20 +56,14 @@ export const ChatRoomComp = () => {
         return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     };
 
-    const handleEndCall = () => {
-
-        ws.disconnect()
-
-        router.push("/main");
-    };
 
 
     return (
         <>
-            {!isConnected ? (
+     
                 <ConnectPage lng={undefined} />
-            ) : (
-                <>
+
+                {/* <>
                     <h1>ChatRoom</h1>
                     <div className={styles.videogrid}>
                        <Video stream={stream} />
@@ -90,7 +83,7 @@ export const ChatRoomComp = () => {
                         {stream && <p className={styles.time}>Time Elapsed: {formatTime(timeElapsed)}</p>}
                     </div>
                 </>
-            )}
+            )} */}
         </>
     );
 };

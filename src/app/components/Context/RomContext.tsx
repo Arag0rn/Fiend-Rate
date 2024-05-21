@@ -12,7 +12,7 @@ import { setUserNames } from '@/app/REDUX/Users/slice';
 
 
 
-const server = 'http://localhost:3000'
+// const server = 'http://localhost:3000'
 const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
@@ -58,7 +58,7 @@ export const RoomProvider = ({children}) => {
     setMe(peer);
     try {
         navigator.mediaDevices
-            .getUserMedia({ video: true, audio: true })
+            .getUserMedia({ audio: true })
             .then((stream) => {
                 setStream(stream);
             });
