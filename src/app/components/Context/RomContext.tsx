@@ -12,12 +12,12 @@ import { setUserNames } from '@/app/REDUX/Users/slice';
 
 
 
-// const server = 'http://localhost:3000'
+const server = 'http://localhost:3000'
 const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
 
 export const RoomContext = createContext<any | null>(null);
 
-const ws = socketIOClient(server2);
+const ws = socketIOClient(server);
 
 export const RoomProvider = ({children}) => {
     const router = useRouter();
@@ -27,7 +27,6 @@ export const RoomProvider = ({children}) => {
     const { user } = useAuth(); 
     
     const reduxDispatch = useDispatch();
-
       
     const handleUserList = useCallback(({ users, names, roomId }: { users: string[], names: string[], roomId: string }) => {
        

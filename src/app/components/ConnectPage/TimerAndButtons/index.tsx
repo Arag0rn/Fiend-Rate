@@ -18,7 +18,7 @@ const TimerAndButtons = ({
   const [isMuted, setIsMuted] = useState(false);
   
   const handleEndCall = () => {
-    ws.disconnect()
+    ws.emit("end-call")
     router.push("/main");
 };
 

@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navbar from '../NavBar/Navbar';
 import MainImg from '../../images/Main/mainimg.png'
 import Logo from '../../images/Main/Logo.svg'
@@ -24,13 +24,6 @@ const Main = ({params}) => {
     const { ws, me } = useContext(RoomContext)
     const { user } = useAuth();
     const router = useRouter()
-
-  //   const joinHub = () => {
-  //     const info = { selectedLanguage, selectedGender, value };
-  //     localStorage.setItem('info', JSON.stringify(info));
-  //     router.push(`/hub`);
-  // };
-
 
     const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
       const minDistance = 6;
