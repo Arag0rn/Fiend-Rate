@@ -5,8 +5,8 @@
 
   &-call {
     @include mainBlock;
-    top: 100%;
-    transform: translate(-50%, -100%);
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 
   &__content {
