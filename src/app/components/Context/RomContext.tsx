@@ -32,14 +32,14 @@ export const RoomProvider = ({children}) => {
        
         router.push(`/chatRoom/${roomId}`);
         console.log(names);
-        // users.forEach((peerId) => {
-        //     if (stream && me) {
-        //         const call = me.call(peerId, stream);
-        //         call?.on("stream", (userVideoStream: MediaStream) => {
-        //             dispatch(addPeerAction(peerId, userVideoStream));
-        //         });
-        //     }
-        // });
+        users.forEach((peerId) => {
+            if (stream && me) {
+                const call = me.call(peerId, stream);
+                call?.on("stream", (userVideoStream: MediaStream) => {
+                    dispatch(addPeerAction(peerId, userVideoStream));
+                });
+            }
+        });
 
    
         reduxDispatch(setUserNames(names));
