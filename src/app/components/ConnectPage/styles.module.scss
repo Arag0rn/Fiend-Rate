@@ -22,6 +22,9 @@
   }
 
   &__nav {
+    position: absolute;
+    bottom: 103px;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     align-items: center;

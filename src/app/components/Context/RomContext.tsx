@@ -48,6 +48,7 @@ export const RoomProvider = ({children}) => {
 
     const removePeer = (peerId: string) => {
       dispatch(removePeerAction(peerId));
+      router.push(`/main`);
   };
 
   useEffect(() => {
