@@ -169,6 +169,7 @@ export const resetPassword = createAsyncThunk(
     }
 });
 
+
 export const setUserRate = createAsyncThunk(
   'auth/setUserRate',
   async (userData: RateData, thunkAPI) => {
@@ -181,3 +182,16 @@ export const setUserRate = createAsyncThunk(
     }
   }
 );
+
+export const updateImageProfile = createAsyncThunk('auth/update-avatar',
+  async (avatarURL: string | File) => {
+
+    const res = await axios.patch('/api/user/avatars', { avatarURL }, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    });
+
+    return res.data;
+})
+

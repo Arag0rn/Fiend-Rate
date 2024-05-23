@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deleteUser, logIn, logOut, refreshUser, register, updateUserData, forgotPassword, resetPassword, setUserRate } from './operations';
+
+import { deleteUser, logIn, logOut, refreshUser, register, updateUserData, forgotPassword, resetPassword, setUserRate, updateImageProfile } from './operations';
+
+
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -87,9 +90,15 @@ const initialState: InitState = {
         state.token = action.payload.token;
       })
 
+
       builder.addCase(setUserRate.fulfilled, (state, action) => {
         if (state.user?.rate !== undefined) {
           state.user.rate = action.payload.rate;
+
+      builder.addCase(updateImageProfile.fulfilled, (state, action) => {
+        if (state.user?.avatarURL !== undefined) {
+          state.user.avatarURL = action.payload.avatarURL as string;
+
         }
       })
       //rejected
