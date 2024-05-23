@@ -16,7 +16,7 @@ const TimerAndButtons = ({
   formatTime,
   params
 }) => {
-  const { ws, me, peers, stream, rateModalOpen, openRateModal, closeRateModal, clearPeers } = useContext(RoomContext);
+  const { ws, me, peers, stream, rateModalOpen, openRateModal, clearPeers } = useContext(RoomContext);
   const router = useRouter();
   const [isMuted, setIsMuted] = useState(false);
   const dispatch = useDispatch()
@@ -44,9 +44,6 @@ const handleOpenModal = () => {
   openRateModal()
 };
 
-const handleCloseModal = () => {
-  closeRateModal();
-};
 
 
   return (
@@ -61,7 +58,7 @@ const handleCloseModal = () => {
       </button>
       <RateModal
                 rateModalOpen={rateModalOpen}
-                handleCloseModal={handleCloseModal}
+
                 params={params}
                 modalTitle="Text in a modal"
                 modalContent="Duis mollis, est non commodo luctus, nisi erat porttitor ligula."
