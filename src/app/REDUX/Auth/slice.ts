@@ -89,12 +89,11 @@ const initialState: InitState = {
         }
         state.token = action.payload.token;
       })
-
-
       builder.addCase(setUserRate.fulfilled, (state, action) => {
         if (state.user?.rate !== undefined) {
           state.user.rate = action.payload.rate;
-
+        }
+      });
       builder.addCase(updateImageProfile.fulfilled, (state, action) => {
         if (state.user?.avatarURL !== undefined) {
           state.user.avatarURL = action.payload.avatarURL as string;
@@ -118,6 +117,6 @@ const initialState: InitState = {
       builder.addCase(register.pending, (state) => {
         state.isRefreshing = true;
       });
-    },
+    }
   });
   export const authReducer = authSlice.reducer;
