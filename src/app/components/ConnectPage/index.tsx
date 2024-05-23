@@ -92,6 +92,7 @@ const ConnectPage = ({ lng }) => {
                   callEnd={callEnd}
                   time={time}
                   formatTime={formatTime}
+                  params={lng}
                 />
           }
           {spinner && search && <span className={styles["connect__text"]}>Search</span>}

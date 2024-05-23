@@ -44,6 +44,11 @@ interface UpdatedData {
   language?: string | '';
 };
 
+interface RateData {
+  rate?: number;
+  username?: string;
+};
+
 
 
 export const register = createAsyncThunk(
@@ -163,3 +168,16 @@ export const resetPassword = createAsyncThunk(
       return thunkAPI.rejectWithValue(error);
     }
 });
+
+export const setUserRate = createAsyncThunk(
+  'auth/setUserRate',
+  async (userData: RateData, thunkAPI) => {
+    console.log(userData);
+    try {
+      const res = await axios.patch('/api/user/set-rate', userData);
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);

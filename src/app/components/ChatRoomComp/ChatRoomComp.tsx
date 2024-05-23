@@ -19,10 +19,6 @@ export const ChatRoomComp = () => {
     const router = useRouter();
     const [isConnected, setIsConnected] = useState(false);
 
-
-    console.log(peers);
-
-
     useEffect(() => {
         // me?.on("open", () => {
         //     ws.emit("join-room", { roomId: id, peerId: me._id });
@@ -31,7 +27,6 @@ export const ChatRoomComp = () => {
       
         if (Object.values(peers).length > 1 ) {
             setIsConnected(true)
-            console.log('true');
             
         }
     }, [peers]);

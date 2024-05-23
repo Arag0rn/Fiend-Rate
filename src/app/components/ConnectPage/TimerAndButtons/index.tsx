@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import styles from '../styles.module.scss';
 import Image from 'next/image';
 import { RoomContext } from '../../Context/RomContext';
 import { useRouter } from 'next/navigation';
+import RateModal from './RateModal';
+import { useDispatch } from 'react-redux';
 
 
 const TimerAndButtons = ({
@@ -11,16 +13,23 @@ const TimerAndButtons = ({
   call,
   microfonClose,
   microfon,
-  formatTime
+  formatTime,
+  params
 }) => {
-  const { ws, me, peers, stream } = useContext(RoomContext);
+  const { ws, me, peers, stream, rateModalOpen, openRateModal, closeRateModal, clearPeers } = useContext(RoomContext);
   const router = useRouter();
   const [isMuted, setIsMuted] = useState(false);
+  const dispatch = useDispatch()
+
   
   const handleEndCall = () => {
     ws.emit("end-call")
-    router.push("/main");
+    // router.push("/main");
+    handleOpenModal()
+    clearPeers();
+   
 };
+
 
 const toggleMute = () => {
   if (stream) {
@@ -29,6 +38,14 @@ const toggleMute = () => {
     });
     setIsMuted(!isMuted);
   }
+};
+
+const handleOpenModal = () => {
+  openRateModal()
+};
+
+const handleCloseModal = () => {
+  closeRateModal();
 };
 
 
@@ -42,6 +59,13 @@ const toggleMute = () => {
         }
         <button onClick={handleEndCall} style={{background: "transparent", border: 'none'}}><Image src={callEnd} alt="Call-End" className={styles["connect__call-end"]} /></button>
       </button>
+      <RateModal
+                rateModalOpen={rateModalOpen}
+                handleCloseModal={handleCloseModal}
+                params={params}
+                modalTitle="Text in a modal"
+                modalContent="Duis mollis, est non commodo luctus, nisi erat porttitor ligula."
+              />
     </div>
   )
 }
