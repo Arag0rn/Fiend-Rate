@@ -16,6 +16,7 @@ import fullstar from '../../../images/ratemodal/fullstar.svg'
 import { useAuth } from '@/app/REDUX/Hooks/useAuth';
 import { usersNames } from '@/app/REDUX/Users/selectors';
 import { useRouter } from 'next/navigation';
+import { RoomContext } from '../../Context/RomContext';
 
 
 const style = {
@@ -37,13 +38,14 @@ const style = {
 
 
 
-export default function RateModal({ rateModalOpen, handleCloseModal, modalTitle, modalContent, params }) {
+export default function RateModal({ rateModalOpen, modalTitle, modalContent, params }) {
     const { t } = useTranslation(params, 'popUp-delete');
     const [dontwant, setIsDontwant] = React.useState(false);
     const [another, setIsAnother] = React.useState(false);
     const [problems, setIsProblems] = React.useState(false);
     const [rate, setRate] = React.useState(0)
     const dispatch:Dispatch = useDispatch();
+    const {  closeRateModal } = React.useContext(RoomContext);
 
     const { user } = useAuth(); 
     const usersInRoom = useSelector(usersNames)
@@ -53,7 +55,9 @@ export default function RateModal({ rateModalOpen, handleCloseModal, modalTitle,
 
     const onSetUserRate = () => {
         dispatch(setUserRate({username, rate}))
+        closeRateModal()
         router.push(`/main`);
+        
     }
 
     return (
@@ -61,7 +65,7 @@ export default function RateModal({ rateModalOpen, handleCloseModal, modalTitle,
 
           <Modal
             open={rateModalOpen}
-            onClose={(_, reason) => reason === "backdropClick" ? null : handleCloseModal()}
+            onClose={(_, reason) => reason === "backdropClick" ? null : closeRateModal()}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
