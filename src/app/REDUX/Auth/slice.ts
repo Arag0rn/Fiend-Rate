@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { deleteUser, logIn, logOut, refreshUser, register, updateUserData, forgotPassword, resetPassword } from './operations';
+import { deleteUser, logIn, logOut, refreshUser, register, updateUserData, forgotPassword, resetPassword, updateImageProfile } from './operations';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -84,6 +84,12 @@ const initialState: InitState = {
           state.user.password = action.payload.password;
         }
         state.token = action.payload.token;
+      })
+
+      builder.addCase(updateImageProfile.fulfilled, (state, action) => {
+        if (state.user?.avatarURL !== undefined) {
+          state.user.avatarURL = action.payload.avatarURL as string;
+        }
       })
       //rejected
       builder.addCase(refreshUser.rejected, (state, action) => {

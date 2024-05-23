@@ -8,9 +8,8 @@ import UserName from '@/app/components/ProfilePage/UserName';
 import Block from '@/app/components/SignIn/Block';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import logOutImg from '../../images/profile/log-out.svg';
-import image from '../../images/profile/image-user.svg';
 import changeImage from '../../images/profile/change-photo.svg';
 import star from '../../images/profile/star-rate.svg';
 import styles from './styles.module.scss';
@@ -20,7 +19,7 @@ import Label from '@/app/components/SignIn/Label';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '@/app/REDUX/Auth/selector';
 import { Dispatch } from '@/app/REDUX/store';
-import { logOut } from '@/app/REDUX/Auth/operations';
+import { logOut, updateImageProfile } from '@/app/REDUX/Auth/operations';
 import { useTranslation } from '@/i18n/client';
 
 
@@ -43,6 +42,26 @@ const ProfileContainer = ({ lng }) => {
   const userData = useSelector(selectUser);
   const dispatch: Dispatch = useDispatch();
 
+  const handleChangeImage = (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) {
+      return;
+    }
+
+    const file = event.target.files[0];
+
+    if (file.size >= 10 * 1024 * 1024
+        && !file.type.includes('jpeg')
+        && !file.type.includes('jpg')
+        && !file.type.includes('svg')
+        && !file.type.includes('webp')
+        && !file.type.includes('png')
+      ) {
+        return;
+      }
+
+    dispatch(updateImageProfile(file));
+  }
+
   return (
     <Block className='profile'>
       <Container>
@@ -62,24 +81,33 @@ const ProfileContainer = ({ lng }) => {
 
           <Block className={styles['profile__block-edit']}>
             <Block className={styles['profile__block-image']}>
-              <Image className={styles['profile__block-image']} src={image} width='88' height='88' alt={'User Image'} priority={true} />
-              <Label className={styles['profile__upload']} htmlFor='file'>
-                <Block className={styles['profile__image-change']}>
-                    <input
-                      className={styles['profile__opacity']}
-                      type="file"
-                      name="file"
-                      id="file"
+              <Image
+                className={styles['profile__block-image']}
+                src={userData?.avatarURL as string}
+                width='88'
+                height='88'
+                alt={'User Image'}
+                priority={true}
+              />
+                <Label className={styles['profile__upload']} htmlFor='file'>
+                  <Block className={styles['profile__image-change']}>
+                      <input
+                        className={styles['profile__opacity']}
+                        type="file"
+                        name="file"
+                        id="file"
+                        accept='.jpg, .jpeg, .png, .svg, .webp'
+                        onChange={handleChangeImage}
+                      />
+                    <Image
+                      className={styles['profile__upload']}
+                      width={15.96}
+                      height={15.96}
+                      src={changeImage}
+                      alt={'Change Image'}
                     />
-                  <Image
-                    className={styles['profile__upload']}
-                    width={15.96}
-                    height={15.96}
-                    src={changeImage}
-                    alt={'Change Image'}
-                  />
-                </Block>
-              </Label>
+                  </Block>
+                </Label>
             </Block>
 
             <Block className='profile__user-name'>
