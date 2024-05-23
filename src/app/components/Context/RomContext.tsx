@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { createContext, useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import  socketIOClient  from 'socket.io-client';
-import { addPeerAction, removePeerAction } from './PeerAction';
+import { addPeerAction, clearPeersAction, removePeerAction } from './PeerAction';
 import { peersReducer } from './peersReducer';
 import Peer from "peerjs";
 import { v4 as uuidV4 } from 'uuid';
@@ -23,6 +23,7 @@ export const RoomProvider = ({children}) => {
     const router = useRouter();
     const [me, setMe] = useState<Peer | null>(null);
     const [peers, dispatch] = useReducer(peersReducer, {});
+    const [rateModalOpen, setRateModalOpen] = useState(false)
     const [stream, setStream] = useState<MediaStream>();
     const { user } = useAuth(); 
     
@@ -37,6 +38,8 @@ export const RoomProvider = ({children}) => {
                 const call = me.call(peerId, stream);
                 call?.on("stream", (userVideoStream: MediaStream) => {
                     dispatch(addPeerAction(peerId, userVideoStream));
+                    console.log(peerId);
+                    
                 });
             }
         });
@@ -46,10 +49,18 @@ export const RoomProvider = ({children}) => {
 
     }, [reduxDispatch, router, stream, me]);
 
-    const removePeer = (peerId: string) => {
-      dispatch(removePeerAction(peerId));
-      router.push(`/main`);
-  };
+    const clearPeers = useCallback(() => {
+        dispatch(clearPeersAction());
+        setRateModalOpen(true);
+    }, [dispatch]);
+
+    // const removePeer = useCallback(
+    //     (peerId: string) => {
+    //       dispatch(removePeerAction(peerId));
+    //       setRateModalOpen(true);
+    //     },
+    //     [dispatch]
+    //   );
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -70,8 +81,8 @@ export const RoomProvider = ({children}) => {
 
 useEffect(()=>{
     ws.on("get-user", handleUserList);
-    ws.on("user-disconnected", removePeer);
-}, [handleUserList])
+    ws.on("user-disconnected", clearPeers);
+}, [handleUserList, clearPeers])
 
 useEffect(() => {
   if (!stream) return;
@@ -86,8 +97,7 @@ useEffect(() => {
           const call = stream && me.call(peerId, stream);
           call.on("stream", (userVideoStream: MediaStream) => {
               dispatch(addPeerAction(peerId, userVideoStream));
-              console.log("111111111111");
-              console.log(names);
+              console.log("111111111111", peerId);
               
           });
       
@@ -100,7 +110,7 @@ useEffect(() => {
       call.answer(stream);
       call.on("stream", (userVideoStream) => {
           dispatch(addPeerAction(call.peer, userVideoStream));
-          console.log("22222222222222222");
+          console.log("22222222222222222", call.peer);
       });
   });
 
@@ -109,8 +119,11 @@ useEffect(() => {
 //     ws.off("get-user");
 //     ws.off("user-disconnected");
 // };
-}, [stream, me, handleUserList, removePeer]);
+}, [stream, me, handleUserList, clearPeers, reduxDispatch]);
+
+const openRateModal = () => setRateModalOpen(true);
+const closeRateModal = () => setRateModalOpen(false);
     
    return (
-   <RoomContext.Provider value={{ws, me, stream, peers}}>{children}</RoomContext.Provider>)
+   <RoomContext.Provider value={{ws, me, stream, peers, rateModalOpen, openRateModal, closeRateModal, clearPeers }}>{children}</RoomContext.Provider>)
 }
