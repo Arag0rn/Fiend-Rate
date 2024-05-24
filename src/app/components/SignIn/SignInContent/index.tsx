@@ -83,7 +83,7 @@ const SignInContent: FC<Props> = (
           }}
           onSubmit={handleLogin}
         >
-          {({ errors, values, touched, handleChange, handleSubmit, handleBlur }) => (
+          {({ errors, values, touched, handleChange, handleSubmit, handleBlur, setFieldValue }) => (
           <Form className={styles.imputForm} onSubmit={handleSubmit}>
             <BlockInput>
               <Label className={styles.fieldLabel} htmlFor="email">{t('email')}</Label>
@@ -95,7 +95,6 @@ const SignInContent: FC<Props> = (
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder={t("email")}
-                autoComplete='off'
               />
               {touched.email && errors.email && (
                 <Block className={styles["reset"]}>{errors.email}</Block>
@@ -117,12 +116,11 @@ const SignInContent: FC<Props> = (
                   onChange={handleChange}
                   onBlur={handleBlur}
                   onClick={() => setIsError(false)}
-                  autoComplete='off'
                 />
                 {isError || (touched.password && errors.password) ?
                   (
                     <Block className={styles.icon}>
-                      <Image onClick={() => setShowPassword(!showPassword)} className={styles.icon} src={cross} alt="show_cross" />
+                      <Image onClick={() => setFieldValue('password', '')} className={styles.icon} src={cross} alt="show_cross" />
                     </Block>
                   ) :
                  (<Block
