@@ -60,6 +60,7 @@ const SignInContent: FC<Props> = (
   });
 
   const handleLogin = (formValue: FormValue, action: FormikHelpers<FormValue>) => {
+    action.setSubmitting(true);
     setIsError(false);
     const { email, password } = formValue;
 
@@ -71,6 +72,8 @@ const SignInContent: FC<Props> = (
     }).catch(() => {
       setIsError(true);
     });
+
+    action.setSubmitting(false);
   }
 
   return (
@@ -83,7 +86,7 @@ const SignInContent: FC<Props> = (
           }}
           onSubmit={handleLogin}
         >
-          {({ errors, values, touched, handleChange, handleSubmit, handleBlur, setFieldValue }) => (
+          {({ errors, values, touched, handleChange, handleSubmit, handleBlur, setFieldValue, isSubmitting }) => (
           <Form className={styles.imputForm} onSubmit={handleSubmit}>
             <BlockInput>
               <Label className={styles.fieldLabel} htmlFor="email">{t('email')}</Label>
@@ -151,7 +154,7 @@ const SignInContent: FC<Props> = (
             <ButtonSubmit
               className={styles.signupBtn}
               type={TypeButton.SUBMIT}
-              disabled={!values.email || !values.password}
+              disabled={!values.email || !values.password || isSubmitting}
             >
               {t('continue')}
             </ButtonSubmit>
