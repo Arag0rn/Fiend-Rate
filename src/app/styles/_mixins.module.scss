@@ -48,7 +48,14 @@
     color: $main-beige;
     font-size: 14px;
     font-weight: 400;
-    line-height: 1.7; 
+    line-height: 1.7;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: $main-beige;
+      transition: background-color 5000s ease-in-out 1s;
+    }
 }
 
 @mixin onGalaxyFold {
