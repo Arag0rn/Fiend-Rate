@@ -60,7 +60,6 @@ const SignInContent: FC<Props> = (
   });
 
   const handleLogin = (formValue: FormValue, action: FormikHelpers<FormValue>) => {
-    action.setSubmitting(true);
     setIsError(false);
     const { email, password } = formValue;
 
@@ -73,7 +72,7 @@ const SignInContent: FC<Props> = (
       setIsError(true);
     });
 
-    action.setSubmitting(false);
+    
   }
 
   return (
@@ -154,7 +153,7 @@ const SignInContent: FC<Props> = (
             <ButtonSubmit
               className={styles.signupBtn}
               type={TypeButton.SUBMIT}
-              disabled={!values.email || !values.password || isSubmitting}
+              disabled={!values.email || !values.password || !!(errors.password || errors.email)}
             >
               {t('continue')}
             </ButtonSubmit>
