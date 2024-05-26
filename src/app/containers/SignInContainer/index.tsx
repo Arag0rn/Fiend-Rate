@@ -25,6 +25,7 @@ import RestoreTitle from "@/app/components/SignIn/RestoreTitle";
 import RestoreSubTitle from "@/app/components/SignIn/RestoreSubTitle";
 import NewPasswordTitle from "@/app/components/SignIn/NewPasswordTitle";
 import NewPasswordSubTitle from "@/app/components/SignIn/NewPasswordSubTitle";
+import { FormikHelpers, FormikValues } from "formik";
 
 export type FormValue = {
   email: string,
@@ -45,6 +46,22 @@ const SignInContainer = ({ lng }) => {
   useEffect(() => {
     setTimeout(() =>
     setLoading(true), 1000);
+
+    const handleAutofill = (event: Event, action?: FormikHelpers<FormikValues>) => {
+      action?.setFieldValue((event.target as HTMLInputElement).name, (event.target as HTMLInputElement).value);
+    }
+
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(input => {
+      input.addEventListener('change', handleAutofill);
+    });
+
+    return () => {
+      inputs.forEach(input => {
+        input.removeEventListener('change', handleAutofill);
+      });
+    }
   }, []);
 
   const handleButtonClick = (buttonName: string) => {
