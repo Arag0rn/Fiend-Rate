@@ -21,6 +21,7 @@ export interface AuthState {
     language?: string | '';
     _id?: string | '';
     rate?: number | null ;
+    ratingCount?: number | null ;
   } | null;
 }
 

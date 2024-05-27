@@ -17,6 +17,7 @@ import { useAuth } from '@/app/REDUX/Hooks/useAuth';
 import { usersNames } from '@/app/REDUX/Users/selectors';
 import { useRouter } from 'next/navigation';
 import { RoomContext } from '../../Context/RomContext';
+import { OpositUser } from '../AuthorizedUser';
 
 
 const style = {
@@ -40,17 +41,17 @@ const style = {
 
 export default function RateModal({ rateModalOpen, modalTitle, modalContent, params }) {
     const { t } = useTranslation(params, 'popUp-delete');
-    const [dontwant, setIsDontwant] = React.useState(false);
-    const [another, setIsAnother] = React.useState(false);
-    const [problems, setIsProblems] = React.useState(false);
     const [rate, setRate] = React.useState(0)
     const dispatch:Dispatch = useDispatch();
     const {  closeRateModal } = React.useContext(RoomContext);
 
     const { user } = useAuth(); 
     const usersInRoom = useSelector(usersNames)
-    const opositUser = usersInRoom.filter((u) => u !== user?.username);
-    const username = opositUser[0]
+
+    const opositUser: OpositUser | null = Array.isArray(usersInRoom) 
+    ? usersInRoom.find((u: OpositUser) => u.userName !== user?.username) || null 
+    : null;
+    const username = opositUser?.userName
     const router = useRouter();
 
     const onSetUserRate = () => {

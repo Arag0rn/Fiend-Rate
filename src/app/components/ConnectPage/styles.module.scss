@@ -15,7 +15,7 @@
     &-block {
       position: relative;
       width: 100%;
-      height: 100%;
+      height: 80%;
       z-index: 1;
       background-color: transparent;
     }
@@ -32,6 +32,8 @@
   }
 
   &__text {
+    position: absolute;
+    top: 450px;
     font-size: 18px;
     font-style: normal;
     font-weight: 700;

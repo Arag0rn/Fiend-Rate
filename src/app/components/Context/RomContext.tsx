@@ -26,10 +26,11 @@ export const RoomProvider = ({children}) => {
     const [rateModalOpen, setRateModalOpen] = useState(false)
     const [stream, setStream] = useState<MediaStream>();
     const { user } = useAuth(); 
+    console.log(user);
     
     const reduxDispatch = useDispatch();
       
-    const handleUserList = useCallback(({ users, names, roomId }: { users: string[], names: string[], roomId: string }) => {
+    const handleUserList = useCallback(({ users, names, roomId }: { users: string[], names: {}, roomId: string }) => {
        
         router.push(`/chatRoom/${roomId}`);
         console.log(names);

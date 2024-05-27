@@ -17,11 +17,13 @@ import { RoomContext } from '../Context/RomContext';
 const ConnectPage = ({ lng }) => {
   const [time, setTime] = useState(0);
   const [call, setCall] = useState(false);
-  const [search, setSearch] = useState(false);
+  const [search, setSearch] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
+
   const [spinner, setSpinner] = useState(true);
   const { ws, me, peers, stream } = useContext(RoomContext);
   console.log('stream');
+  console.log(spinner);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,6 +41,7 @@ const ConnectPage = ({ lng }) => {
         setSpinner(false)
         setCall(true)
         setSpinner(false)
+        setSearch(false)
     
         
     }

@@ -3,13 +3,23 @@ import styles from './styles.module.scss';
 import rateStar from '../../../images/profile/star-rate.svg';
 import Image from 'next/image';
 
-const Rate = ({children}: {children: ReactElement | string}) => {
+const Rate = ({ rate, ratingCount }) => {
+
+  console.log(rate);
+  
+
+  const averageRate = rate / ratingCount;
+  const roundedRate = Math.round(averageRate * 100) / 100;
+
+
+  const stars = Array(Math.max(1, Math.floor(averageRate || 0))).fill(0);
+
   return (
-    <div className={styles.rate}>
+    <div className={styles.rate}>{roundedRate}
         <Image className={styles.star} src={rateStar} alt="Star" />
-        {children}
+
     </div>
-  )
+  );
 }
 
-export default Rate
+export default Rate;

@@ -16,13 +16,22 @@ const AvatarImage = (
     search: boolean,
     style?: CSSProperties,
   }) => {
+
+    const isMicrofon = typeof src === 'string' && src.includes("/_next/static/media/microfon.3cda766a.svg");
+
+    console.log(src);
+
   return (
+    // <div className={styles.avatar}>
       <Image
-        className={styles.avatar}
-        src={src}
-        style={style}
-        alt="Microfon"
+      className={styles.avatar}
+      src={src}
+      width={search ? 74 : 137}
+      height={search ? 92 : 137}
+      style={style}
+      alt={search ? 'Microfon' : "UserLogo"}
       />
+      // </div>
   )
 }
 

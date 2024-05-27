@@ -2,13 +2,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { RoomContext } from '../Context/RomContext';
 import { Video } from './Video';
-import styles from './ChatRoomComp.module.scss';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import callEnd from "../../images/call-end.svg"
 import ConnectPage from '../ConnectPage';
-import { useSelector } from 'react-redux';
-import { usersNames } from '@/app/REDUX/Users/selectors';
+
 
 export const ChatRoomComp = () => {
     const [timeElapsed, setTimeElapsed] = useState(0);

@@ -25,6 +25,7 @@ const Main = ({params}) => {
     const { user } = useAuth();
     const router = useRouter()
 
+
     const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
       const minDistance = 6;
       if (!Array.isArray(newValue)) {
@@ -78,9 +79,17 @@ const Main = ({params}) => {
     return age;
 };
 
+const userData = 
+  {
+      userName: user?.username,
+      avatarURL: user?.avatarURL,
+      rate: user?.rate,
+      ratingCount: user?.ratingCount
+  }
+
   const connectToRoom = () => {
 
-    ws.emit('create-room', { peerId: me._id, value, selectedLanguage, selectedGender, userName: user?.username, userLanguage: user?.language, userGender: user?.gender, userAge: calculateAge(user?.birthday)});
+    ws.emit('create-room', { peerId: me._id, value, selectedLanguage, selectedGender, userData, userLanguage: user?.language, userGender: user?.gender, userAge: calculateAge(user?.birthday)});
     };
 
   return (

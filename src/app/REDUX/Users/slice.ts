@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllActive } from './operations';
+import { OpositUser } from '@/app/components/ConnectPage/AuthorizedUser';
 
 export interface UserData {
     age(age: any): unknown;
@@ -18,7 +19,7 @@ export interface UsersState {
     users: UserData[],
     isRefreshing: boolean;
     isError: boolean;
-    userNames: string[];
+    userNames: OpositUser | null;
 }
 
 type InitState = UsersState;  
@@ -27,7 +28,7 @@ const initialState: InitState = {
     users: [],
     isRefreshing: false,
     isError: false,
-    userNames: [], 
+    userNames: null 
 };
 
 const activeUsersSlice = createSlice({

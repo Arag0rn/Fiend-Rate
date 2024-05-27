@@ -10,7 +10,14 @@ import AvatarImage from '../AvatarImage';
 import { useAuth } from '@/app/REDUX/Hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { usersNames } from '@/app/REDUX/Users/selectors';
+import { string } from 'yup';
 
+export interface OpositUser{
+    userName: string,
+    avatarURL: string,
+    rate: number,
+    ratingCount: number
+}
 const AuthorizedUser = (
   {
     isConnected,
@@ -28,18 +35,21 @@ const AuthorizedUser = (
 
     const { user } = useAuth(); 
     const usersInRoom = useSelector(usersNames)
-    const opositUser = usersInRoom.filter((u) => u !== user?.username);
-    
+
+    const opositUser: OpositUser | null = Array.isArray(usersInRoom) 
+    ? usersInRoom.find((u: OpositUser) => u.userName !== user?.username) || null 
+    : null;
+
 
   return (
     <div className={spinner ? styles.authorized : styles['authorized-call']}>
       <div className={styles["authorized__content"]}>
         <Stroke spinner={spinner}>
           <Circle  lng={lng} call={call} isConnected={isConnected}>
-            <AvatarImage search={search} src={picture} isConnected={isConnected}/>
+            <AvatarImage search={search} src={opositUser ? opositUser.avatarURL : picture} isConnected={isConnected}/>
 
-            <Rate>0.0</Rate>
-            <UserName>{!search && opositUser}</UserName>
+            <Rate rate={opositUser?.rate} ratingCount={opositUser?.ratingCount}></Rate>
+            <UserName>{!search && opositUser?.userName}</UserName>
           </Circle>
         </Stroke>
       </div>
