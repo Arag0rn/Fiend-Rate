@@ -15,7 +15,7 @@ const Rate = ({ rate, ratingCount }) => {
   const stars = Array(Math.max(1, Math.floor(averageRate || 0))).fill(0);
 
   return (
-    <div className={styles.rate}>{roundedRate}
+    <div className={styles.rate}>{roundedRate || "0.0"}
         <Image className={styles.star} src={rateStar} alt="Star" />
 
     </div>
