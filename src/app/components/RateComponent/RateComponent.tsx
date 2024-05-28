@@ -27,15 +27,13 @@ const RateComponent = () => {
     
 
     const sortedUsers = AllUsers.slice().sort((a, b) => {
-      const averageRateA = ((a.rate ?? 0) / (a.ratingCount ?? 0)).toFixed(2);
-      const averageRateB = ((b.rate ?? 0) / (b.ratingCount ?? 0)).toFixed(2);
+      const averageRateA = ((a.rate ?? 0) / Math.max(1, a.ratingCount ?? 0)).toFixed(2);
+      const averageRateB = ((b.rate ?? 0) / Math.max(1, b.ratingCount ?? 0)).toFixed(2);
+      
       if (averageRateA !== averageRateB) {
-        if (isNaN(parseFloat(averageRateA))) return 1; 
-        if (isNaN(parseFloat(averageRateB))) return -1;
-        return parseFloat(averageRateB) - parseFloat(averageRateA);  
+        return parseFloat(averageRateB) - parseFloat(averageRateA);
       }
-      if (isNaN(parseFloat(averageRateA))) return 1; 
-      if (isNaN(parseFloat(averageRateB))) return -1;
+      
       return (b.rate ?? 0) - (a.rate ?? 0);  
     }).slice(0, 10); 
     
