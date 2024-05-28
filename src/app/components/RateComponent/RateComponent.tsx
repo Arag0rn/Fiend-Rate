@@ -78,7 +78,7 @@ const RateComponent = () => {
                     width={12}
                     height={12}
                 />
-                {(rate/ratingCount).toFixed(2)}</div>
+                {((rate ?? 0)/(ratingCount ?? 0)).toFixed(2)}</div>
               <div className={styles.numberOfRatings} >
                 ({ratingCount})
                 </div>
