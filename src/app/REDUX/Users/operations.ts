@@ -19,4 +19,22 @@ interface GetAllActiveData {
         return thunkAPI.rejectWithValue(error);
       }
     }
+    
+);
+
+
+export const getAllWithRate = createAsyncThunk(
+  'users/getAllWithRate',
+  async (_, thunkAPI) => {
+ 
+    try {
+      const res = await axios.post('/api/user/get-all-rate'); 
+      console.log(res.data);
+      return res.data;
+      
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+  
 );

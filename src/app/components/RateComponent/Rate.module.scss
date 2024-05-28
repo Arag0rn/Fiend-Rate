@@ -1,8 +1,10 @@
 @import '../../styles/mixins.module';
 @import '../../styles/utils.module.scss';
 
-
-
+.rateBox {
+    height: calc(100vh - 60px);
+    overflow: scroll;
+}
 .ratehead{
     color: $main-beige;
     margin-top: 32px;
