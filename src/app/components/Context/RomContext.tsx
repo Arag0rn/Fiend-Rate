@@ -67,7 +67,13 @@ export const RoomProvider = ({children}) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
     const meId = uuidV4();
-    const peer = new Peer(meId);
+    const peer = new Peer(meId, {
+        config: {
+          iceServers: [
+            { urls: 'stun:stun.l.google.com:19302' }
+          ]
+        }
+      });
     setMe(peer);
     try {
         navigator.mediaDevices
