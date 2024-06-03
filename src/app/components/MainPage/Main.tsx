@@ -17,13 +17,13 @@ import { useAuth } from '@/app/REDUX/Hooks/useAuth';
 import { RoomContext } from '../Context/RomContext';
 
 const Main = ({params}) => {
-    const [value, setValue] = useState<number[]>([18, 55]);
+    const [value, setValue] = useState<number[]>([18, 99]);
     const { t } = useTranslation(params, 'main-page');
     const [selectedLanguage, setSelectedLanguage] = useState(t("ukr"));
     const [selectedGender, setSelectedGender] = useState(t("maile"));
     const { ws, me } = useContext(RoomContext)
     const { user } = useAuth();
-    const router = useRouter()
+    const router = useRouter();
 
 
     const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
@@ -138,7 +138,7 @@ const userData =
         onChange={handleChange}
         valueLabelDisplay="on"
         min={14}
-        max={55}
+        max={99}
         disableSwap
       />
     </Box>
