@@ -39,7 +39,7 @@ const SignupSchema = (t: TFunction<string, undefined>) =>  Yup.object().shape({
     ),
   passwordRepeat: Yup.string()
     .oneOf([Yup.ref('password')], () => t("errorConfirm"))
-    .required('Required'),
+    .required(() => t("emptyErrorConfirm")),
 });
 
 const SignUpComp= ({params}) => {

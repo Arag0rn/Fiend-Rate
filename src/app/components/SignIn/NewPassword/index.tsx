@@ -12,8 +12,9 @@ import Image from 'next/image';
 import { useTranslation } from '@/i18n/client';
 import * as Yup from 'yup';
 import { TFunction } from 'i18next';
-import { useAppDispatch } from '@/app/REDUX/Hooks/hooks';
-import { resetPassword } from '@/app/REDUX/Auth/operations';
+import { useAppDispatch, useAppSelector } from '@/app/REDUX/Hooks/hooks';
+import { selectUser } from '../../../REDUX/Auth/selector';
+import { logIn, resetPassword } from '@/app/REDUX/Auth/operations';
 import { useRouter } from 'next/navigation';
 
 const Schema = (t: TFunction<string, undefined>) => Yup.object().shape({
@@ -34,6 +35,7 @@ const NewPassword = ({ lng }) => {
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation(lng, 'new-password');
   const dispatch = useAppDispatch();
+  const email = useAppSelector(selectUser)?.email;
   const router = useRouter();
 
   return (
@@ -51,8 +53,11 @@ const NewPassword = ({ lng }) => {
             token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imtlc2lyaWg1MzBAZmluY2FpbmMuY29tIiwiaWF0IjoxNzE2Mjk1MzE3LCJleHAiOjE3MTYyOTg5MTd9.JEf2xZ-2UyPW08dp3xozJMApMVXUdp0-vwwXVVABa54',
           }
           dispatch(resetPassword(data));
-          action.resetForm();
-          router.push(`/${lng}/main`);
+          setTimeout(() => {
+            dispatch(logIn({ email: email as string, password: values.password }));
+            action.resetForm();
+            router.push(`/${lng}/main`);
+          }, 500);
         }}
       >
         {({handleSubmit, handleChange, handleBlur, values, touched, errors}) => (
