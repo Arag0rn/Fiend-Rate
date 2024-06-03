@@ -22,6 +22,9 @@ import { Dispatch } from '@/app/REDUX/store';
 import { logOut, updateImageProfile } from '@/app/REDUX/Auth/operations';
 import { useTranslation } from '@/i18n/client';
 
+const replaceLink = (str: string) => {
+  return !str.includes('https://') ? str.replace(str, `https:${str}`) : str;
+}
 
 const calculateAge = (birthDate: string | undefined) => {
   if (!birthDate) return 0;
@@ -83,7 +86,7 @@ const ProfileContainer = ({ lng }) => {
             <Block className={styles['profile__block-image']}>
               <Image
                 className={styles['profile__block-image']}
-                src={userData?.avatarURL as string}
+                src={replaceLink(userData?.avatarURL as string)}
                 width='88'
                 height='88'
                 alt={'User Image'}
