@@ -1,4 +1,5 @@
 'use client';
+
 import Container from '@/app/components/Container';
 import Title from '@/app/components/HelloPage/Title';
 import Navbar from '@/app/components/NavBar/Navbar';
@@ -22,14 +23,19 @@ import { Dispatch } from '@/app/REDUX/store';
 import { logOut, updateImageProfile } from '@/app/REDUX/Auth/operations';
 import { useTranslation } from '@/i18n/client';
 
+// Функція для виправлення посилання на аватар
 const replaceLink = (str: string) => {
+  if (!str) return '/default-avatar.png';
   return !str.includes('https://') ? str.replace(str, `https:${str}`) : str;
-}
+};
 
+// Обчислення віку
 const calculateAge = (birthDate: string | undefined) => {
   if (!birthDate) return 0;
   const currentDate = new Date();
-  const birthDateUser = new Date(birthDate.split('.').reverse().join('.'));
+  const birthDateUser = new Date(
+    birthDate.includes('.') ? birthDate.split('.').reverse().join('.') : birthDate
+  );
   let age = currentDate.getFullYear() - birthDateUser.getFullYear();
   const monthDiff = currentDate.getMonth() - birthDateUser.getMonth();
 
@@ -38,126 +44,133 @@ const calculateAge = (birthDate: string | undefined) => {
   }
 
   return age;
-}
+};
 
-const ProfileContainer = ({ lng }) => {
+type Props = {
+  lng: string;
+};
+
+const ProfileContainer: React.FC<Props> = ({ lng }) => {
   const { t } = useTranslation(lng, 'profile');
   const userData = useSelector(selectUser);
   const dispatch: Dispatch = useDispatch();
 
   const handleChangeImage = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
-    }
+    if (!event.target.files) return;
 
     const file = event.target.files[0];
 
-    if (file.size >= 10 * 1024 * 1024
-        && !file.type.includes('jpeg')
-        && !file.type.includes('jpg')
-        && !file.type.includes('svg')
-        && !file.type.includes('webp')
-        && !file.type.includes('png')
-      ) {
-        return;
-      }
+    // Перевірка на розмір і тип
+    if (
+      file.size >= 10 * 1024 * 1024 ||
+      !['image/jpeg', 'image/jpg', 'image/svg+xml', 'image/webp', 'image/png'].includes(file.type)
+    ) {
+      return;
+    }
 
     dispatch(updateImageProfile(file));
-  }
+  };
 
   return (
-    <Block className='profile'>
+    <Block className="profile">
       <Container>
         <Block className={styles['profile__content']}>
-
+          {/* Заголовок і вихід */}
           <Block className={styles['profile__block-title']}>
-            <Title>{t("title")}</Title>
+            <Title>{t('title')}</Title>
             <div onClick={() => dispatch(logOut())}>
-              <Image 
-                width={24}
-                height={24}
-                src={logOutImg}
-                alt={'picture log out'}
-              />
-              </div>
+              <Image width={24} height={24} src={logOutImg} alt="picture log out" />
+            </div>
           </Block>
 
+          {/* Блок редагування профілю */}
           <Block className={styles['profile__block-edit']}>
             <Block className={styles['profile__block-image']}>
               <Image
                 className={styles['profile__block-image']}
                 src={replaceLink(userData?.avatarURL as string)}
-                width='88'
-                height='88'
-                alt={'User Image'}
-                priority={true}
+                width={88}
+                height={88}
+                alt="User Image"
+                priority
               />
-                <Label className={styles['profile__upload']} htmlFor='file'>
-                  <Block className={styles['profile__image-change']}>
-                      <input
-                        className={styles['profile__opacity']}
-                        type="file"
-                        name="file"
-                        id="file"
-                        accept='.jpg, .jpeg, .png, .svg, .webp'
-                        onChange={handleChangeImage}
-                      />
-                    <Image
-                      className={styles['profile__upload']}
-                      width={15.96}
-                      height={15.96}
-                      src={changeImage}
-                      alt={'Change Image'}
-                    />
-                  </Block>
-                </Label>
+              <Label className={styles['profile__upload']} htmlFor="file">
+                <Block className={styles['profile__image-change']}>
+                  <input
+                    className={styles['profile__opacity']}
+                    type="file"
+                    name="file"
+                    id="file"
+                    accept=".jpg, .jpeg, .png, .svg, .webp"
+                    onChange={handleChangeImage}
+                  />
+                  <Image
+                    className={styles['profile__upload']}
+                    width={16}
+                    height={16}
+                    src={changeImage}
+                    alt="Change Image"
+                  />
+                </Block>
+              </Label>
             </Block>
 
-            <Block className='profile__user-name'>
+            <Block className="profile__user-name">
               <UserName>{userData?.username}</UserName>
               <Block className={styles['profile__block-rate']}>
-                <Image width={17} height={16} src={star} alt={'Star'} />
+                <Image width={17} height={16} src={star} alt="Star" />
                 <Block className={styles['profile__number']}>4.0</Block>
               </Block>
-              <Link className={styles['profile__edit-profile']} href='/profile-edit'>{t("edit")}</Link>
+              <Link className={styles['profile__edit-profile']} href="/profile-edit">
+                {t('edit')}
+              </Link>
             </Block>
           </Block>
 
+          {/* Інформація */}
           <Block className={styles['profile__inform']}>
             <List>
-              <ListItem>{t("age")}</ListItem>
-              <Block className={styles['profile__inform-value']}>{calculateAge(userData?.birthday)}</Block>
-            </List>
-
-            <List>
-              <ListItem>{t("gender")}</ListItem>
+              <ListItem>{t('age')}</ListItem>
               <Block className={styles['profile__inform-value']}>
-              {userData?.gender}
+                {calculateAge(userData?.birthday)}
               </Block>
             </List>
 
             <List>
-              <ListItem>{t("lng")}</ListItem>
+              <ListItem>{t('gender')}</ListItem>
+              <Block className={styles['profile__inform-value']}>{userData?.gender}</Block>
+            </List>
+
+            <List>
+              <ListItem>{t('lng')}</ListItem>
               <Block className={styles['profile__inform-value']}>{userData?.language}</Block>
             </List>
           </Block>
 
+          {/* Про себе */}
           <Block className={styles['profile__about']}>
-            <TitleAbout>{t("about")}</TitleAbout>
-            <AboutDescription>
-            {userData?.about}
-            </AboutDescription>
+            <TitleAbout>{t('about')}</TitleAbout>
+            <AboutDescription>{userData?.about}</AboutDescription>
           </Block>
 
+          {/* Посилання */}
           <Block className={styles['profile__feedback']}>
-            <Link className={styles['profile__link']} href='/'>{t("privacy")}</Link>
-            <Link className={styles['profile__link']} href='/'>{t("terms")}</Link>
-            <Link className={styles['profile__link']} href='/'>{t("feedback")}</Link>
+            <Link className={styles['profile__link']} href="/">
+              {t('privacy')}
+            </Link>
+            <Link className={styles['profile__link']} href="/">
+              {t('terms')}
+            </Link>
+            <Link className={styles['profile__link']} href="/">
+              {t('feedback')}
+            </Link>
           </Block>
+
           <Navbar style={{ paddingLeft: 10, paddingRight: 10 }} />
         </Block>
       </Container>
     </Block>
-  )
-}
+  );
+};
+
 export default ProfileContainer;

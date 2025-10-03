@@ -13,7 +13,7 @@ import { setUserNames } from '@/app/REDUX/Users/slice';
 
 
 const server = 'http://localhost:3000'
-const server2 = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com'  
+const server2 = 'https://friendrateback.onrender.com/'  
 
 export const RoomContext = createContext<any | null>(null);
 

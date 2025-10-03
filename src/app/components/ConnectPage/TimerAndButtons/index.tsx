@@ -31,6 +31,8 @@ const TimerAndButtons = ({
 };
 
 
+
+
 const toggleMute = () => {
   if (stream) {
     stream.getAudioTracks().forEach(track => {

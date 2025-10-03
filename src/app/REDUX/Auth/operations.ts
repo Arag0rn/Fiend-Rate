@@ -4,7 +4,7 @@ import { AuthState } from './slice';
 
 // axios.defaults.baseURL = 'http://localhost:3000';
 
-axios.defaults.baseURL = 'https://whispering-falls-70384-f5d92e367b77.herokuapp.com/';
+axios.defaults.baseURL = 'https://friendrateback.onrender.com';
 
 
 const setAuthHeader = (token: string) => {
@@ -55,8 +55,10 @@ export const register = createAsyncThunk(
   'auth/register',
   async (newUser: RegisterData, thunkAPI) => {
     try {
+      console.log(newUser);
       const res = await axios.post('api/user/register', newUser);
       setAuthHeader(res.data.token);
+      console.log(res.data);
       return res.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
