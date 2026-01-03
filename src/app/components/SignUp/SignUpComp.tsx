@@ -73,7 +73,7 @@ const SignUpComp= ({params}) => {
           }
         })
 
-       if (isLoggedIn){ router.push('/verify')}
+       if (isLoggedIn){ router.push('/main')}
   
  
   return (

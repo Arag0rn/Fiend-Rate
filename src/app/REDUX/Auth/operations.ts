@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthState } from './slice';
 
-// axios.defaults.baseURL = 'http://localhost:3000';
+// axios.defaults.baseURL = 'http://localhost:3002';
 
 axios.defaults.baseURL = 'https://friendrateback.onrender.com';
 
