@@ -5,9 +5,6 @@ import Image from 'next/image';
 
 const Rate = ({ rate, ratingCount }) => {
 
-  console.log(rate);
-  
-
   const averageRate = rate && ratingCount ? rate / ratingCount : 0;
   const roundedRate = Math.round(averageRate * 100) / 100;
 

@@ -38,7 +38,6 @@ export const HubComp = () => {
     
     useEffect(() => {
         const handleUsersList = ({ users }) => {
-            console.log(users);
             setActiveUser(users);
         };
     

@@ -22,8 +22,7 @@ const ConnectPage = ({ lng }) => {
 
   const [spinner, setSpinner] = useState(true);
   const { ws, me, peers, stream } = useContext(RoomContext);
-  console.log(stream);
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(prevTime => prevTime + 1);
@@ -31,9 +30,6 @@ const ConnectPage = ({ lng }) => {
 
     return () => clearInterval(interval);
   }, []);
-
-
-    console.log(peers);
 
   useEffect(() => {
   

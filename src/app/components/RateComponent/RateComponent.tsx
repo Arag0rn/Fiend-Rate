@@ -15,8 +15,6 @@ const RateComponent = () => {
 
   const dispatch: Dispatch = useDispatch();
   const AllUsers = useSelector(getAllUsers)
-  console.log(AllUsers);
-  
 
   useEffect(()=>{
     dispatch(getAllWithRate())

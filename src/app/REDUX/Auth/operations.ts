@@ -55,10 +55,8 @@ export const register = createAsyncThunk(
   'auth/register',
   async (newUser: RegisterData, thunkAPI) => {
     try {
-      console.log(newUser);
       const res = await axios.post('api/user/register', newUser);
       setAuthHeader(res.data.token);
-      console.log(res.data);
       return res.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -175,7 +173,6 @@ export const resetPassword = createAsyncThunk(
 export const setUserRate = createAsyncThunk(
   'auth/setUserRate',
   async (userData: RateData, thunkAPI) => {
-    console.log(userData);
     try {
       const res = await axios.patch('/api/user/set-rate', userData);
       return res.data;

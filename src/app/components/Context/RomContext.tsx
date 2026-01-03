@@ -26,22 +26,17 @@ export const RoomProvider = ({children}) => {
     const [rateModalOpen, setRateModalOpen] = useState(false)
     const [stream, setStream] = useState<MediaStream>();
     const { user } = useAuth(); 
-    console.log(user);
     
     const reduxDispatch = useDispatch();
       
     const handleUserList = useCallback(({ users, names, roomId }: { users: string[], names: {}, roomId: string }) => {
        
         router.push(`/chatRoom/${roomId}`);
-        console.log(names);
         users.forEach((peerId) => {
             if (stream && me) {
                 const call = me.call(peerId, stream);
                 call?.on("stream", (userVideoStream: MediaStream) => {
-                    dispatch(addPeerAction(peerId, userVideoStream));
-                    console.log(peerId);
-                    console.log(" call?.on3333333333", peerId);
-                    
+                    dispatch(addPeerAction(peerId, userVideoStream));                   
                 });
             }
         });
@@ -95,18 +90,15 @@ useEffect(()=>{
 useEffect(() => {
   if (!stream) return;
   if (!me) return;
-    console.log(me);
     
   ws.on(
       "user-joined",
       ({ peerId, names}) => {
-        reduxDispatch(setUserNames(names)); 
-        console.log(`${peerId} was connected`);
+        reduxDispatch(setUserNames(names));
+        
           const call = stream && me.call(peerId, stream);
           call.on("stream", (userVideoStream: MediaStream) => {
-              dispatch(addPeerAction(peerId, userVideoStream));
-              console.log("111111111111", peerId);
-              
+              dispatch(addPeerAction(peerId, userVideoStream));             
           });
       
        
@@ -118,7 +110,6 @@ useEffect(() => {
       call.answer(stream);
       call.on("stream", (userVideoStream) => {
           dispatch(addPeerAction(call.peer, userVideoStream));
-          console.log("22222222222222222", call.peer);
       });
   });
 

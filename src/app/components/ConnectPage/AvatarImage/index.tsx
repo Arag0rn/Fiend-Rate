@@ -19,8 +19,6 @@ const AvatarImage = (
 
     const isMicrofon = typeof src === 'string' && src.includes("/_next/static/media/microfon.3cda766a.svg");
 
-    console.log(src);
-
   return (
     // <div className={styles.avatar}>
       <Image
